@@ -14,7 +14,7 @@ SITE = {
     "email": "alexyan1987@outlook.com",
     "scholar": "28WTkNkAAAAJ",
     "orcid": "0000-0002-1265-9772",
-    "github": "fabea",
+    "github": "fabea87",
     "cv_en": "https://870603.xyz/assets/pdf/CV.pdf",
     "cv_cn": "https://870603.xyz/assets/pdf/CV-cn.pdf",
     # ---------- 站点元信息 ----------

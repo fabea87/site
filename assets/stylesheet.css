@@ -1,86 +1,45 @@
 /* ==========================================================
-   Personal academic homepage — warm paper theme
-   Light / dark via <html data-theme="light|dark">
+   Personal academic homepage — warm parchment theme
+   Light mode only（强调色墨蓝 #1B365D）
    ========================================================== */
 
 /* ---------- Design tokens ---------- */
 :root {
-  --font-display: "Gloock", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
-  --font-display-alt: "Instrument Serif", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
-  --font-serif: "Lora", "Noto Serif SC", "Songti SC", "SimSun", Georgia, "Times New Roman", serif;
-  --font-ui: "Crimson Pro", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
-  --font-label: "Merriweather", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
-  --font-meta: "EB Garamond", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+  --font-display: "Bona Nova SC", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+  --font-display-alt: "Simonetta", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+  --font-title: "Lora", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+  --font-serif: "Simonetta", "Noto Serif SC", "Songti SC", "SimSun", Georgia, "Times New Roman", serif;
+  --font-ui: "Simonetta", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+  --font-label: "Simonetta", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+  --font-meta: "Simonetta", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
   --font-mono: "SF Mono", "Cascadia Code", Consolas, "Liberation Mono", Menlo, monospace;
 
-  --bg: #faf7f0;
-  --bg-elevated: #ffffff;
-  --bg-subtle: #f2ede1;
-  --bg-nav: rgba(250, 247, 240, 0.88);
-  --featured-bg: #f3f6f1;
-  --text: #2b2a26;
-  --text-soft: #5c5a52;
-  --text-faint: #8b877c;
-  --accent: #2f6b5f;
-  --accent-strong: #24584e;
-  --accent-soft: rgba(47, 107, 95, 0.12);
-  --border: #e5dfd1;
-  --border-strong: #cfc7b3;
-  --code-bg: #f3eee2;
-  --code-text: #3a3831;
-  --badge-bg: #2f6b5f;
-  --badge-text: #ffffff;
-  --shadow: 0 1px 2px rgba(60, 50, 30, 0.05), 0 4px 14px rgba(60, 50, 30, 0.06);
-  --shadow-hover: 0 2px 4px rgba(60, 50, 30, 0.06), 0 8px 24px rgba(60, 50, 30, 0.1);
+  /* 设计原则：
+     1) 背景固定暖羊皮纸 #f5f4ed
+     2) 唯一主强调色墨蓝 #1B365D
+     3) 灰色全部带黄褐暖调
+     6) 深度靠边框 / 极弱阴影 / 留白，禁止硬阴影 */
+  --bg: #f5f4ed;
+  --bg-elevated: #fdfcf7;
+  --bg-subtle: #eceade;
+  --bg-nav: rgba(245, 244, 237, 0.9);
+  --featured-bg: #f1efe4;
+  --text: #2b2821;
+  --text-soft: #5f5a4b;
+  --text-faint: #8f8978;
+  --accent: #1B365D;
+  --accent-strong: #16294A;
+  --accent-soft: rgba(27, 54, 93, 0.1);
+  --border: #e3dfd1;
+  --border-strong: #cfc9b6;
+  --code-bg: #efede2;
+  --code-text: #3b382e;
+  --badge-bg: #1B365D;
+  --badge-text: #f7f5ee;
+  --shadow: 0 1px 2px rgba(90, 80, 55, 0.05);
+  --shadow-hover: 0 1px 2px rgba(90, 80, 55, 0.05), 0 3px 10px rgba(90, 80, 55, 0.07);
   --radius: 12px;
   --maxw: 920px;
-}
-
-:root[data-theme="dark"] {
-  --bg: #1e1c18;
-  --bg-elevated: #262420;
-  --bg-subtle: #2e2b25;
-  --bg-nav: rgba(30, 28, 24, 0.88);
-  --featured-bg: #262a26;
-  --text: #e9e5da;
-  --text-soft: #b8b2a3;
-  --text-faint: #8d877a;
-  --accent: #83b9a9;
-  --accent-strong: #a3cabd;
-  --accent-soft: rgba(131, 185, 169, 0.16);
-  --border: #37332c;
-  --border-strong: #4b463b;
-  --code-bg: #23211c;
-  --code-text: #cfc9bb;
-  --badge-bg: #9cc6b8;
-  --badge-text: #12241e;
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 4px 14px rgba(0, 0, 0, 0.28);
-  --shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.4), 0 10px 26px rgba(0, 0, 0, 0.38);
-}
-
-/* JS-disabled fallback: follow the OS preference */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --bg: #1e1c18;
-    --bg-elevated: #262420;
-    --bg-subtle: #2e2b25;
-    --bg-nav: rgba(30, 28, 24, 0.88);
-    --featured-bg: #262a26;
-    --text: #e9e5da;
-    --text-soft: #b8b2a3;
-    --text-faint: #8d877a;
-    --accent: #83b9a9;
-    --accent-strong: #a3cabd;
-    --accent-soft: rgba(131, 185, 169, 0.16);
-    --border: #37332c;
-    --border-strong: #4b463b;
-    --code-bg: #23211c;
-    --code-text: #cfc9bb;
-    --badge-bg: #9cc6b8;
-    --badge-text: #12241e;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 4px 14px rgba(0, 0, 0, 0.28);
-    --shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.4), 0 10px 26px rgba(0, 0, 0, 0.38);
-  }
 }
 
 /* ---------- Base ---------- */
@@ -173,11 +132,6 @@ section[id] {
   width: auto;
 }
 
-:root[data-theme="dark"] .nav-brand-img {
-  filter: brightness(0) invert(1);
-  opacity: 0.92;
-}
-
 .nav-links {
   display: flex;
   align-items: center;
@@ -199,57 +153,6 @@ section[id] {
   text-decoration: none;
 }
 
-.theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  margin-left: 8px;
-  flex-shrink: 0;
-  border: 1px solid var(--border-strong);
-  border-radius: 50%;
-  background: var(--bg-elevated);
-  color: var(--text-soft);
-  font-family: var(--font-ui);
-  cursor: pointer;
-  transition: color 0.15s ease, border-color 0.15s ease;
-}
-
-.theme-toggle:hover {
-  color: var(--accent-strong);
-  border-color: var(--accent);
-}
-
-.theme-toggle {
-  position: relative;
-}
-
-.theme-toggle svg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 16px;
-  height: 16px;
-  transform: translate(-50%, -50%);
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.theme-toggle .icon-moon {
-  opacity: 0;
-  transform: translate(-50%, -50%) rotate(-90deg) scale(0.5);
-}
-
-:root[data-theme="dark"] .theme-toggle .icon-sun {
-  opacity: 0;
-  transform: translate(-50%, -50%) rotate(90deg) scale(0.5);
-}
-
-:root[data-theme="dark"] .theme-toggle .icon-moon {
-  opacity: 1;
-  transform: translate(-50%, -50%) rotate(0deg) scale(1);
-}
-
 /* ---------- Hero ---------- */
 .hero {
   padding: 44px 0 18px;
@@ -265,7 +168,7 @@ section[id] {
 .hero-name {
   margin: 0 0 8px;
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 700;
   font-size: clamp(2.3rem, 6.4vw, 3.2rem);
   line-height: 1.12;
   letter-spacing: -0.01em;
@@ -368,7 +271,7 @@ summary.link-pill:hover {
 
 .about-label {
   font-family: var(--font-label);
-  font-weight: 700;
+  font-weight: 900;
   color: var(--text);
 }
 
@@ -459,7 +362,7 @@ summary.link-pill:hover {
   margin: 0;
   padding-bottom: 12px;
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 700;
   font-size: 1.85rem;
   color: var(--text);
   border-bottom: 1px solid var(--border);
@@ -528,7 +431,7 @@ summary.link-pill:hover {
   align-items: center;
   gap: 14px;
   margin: 24px 0 14px;
-  font-family: var(--font-label);
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.98rem;
   letter-spacing: 0.08em;
@@ -555,12 +458,11 @@ summary.link-pill:hover {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+  transition: box-shadow 0.18s ease, border-color 0.18s ease;
 }
 
 .pub-card:hover {
   box-shadow: var(--shadow-hover);
-  transform: translateY(-1px);
   border-color: var(--border-strong);
 }
 
@@ -573,16 +475,16 @@ summary.link-pill:hover {
   position: absolute;
   top: -10px;
   right: 16px;
-  padding: 4px 12px;
-  font-family: var(--font-label);
-  font-size: 0.72rem;
+  padding: 3px 11px;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--badge-text);
-  background: var(--badge-bg);
+  color: var(--accent);
+  background: var(--bg-elevated);
+  border: 1px solid var(--accent);
   border-radius: 999px;
-  box-shadow: var(--shadow);
 }
 
 .pub-body {
@@ -591,8 +493,8 @@ summary.link-pill:hover {
 
 .pub-title {
   margin: 0 0 7px;
-  font-family: var(--font-serif);
-  font-weight: 600;
+  font-family: var(--font-title);
+  font-weight: 700;
   font-size: 1.08rem;
   line-height: 1.4;
 }
@@ -609,7 +511,7 @@ summary.link-pill:hover {
 .pub-award {
   margin-left: 3px;
   font-weight: 600;
-  color: #b3261e;
+  color: #9c4a33;
 }
 
 .pub-authors {
@@ -877,27 +779,17 @@ summary.link-pill:hover {
 .contact-item .contact-icon.mono {
   font-family: var(--font-label);
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 900;
   letter-spacing: 0.03em;
 }
 
-/* 品牌色：Scopus 橙、Web of Science 绿（亮色模式自动加深保证可读） */
+/* 品牌图标：Scopus / Web of Science 统一渲染为墨蓝 #1B365C */
 .contact-item.brand-scopus .contact-icon {
-  color: #e9711c;
+  color: #1B365C;
 }
 
 .contact-item.brand-wos .contact-icon {
-  color: #2e8a4f;
-}
-
-@supports (color: color-mix(in srgb, red 50%, blue)) {
-  .contact-item.brand-wos .contact-icon {
-    color: color-mix(in srgb, #93ff9e 55%, #14532d);
-  }
-}
-
-:root[data-theme="dark"] .contact-item.brand-wos .contact-icon {
-  color: #93ff9e;
+  color: #1B365C;
 }
 
 .contact-item:hover {
@@ -922,7 +814,7 @@ summary.link-pill:hover {
 .year-count {
   font-family: var(--font-meta);
   font-size: 0.82em;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0;
   text-transform: none;
   color: var(--text-faint);
@@ -1039,8 +931,7 @@ summary.link-pill:hover {
   .site-nav,
   .back-to-top,
   .thumb-preview,
-  .pub-thumb,
-  .theme-toggle {
+  .pub-thumb {
     display: none !important;
   }
 
@@ -1127,14 +1018,7 @@ summary.link-pill:hover {
 /* ---------- 卡片键盘焦点态（与 hover 一致） ---------- */
 .pub-card:focus-within {
   box-shadow: var(--shadow-hover);
-  transform: translateY(-1px);
   border-color: var(--border-strong);
-}
-
-/* ---------- 暗色模式缩略图微调 ---------- */
-:root[data-theme="dark"] .pub-thumb img,
-:root[data-theme="dark"] .thumb-preview img {
-  filter: brightness(0.92) saturate(0.95);
 }
 
 /* ---------- 暖色滚动条 ---------- */
@@ -1164,7 +1048,7 @@ html {
 
 /* ---------- 导航滚动阴影（nav.js 添加 .scrolled） ---------- */
 .site-nav.scrolled {
-  box-shadow: 0 1px 2px rgba(60, 50, 30, 0.05), 0 6px 18px rgba(60, 50, 30, 0.08);
+  box-shadow: 0 1px 2px rgba(90, 80, 55, 0.05), 0 3px 10px rgba(90, 80, 55, 0.06);
 }
 
 /* ---------- Skip link ---------- */
