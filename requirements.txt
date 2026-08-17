@@ -1,0 +1,4 @@
+# Cloudflare Pages 构建依赖
+# 由 build_cloudflare.py 自动安装（也可在 Pages 的 Install command 单独配置）
+pybtex>=0.24
+Pillow>=10.0
