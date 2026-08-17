@@ -1,22 +1,15 @@
 #!/usr/bin/env python3
 """
-Cloudflare Pages 构建脚本
-=========================
+站点构建脚本（GitHub Pages / 任意静态托管通用）
+=============================================
 
 工作流程（共三步）：
   1. 确保 pip 依赖已安装（见 requirements.txt：pybtex、Pillow）
   2. 运行站点构建器 build.py（生成 index.html、WebP 缩略图等）
   3. 把可部署的静态文件（index.html、assets/）暂存到 public/
 
-Cloudflare Pages 面板配置：
-  - Framework preset : None
-  - Install command  : （留空即可，脚本会自动 pip install；也可填
-                       pip install -r requirements.txt）
-  - Build command    : python build_cloudflare.py
-  - Build output dir : public
-
-每次 git push 到仓库后，Cloudflare Pages 会自动拉取代码并执行本脚本。
-本地也可以直接运行：python build_cloudflare.py
+GitHub Actions 里由 .github/workflows/deploy.yml 调用本脚本，
+本地也可以直接运行：python build_site.py
 """
 
 import os
@@ -103,11 +96,11 @@ def stage_output():
 
 
 def main():
-    print(f"Cloudflare Pages 构建开始（仓库根目录: {ROOT}）")
+    print(f"站点构建开始（仓库根目录: {ROOT}）")
     ensure_deps()
     run_build()
     stage_output()
-    print("构建完成。输出目录: public（请在 Pages 面板填写 Build output dir: public）")
+    print("构建完成。输出目录: public")
 
 
 if __name__ == "__main__":
