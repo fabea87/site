@@ -1,0 +1,936 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bib Editor — publication_list.bib</title>
+<style>
+  :root {
+    --bg: #f5f6f8;
+    --panel: #ffffff;
+    --border: #dde1e7;
+    --text: #1c2430;
+    --muted: #6b7686;
+    --accent: #2f6fed;
+    --accent-dark: #1f56c8;
+    --danger: #d64545;
+    --ok: #2e9e5b;
+    --code-bg: #f0f2f5;
+    --shadow: 0 1px 3px rgba(20,30,50,.08);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font: 14px/1.5 -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg); color: var(--text);
+  }
+  button { font: inherit; cursor: pointer; }
+  input, select, textarea { font: inherit; color: inherit; }
+  .hidden { display: none !important; }
+
+  header.topbar {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 16px;
+    background: var(--panel); border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    flex-wrap: wrap;
+  }
+  header.topbar h1 { font-size: 15px; margin: 0; font-weight: 600; }
+  .file-badge {
+    font-size: 12px; color: var(--muted);
+    background: var(--code-bg); border-radius: 6px; padding: 2px 8px;
+    max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .spacer { flex: 1; }
+  .btn {
+    border: 1px solid var(--border); background: var(--panel);
+    border-radius: 8px; padding: 7px 14px; font-size: 13px; font-weight: 500;
+    color: var(--text); transition: background .12s, border-color .12s;
+  }
+  .btn:hover { background: var(--code-bg); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn.primary:hover { background: var(--accent-dark); }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .btn.small { padding: 4px 9px; font-size: 12px; }
+  .btn.danger { color: var(--danger); }
+
+  #dirtyFlag { font-size: 12px; color: var(--danger); font-weight: 600; }
+
+  .layout {
+    display: grid; grid-template-columns: 360px 1fr;
+    gap: 0; height: calc(100vh - 55px);
+  }
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; height: auto; }
+    #entryList { max-height: 240px; }
+  }
+
+  aside#entryList {
+    border-right: 1px solid var(--border); background: var(--panel);
+    overflow-y: auto; padding: 8px;
+  }
+  #entryList h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 6px 8px 10px; }
+  .entry-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 10px; border-radius: 8px; cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .entry-item:hover { background: var(--code-bg); }
+  .entry-item.active { background: #eaf1ff; border-color: #c4d7ff; }
+  .entry-item .e-key { font-family: ui-monospace, Consolas, monospace; font-size: 12px; color: var(--accent); white-space: nowrap; }
+  .entry-item .e-year { font-size: 11px; color: var(--muted); background: var(--code-bg); border-radius: 4px; padding: 0 5px; }
+  .entry-item .e-title {
+    flex: 1; font-size: 12px; color: var(--text); line-height: 1.35;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .entry-item .e-del {
+    border: none; background: transparent; color: var(--muted);
+    padding: 2px 6px; border-radius: 6px; font-size: 13px;
+  }
+  .entry-item .e-del:hover { color: var(--danger); background: #fdeaea; }
+
+  main#editor { overflow-y: auto; padding: 18px; background: var(--bg); }
+
+  #emptyHint {
+    text-align: center; color: var(--muted); padding: 60px 20px;
+  }
+  #emptyHint .big { font-size: 34px; margin-bottom: 8px; }
+
+  .doi-row { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .doi-row input {
+    flex: 1; min-width: 220px; padding: 8px 12px;
+    border: 1px solid var(--border); border-radius: 8px; background: var(--panel);
+  }
+  .doi-row input:focus { outline: 2px solid #c4d7ff; border-color: var(--accent); }
+
+  .card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px; box-shadow: var(--shadow);
+  }
+  .card-head {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .card-head .k { font-family: ui-monospace, Consolas, monospace; font-size: 13px; font-weight: 600; color: var(--accent); }
+  .card-head .tag { font-size: 11px; background: var(--code-bg); border-radius: 5px; padding: 2px 7px; color: var(--muted); }
+
+  .tabs { display: flex; gap: 4px; margin-bottom: 12px; }
+  .tabs button {
+    border: 1px solid var(--border); background: var(--panel); border-radius: 8px 8px 0 0;
+    padding: 7px 16px; font-weight: 500; color: var(--muted); border-bottom: none;
+  }
+  .tabs button.active { background: var(--panel); color: var(--accent); box-shadow: inset 0 -2px 0 var(--accent); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 8px 10px;
+    border: 1px solid var(--border); border-radius: 8px; background: #fff;
+  }
+  .field textarea { min-height: 90px; resize: vertical; line-height: 1.5; }
+  .field input:focus, .field select:focus, .field textarea:focus,
+  #rawText:focus { outline: 2px solid #c4d7ff; border-color: var(--accent); }
+  .field.wide { grid-column: 1 / -1; }
+  .field.mono input, .field.mono textarea { font-family: ui-monospace, Consolas, monospace; }
+  .check { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .check input { width: 16px; height: 16px; accent-color: var(--accent); }
+  .check label { font-size: 13px; font-weight: 500; color: var(--text); }
+
+  details.more { margin-top: 4px; border-top: 1px dashed var(--border); padding-top: 10px; }
+  details.more summary { cursor: pointer; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+  #rawText {
+    width: 100%; min-height: 320px; resize: vertical;
+    font-family: ui-monospace, Consolas, "Courier New", monospace; font-size: 13px; line-height: 1.5;
+    border: 1px solid var(--border); border-radius: 8px; background: #fff; padding: 12px;
+  }
+
+  #toastWrap { position: fixed; bottom: 18px; right: 18px; z-index: 50; display: flex; flex-direction: column; gap: 8px; }
+  .toast {
+    background: #232c38; color: #fff; padding: 10px 16px; border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0,0,0,.18); font-size: 13px;
+    animation: slidein .15s ease;
+  }
+  .toast.err { background: var(--danger); }
+  .toast.ok { background: var(--ok); }
+  @keyframes slidein { from { transform: translateX(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+  #connectOverlay {
+    position: fixed; inset: 0; z-index: 60; background: rgba(20,28,40,.55);
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+  }
+  #connectCard {
+    background: var(--panel); border-radius: 14px; padding: 28px; max-width: 480px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  }
+  #connectCard h2 { margin: 0 0 8px; font-size: 18px; }
+  #connectCard p { color: var(--muted); margin: 0 0 16px; font-size: 13px; }
+  #connectCard .btn { width: 100%; padding: 12px; font-size: 14px; }
+
+  footer.note { color: var(--muted); font-size: 12px; margin-top: 16px; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <h1>Bib Editor</h1>
+  <span class="file-badge" id="fileBadge">no file loaded</span>
+  <span id="dirtyFlag" class="hidden">● unsaved</span>
+  <div class="spacer"></div>
+  <button id="btnNew" class="btn">+ New entry</button>
+  <button id="btnUndo" class="btn">↩ Undo save</button>
+  <button id="btnSave" class="btn primary">💾 Save</button>
+</header>
+
+<div class="layout">
+  <aside id="entryList">
+    <h2>Entries</h2>
+    <div id="listBody"></div>
+  </aside>
+
+  <main id="editor">
+    <div id="doiRow" class="doi-row hidden">
+      <input id="doiInput" type="text" placeholder="DOI, e.g. 10.1111/ijal.70328 — then click Import" autocomplete="off" spellcheck="false">
+      <button id="btnImport" class="btn primary">⚡ Import from DOI</button>
+    </div>
+
+    <div id="emptyHint">
+      <div class="big">📄</div>
+      <p id="emptyHintText">Load or create an entry to get started.</p>
+    </div>
+
+    <div id="editorArea" class="hidden">
+      <div class="card">
+        <div class="card-head">
+          <span class="k" id="curKey">newkey</span>
+          <span class="tag" id="curTypeTag"></span>
+          <span class="spacer"></span>
+          <button id="btnDelete" class="btn small danger">🗑 Delete entry</button>
+        </div>
+
+        <div class="tabs">
+          <button id="tabForm" class="active" type="button">Form</button>
+          <button id="tabRaw" type="button">Raw BibTeX</button>
+        </div>
+
+        <div id="panelForm">
+          <div class="grid">
+            <div class="field wide">
+              <label for="f_key">Citation key</label>
+              <input id="f_key" type="text" class="mono" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="field">
+              <label for="f_type">Type</label>
+              <select id="f_type">
+                <option value="article">article</option>
+                <option value="inproceedings">inproceedings</option>
+                <option value="incollection">incollection</option>
+                <option value="book">book</option>
+                <option value="phdthesis">phdthesis</option>
+                <option value="techreport">techreport</option>
+                <option value="proceedings">proceedings</option>
+                <option value="misc">misc</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f_year">Year</label>
+              <input id="f_year" type="text" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="field wide">
+              <label for="f_title">Title</label>
+              <input id="f_title" type="text" autocomplete="off">
+            </div>
+            <div class="field wide">
+              <label for="f_author">Author(s) — one per line, in order</label>
+              <textarea id="f_author" placeholder="Da Yan&#10;Feng Tian" autocomplete="off"></textarea>
+            </div>
+            <div class="field wide">
+              <label for="f_booktitle">Booktitle / Journal</label>
+              <input id="f_booktitle" type="text" autocomplete="off">
+            </div>
+            <div class="field"><label for="f_volume">Volume</label><input id="f_volume" type="text" autocomplete="off"></div>
+            <div class="field"><label for="f_number">Number</label><input id="f_number" type="text" autocomplete="off"></div>
+            <div class="field"><label for="f_pages">Pages</label><input id="f_pages" type="text" autocomplete="off"></div>
+            <div class="field"><label for="f_publisher">Publisher</label><input id="f_publisher" type="text" autocomplete="off"></div>
+            <div class="field wide">
+              <label for="f_html">html (web link)</label>
+              <input id="f_html" type="text" autocomplete="off">
+            </div>
+            <div class="field"><label for="f_pdf">pdf</label><input id="f_pdf" type="text" autocomplete="off"></div>
+            <div class="field"><label for="f_img">img</label><input id="f_img" type="text" autocomplete="off"></div>
+          </div>
+
+          <details class="more">
+            <summary>Extra fields</summary>
+            <div class="grid" style="margin-top:10px">
+              <div class="field"><label for="f_award">award</label><input id="f_award" type="text" autocomplete="off"></div>
+              <div class="field"><label for="f_supp">supp</label><input id="f_supp" type="text" autocomplete="off"></div>
+              <div class="field"><label for="f_video">video</label><input id="f_video" type="text" autocomplete="off"></div>
+              <div class="field"><label for="f_poster">poster</label><input id="f_poster" type="text" autocomplete="off"></div>
+              <div class="field"><label for="f_code">code</label><input id="f_code" type="text" autocomplete="off"></div>
+              <div class="field"><label for="f_equal">equal_contribution (int)</label><input id="f_equal" type="text" autocomplete="off"></div>
+            </div>
+            <div class="check">
+              <input id="f_highlight" type="checkbox">
+              <label for="f_highlight">Highlight / Featured</label>
+            </div>
+          </details>
+        </div>
+
+        <div id="panelRaw" class="hidden">
+          <textarea id="rawText" autocomplete="off" spellcheck="false"></textarea>
+        </div>
+      </div>
+
+      <footer class="note">
+        After saving, run <code>python build.py</code> to regenerate index.html. DOI import uses api.crossref.org (no API key).
+        For entries without a DOI, paste BibTeX from Google Scholar / zbib into the <b>Raw</b> tab.
+      </footer>
+    </div>
+  </main>
+</div>
+
+<div id="connectOverlay">
+  <div id="connectCard">
+    <h2>Connect publication_list.bib</h2>
+    <p>
+      This tool needs to open your <code>publication_list.bib</code> file. On the first run you pick it once;
+      afterwards the browser remembers it and <b>auto-loads and auto-saves</b> that file on every visit
+      (requires Chrome or Edge — the File System Access API).
+    </p>
+    <button id="btnConnect" class="btn primary">Choose publication_list.bib…</button>
+  </div>
+</div>
+
+<div id="toastWrap"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var FALLBACK_KEY = "bib-tool-fallback-content";
+  var $ = function (s) { return document.querySelector(s); };
+
+  var doc = null;
+  var fileHandle = null;
+  var fileName = null;
+  var currentSeg = null;
+  var editedSegs = new Set();
+  var lastSavedText = "";
+  var undoText = null;
+
+  var FORM_NAMES = ["title", "author", "booktitle", "volume", "number", "pages", "year", "publisher", "html", "pdf", "img", "award", "supp", "video", "poster", "code", "equal_contribution"];
+
+  function toast(msg, kind) {
+    var el = document.createElement("div");
+    el.className = "toast" + (kind ? " " + kind : "");
+    el.textContent = msg;
+    $("#toastWrap").appendChild(el);
+    setTimeout(function () { el.remove(); }, 3500);
+  }
+
+  function parseBib(text) {
+    var segments = [];
+    var frontmatter = "";
+    var fm = /^---\r?\n[\s\S]*?\r?\n---\r?\n?/.exec(text);
+    var i = 0;
+    if (fm) { frontmatter = fm[0]; i = fm[0].length; }
+    var buf = "";
+    function flushPreamble(end) {
+      if (buf.length) { segments.push({ type: "preamble", text: buf }); buf = ""; }
+    }
+    var n = text.length;
+    while (i < n) {
+      var at = text.indexOf("@", i);
+      if (at === -1) { buf += text.slice(i); i = n; break; }
+      buf += text.slice(i, at);
+      var e = parseEntryAt(text, at);
+      if (e) {
+        flushPreamble(at);
+        segments.push(e);
+        i = e._end;
+      } else {
+        buf += "@";
+        i = at + 1;
+      }
+    }
+    flushPreamble(n);
+    return { frontmatter: frontmatter, segments: segments };
+  }
+
+  function parseEntryAt(text, at) {
+    var n = text.length, j = at + 1, t = "";
+    while (j < n && /[a-zA-Z0-9_]/.test(text[j])) { t += text[j]; j++; }
+    if (!t) return null;
+    while (j < n && /\s/.test(text[j])) j++;
+    if (text[j] !== "{") return null;
+    j++;
+    var key = "";
+    while (j < n && /[a-zA-Z0-9_:]/.test(text[j])) { key += text[j]; j++; }
+    if (!key) return null;
+    var fields = [];
+    while (j < n && text[j] !== ",") {
+      if (text[j] === "}") {
+        j++;
+        return { type: "entry", typeName: t, key: key, fields: fields, raw: text.slice(at, j), _end: j };
+      }
+      j++;
+    }
+    if (j < n) j++;
+    while (j < n) {
+      while (j < n && (/\s/.test(text[j]) || text[j] === ",")) j++;
+      if (j >= n) break;
+      if (text[j] === "}") { j++; break; }
+      var name = "";
+      while (j < n && /[a-zA-Z0-9_-]/.test(text[j])) { name += text[j]; j++; }
+      if (!name) { j++; continue; }
+      while (j < n && /\s/.test(text[j])) j++;
+      if (text[j] === "=") {
+        j++;
+        while (j < n && /\s/.test(text[j])) j++;
+        var vs = j, depth = 0, inStr = false;
+        while (j < n) {
+          var c = text[j];
+          if (inStr) {
+            if (c === '"' && text[j - 1] !== "\\") inStr = false;
+          } else if (c === "{") {
+            depth++;
+          } else if (c === "}") {
+            if (depth === 0) break;
+            depth--;
+          } else if (c === '"') {
+            inStr = true;
+          } else if (c === "," && depth === 0) {
+            break;
+          }
+          j++;
+        }
+        fields.push({ name: name, value: text.slice(vs, j).trim() });
+        if (j < n && text[j] === ",") j++;
+      } else {
+        j++;
+      }
+    }
+    return { type: "entry", typeName: t, key: key, fields: fields, raw: text.slice(at, j), _end: j };
+  }
+
+  function valueToPlain(v) {
+    var s = (v || "").trim();
+    if (s.startsWith("{") && s.endsWith("}")) s = s.slice(1, -1);
+    else if (s.startsWith('"') && s.endsWith('"')) s = s.slice(1, -1);
+    s = s.replace(/\\([{}%&$#_])/g, "$1");
+    return s.replace(/\s*\n\s*/g, " ").trim();
+  }
+
+  function plainToValue(s) {
+    s = String(s || "").trim().replace(/([{}%])/g, "\\$1");
+    return "{" + s + "}";
+  }
+
+  function getField(seg, name) {
+    if (!seg) return null;
+    var f = seg.fields.filter(function (x) { return x.name === name; })[0];
+    return f ? f.value : null;
+  }
+
+  function getFieldPlain(seg, name) {
+    return valueToPlain(getField(seg, name));
+  }
+
+  function setField(seg, name, plain) {
+    seg.fields = seg.fields.filter(function (x) { return x.name !== name; });
+    if (plain !== undefined && plain !== null && String(plain).trim() !== "") {
+      seg.fields.push({ name: name, value: plainToValue(plain) });
+    }
+  }
+
+  function serializeEntry(seg) {
+    var s = "@" + seg.typeName + "{" + seg.key + ",\n";
+    seg.fields.forEach(function (f, i) {
+      var last = i === seg.fields.length - 1;
+      s += "  " + f.name + " = " + f.value + (last ? "" : ",") + "\n";
+    });
+    return s + "}";
+  }
+
+  function serializeDoc() {
+    var out = doc.frontmatter;
+    doc.segments.forEach(function (seg) {
+      if (seg.type === "preamble") { out += seg.text; return; }
+      out += editedSegs.has(seg) ? serializeEntry(seg) : seg.raw;
+    });
+    return out;
+  }
+
+  function isDirty() {
+    return !!doc && serializeDoc() !== lastSavedText;
+  }
+
+  function markDirty() {
+    var d = isDirty();
+    $("#dirtyFlag").classList.toggle("hidden", !d);
+    document.title = (d ? "● " : "") + "Bib Editor — " + (fileName || "no file");
+  }
+
+  function renderList() {
+    if (!doc) return;
+    var entries = doc.segments.filter(function (s) { return s.type === "entry"; });
+    entries.sort(function (a, b) {
+      var ay = parseInt(getFieldPlain(a, "year") || "0", 10) || 0;
+      var by = parseInt(getFieldPlain(b, "year") || "0", 10) || 0;
+      if (by !== ay) return by - ay;
+      return a.key < b.key ? -1 : a.key > b.key ? 1 : 0;
+    });
+    var body = $("#listBody");
+    if (!entries.length) {
+      body.innerHTML = '<div class="entry-item" style="color:var(--muted);font-size:12px">No entries yet — import a DOI below.</div>';
+      return;
+    }
+    body.innerHTML = "";
+    entries.forEach(function (seg) {
+      var div = document.createElement("div");
+      div.className = "entry-item" + (seg === currentSeg ? " active" : "");
+      var year = getFieldPlain(seg, "year") || "—";
+      var title = getFieldPlain(seg, "title") || "";
+      div.innerHTML =
+        '<span class="e-key"></span>' +
+        '<span class="e-year"></span>' +
+        '<span class="e-title"></span>' +
+        '<button class="e-del" title="Delete entry">&times;</button>';
+      div.querySelector(".e-key").textContent = seg.key;
+      div.querySelector(".e-year").textContent = year;
+      div.querySelector(".e-title").textContent = title;
+      div.querySelector(".e-del").addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        if (!confirm("Delete entry \u201c" + seg.key + "\u201d?")) return;
+        var idx = doc.segments.indexOf(seg);
+        if (idx > -1) doc.segments.splice(idx, 1);
+        if (currentSeg === seg) { clearEditor(); }
+        editedSegs.add(seg);
+        renderList();
+        markDirty();
+        toast("Entry deleted");
+      });
+      div.addEventListener("click", function () { openEntry(seg); });
+      body.appendChild(div);
+    });
+  }
+
+  function switchTab(name) {
+    var form = name === "form";
+    $("#tabForm").classList.toggle("active", form);
+    $("#tabRaw").classList.toggle("active", !form);
+    $("#panelForm").classList.toggle("hidden", !form);
+    $("#panelRaw").classList.toggle("hidden", form);
+    if (!form && currentSeg) {
+      $("#rawText").value = serializeEntry(currentSeg);
+    }
+  }
+
+  function syncFromForm() {
+    if (!currentSeg) return;
+    currentSeg.key = $("#f_key").value.trim() || "newentry";
+    currentSeg.typeName = $("#f_type").value;
+    var fields = [];
+    function add(name, plain) {
+      if (plain !== undefined && plain !== null && String(plain).trim() !== "") {
+        fields.push({ name: name, value: plainToValue(plain) });
+      }
+    }
+    add("title", $("#f_title").value);
+    var authors = $("#f_author").value.split(/\r?\n/).map(function (l) { return l.trim(); }).filter(Boolean);
+    if (authors.length) add("author", authors.join(" and "));
+    add("booktitle", $("#f_booktitle").value);
+    add("volume", $("#f_volume").value);
+    add("number", $("#f_number").value);
+    add("pages", $("#f_pages").value);
+    add("year", $("#f_year").value);
+    add("publisher", $("#f_publisher").value);
+    add("html", $("#f_html").value);
+    add("pdf", $("#f_pdf").value);
+    add("img", $("#f_img").value);
+    add("award", $("#f_award").value);
+    add("supp", $("#f_supp").value);
+    add("video", $("#f_video").value);
+    add("poster", $("#f_poster").value);
+    add("code", $("#f_code").value);
+    add("equal_contribution", $("#f_equal").value);
+    if ($("#f_highlight").checked) fields.push({ name: "highlight", value: "{true}" });
+    currentSeg.fields = fields;
+    editedSegs.add(currentSeg);
+  }
+
+  function syncToForm() {
+    if (!currentSeg) return;
+    $("#f_key").value = currentSeg.key;
+    $("#f_type").value = currentSeg.typeName;
+    $("#f_title").value = getFieldPlain(currentSeg, "title");
+    var authors = getFieldPlain(currentSeg, "author").split(/\s+and\s+/i);
+    $("#f_author").value = authors.join("\n");
+    $("#f_booktitle").value = getFieldPlain(currentSeg, "booktitle");
+    $("#f_volume").value = getFieldPlain(currentSeg, "volume");
+    $("#f_number").value = getFieldPlain(currentSeg, "number");
+    $("#f_pages").value = getFieldPlain(currentSeg, "pages");
+    $("#f_year").value = getFieldPlain(currentSeg, "year");
+    $("#f_publisher").value = getFieldPlain(currentSeg, "publisher");
+    $("#f_html").value = getFieldPlain(currentSeg, "html");
+    $("#f_pdf").value = getFieldPlain(currentSeg, "pdf");
+    $("#f_img").value = getFieldPlain(currentSeg, "img");
+    $("#f_award").value = getFieldPlain(currentSeg, "award");
+    $("#f_supp").value = getFieldPlain(currentSeg, "supp");
+    $("#f_video").value = getFieldPlain(currentSeg, "video");
+    $("#f_poster").value = getFieldPlain(currentSeg, "poster");
+    $("#f_code").value = getFieldPlain(currentSeg, "code");
+    $("#f_equal").value = getFieldPlain(currentSeg, "equal_contribution");
+    $("#f_highlight").checked = !!getField(currentSeg, "highlight");
+    $("#curKey").textContent = currentSeg.key;
+    $("#curTypeTag").textContent = currentSeg.typeName;
+  }
+
+  function updateAfterEdit() {
+    syncFromForm();
+    syncToForm();
+    renderList();
+    markDirty();
+  }
+
+  function bindFormInputs() {
+    ["f_key", "f_type", "f_title", "f_author", "f_booktitle", "f_volume", "f_number", "f_pages", "f_year", "f_publisher", "f_html", "f_pdf", "f_img", "f_award", "f_supp", "f_video", "f_poster", "f_code", "f_equal"].forEach(function (id) {
+      var el = $("#" + id);
+      el.addEventListener("input", updateAfterEdit);
+    });
+    $("#f_highlight").addEventListener("change", updateAfterEdit);
+    $("#rawText").addEventListener("change", function () {
+      var text = $("#rawText").value.trim().replace(/^@/, "");
+      var e = parseEntryAt("@" + text, 0);
+      if (!e) { toast("Could not parse this BibTeX entry", "err"); return; }
+      currentSeg.key = e.key;
+      currentSeg.typeName = e.typeName;
+      currentSeg.fields = e.fields;
+      editedSegs.add(currentSeg);
+      syncToForm();
+      renderList();
+      markDirty();
+      toast("Raw entry parsed");
+    });
+  }
+
+  function openEntry(seg) {
+    currentSeg = seg;
+    $("#emptyHint").classList.add("hidden");
+    $("#editorArea").classList.remove("hidden");
+    syncToForm();
+    switchTab("form");
+    renderList();
+    $("#editor").scrollTop = 0;
+  }
+
+  function clearEditor() {
+    currentSeg = null;
+    $("#emptyHint").classList.remove("hidden");
+    $("#editorArea").classList.add("hidden");
+    $("#emptyHintText").textContent = "Select an entry on the left, or create a new one.";
+    renderList();
+  }
+
+  function newEntry() {
+    if (!doc) return;
+    var seg = { type: "entry", typeName: "article", key: "newentry", fields: [], raw: "" };
+    doc.segments.push({ type: "preamble", text: "\n\n" });
+    doc.segments.push(seg);
+    editedSegs.add(seg);
+    openEntry(seg);
+    $("#doiInput").focus();
+    toast("New entry created");
+  }
+
+  function ensureInserted(seg) {
+    if (doc.segments.indexOf(seg) === -1) {
+      doc.segments.push({ type: "preamble", text: "\n\n" });
+      doc.segments.push(seg);
+    }
+    editedSegs.add(seg);
+  }
+
+  var STOP = new Set(["of", "the", "and", "in", "for", "on", "an", "a", "to", "studies", "journal", "review", "international", "academic", "research", "education", "translation", "language", "learning", "press"]);
+  var ABBR = {
+    "system": "sys",
+    "computer assisted language learning": "call",
+    "interactive learning environments": "ile",
+    "perspectives: studies in translation theory and practice": "pers",
+    "language learning & technology": "llt",
+    "language learning and technology": "llt",
+    "international journal of applied linguistics": "injal",
+    "international journal of academic research in progressive education and development": "ijarped",
+    "education and information technologies": "edtech",
+    "humanities and social sciences communications": "hscc",
+    "plos one": "plos"
+  };
+
+  function existingKeys() {
+    var set = {};
+    doc.segments.forEach(function (s) {
+      if (s.type === "entry") set[s.key] = true;
+    });
+    return set;
+  }
+
+  function genKey(seg) {
+    var first = getFieldPlain(seg, "author").split(/\s+and\s+/i)[0] || "";
+    var parts = first.trim().split(/\s+/);
+    var surname = (parts[parts.length - 1] || "a").toLowerCase().replace(/[^a-z]/g, "");
+    if (!surname) surname = "a";
+    var jt = getFieldPlain(seg, "booktitle").toLowerCase().trim();
+    var slug = ABBR[jt];
+    if (!slug) {
+      var words = jt.split(/[^a-z0-9&]+/).filter(Boolean);
+      var sig = words.filter(function (w) { return !STOP.has(w); });
+      slug = ((sig[0] || words[0] || "pub").replace(/[^a-z]/g, "") || "pub").slice(0, 3);
+    }
+    var year = getFieldPlain(seg, "year") || String(new Date().getFullYear());
+    var base = surname + "_" + slug + "_" + year;
+    var keys = existingKeys();
+    var cand = base, i = 2;
+    while (keys[cand]) { cand = base + (i++); }
+    return cand;
+  }
+
+  var TYPE_MAP = {
+    "journal-article": "article",
+    "proceedings-article": "inproceedings",
+    "book": "book",
+    "book-chapter": "incollection",
+    "reference-book": "book",
+    "edited-book": "book",
+    "report": "techreport",
+    "dissertation": "phdthesis",
+    "monograph": "book",
+    "posted-content": "article",
+    "dataset": "misc",
+    "other": "misc"
+  };
+
+  function first(arr) { return arr && arr.length ? arr[0] : null; }
+  function str(v) { return v === undefined || v === null ? "" : String(v); }
+
+  function authorName(a) {
+    if (a.name) return a.name;
+    return [a.given, a.family].filter(Boolean).join(" ");
+  }
+
+  function yearOf(m) {
+    var src = m["published-print"] || m["published-online"] || m.issued || {};
+    var dp = src["date-parts"];
+    if (dp && dp[0] && dp[0][0]) return dp[0][0];
+    return "";
+  }
+
+  async function doiImport() {
+    if (!doc) return;
+    var raw = $("#doiInput").value.trim();
+    if (!raw) { toast("Enter a DOI first", "err"); return; }
+    var doi = raw.replace(/^https?:\/\/doi\.org\//i, "").trim();
+    var btn = $("#btnImport");
+    btn.disabled = true;
+    btn.textContent = "Importing…";
+    try {
+      var r = await fetch("https://api.crossref.org/works/" + encodeURIComponent(doi), { headers: { "Accept": "application/json" } });
+      if (!r.ok) throw new Error(r.status === 404 ? "DOI not found" : "Import failed (HTTP " + r.status + ")");
+      var j = await r.json();
+      var m = j.message || {};
+      var seg = { type: "entry", typeName: TYPE_MAP[m.type] || "article", key: "", fields: [], raw: "" };
+      setField(seg, "title", first(m.title));
+      setField(seg, "author", (m.author || []).map(authorName).filter(Boolean).join(" and "));
+      setField(seg, "booktitle", first(m["container-title"]));
+      setField(seg, "volume", str(m.volume));
+      setField(seg, "number", str(m.issue));
+      setField(seg, "pages", str(m.page));
+      setField(seg, "publisher", str(m.publisher));
+      setField(seg, "year", str(yearOf(m)));
+      if (m.DOI) setField(seg, "html", "https://doi.org/" + m.DOI);
+      ensureInserted(seg);
+      seg.key = genKey(seg);
+      openEntry(seg);
+      toast("Imported from Crossref — review the fields");
+    } catch (e) {
+      toast("Import failed: " + e.message, "err");
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "⚡ Import from DOI";
+    }
+  }
+
+  function loadFromText(text) {
+    doc = parseBib(text);
+    editedSegs = new Set();
+    currentSeg = null;
+    lastSavedText = serializeDoc();
+    undoText = null;
+    $("#doiRow").classList.remove("hidden");
+    renderList();
+    clearEditor();
+    $("#emptyHintText").textContent = "Select an entry on the left, or import a DOI / create a new entry.";
+    markDirty();
+  }
+
+  async function save() {
+    if (!doc) { toast("Nothing loaded yet", "err"); return; }
+    var text = serializeDoc();
+    if (fileHandle) {
+      var perm = "granted";
+      try {
+        perm = await fileHandle.queryPermission({ mode: "readwrite" });
+        if (perm !== "granted") perm = await fileHandle.requestPermission({ mode: "readwrite" });
+      } catch (e) { perm = "denied"; }
+      if (perm !== "granted") { toast("Write permission denied", "err"); return; }
+      try {
+        var w = await fileHandle.createWritable();
+        await w.write(text);
+        await w.close();
+      } catch (e) {
+        toast("Save failed: " + e.message, "err");
+        return;
+      }
+      undoText = lastSavedText;
+      lastSavedText = text;
+      toast("Saved to " + fileName, "ok");
+    } else {
+      var blob = new Blob([text], { type: "text/plain" });
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "publication_list.bib";
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+      localStorage.setItem(FALLBACK_KEY, text);
+      lastSavedText = text;
+      undoText = null;
+      toast("Downloaded publication_list.bib — replace the original file", "ok");
+    }
+    markDirty();
+  }
+
+  async function connectFile() {
+    if (!window.showOpenFilePicker) { toast("This browser doesn't support the File System Access API — use Chrome or Edge", "err"); return; }
+    try {
+      var [h] = await window.showOpenFilePicker({
+        types: [{ description: "BibTeX", accept: { "text/plain": [".bib"] } }],
+        excludeAcceptAllOption: false,
+        suggestedName: "publication_list.bib"
+      });
+      var perm = await h.requestPermission({ mode: "readwrite" });
+      if (perm !== "granted") { toast("Permission not granted", "err"); return; }
+      fileHandle = h;
+      fileName = h.name;
+      var file = await h.getFile();
+      loadFromText(await file.text());
+      $("#connectOverlay").classList.add("hidden");
+      $("#fileBadge").textContent = fileName;
+      toast("Connected to " + fileName + " — it will auto-load next time", "ok");
+      try {
+        var db = await idbOpen();
+        await new Promise(function (res, rej) {
+          var tx = db.transaction("handles", "readwrite");
+          tx.objectStore("handles").put(h, "bib-file");
+          tx.oncomplete = res;
+          tx.onerror = function () { rej(tx.error); };
+        });
+      } catch (e) { console.warn("handle persist failed", e); }
+    } catch (e) {
+      if (e && e.name === "AbortError") return;
+      toast("Could not open file: " + (e.message || "unknown"), "err");
+    }
+  }
+
+  function idbOpen() {
+    return new Promise(function (res, rej) {
+      var req = indexedDB.open("bib-tool-db", 1);
+      req.onupgradeneeded = function () { req.result.createObjectStore("handles"); };
+      req.onsuccess = function () { res(req.result); };
+      req.onerror = function () { rej(req.error); };
+    });
+  }
+
+  async function init() {
+    bindFormInputs();
+    $("#tabForm").addEventListener("click", function () { switchTab("form"); });
+    $("#tabRaw").addEventListener("click", function () { switchTab("raw"); });
+    $("#btnNew").addEventListener("click", newEntry);
+    $("#btnDelete").addEventListener("click", function () {
+      if (!currentSeg) return;
+      if (!confirm("Delete entry \u201c" + currentSeg.key + "\u201d?")) return;
+      var idx = doc.segments.indexOf(currentSeg);
+      if (idx > -1) doc.segments.splice(idx, 1);
+      editedSegs.add(currentSeg);
+      clearEditor();
+      markDirty();
+      toast("Entry deleted");
+    });
+    $("#btnSave").addEventListener("click", save);
+    $("#btnConnect").addEventListener("click", connectFile);
+    $("#btnImport").addEventListener("click", doiImport);
+    $("#doiInput").addEventListener("keydown", function (e) { if (e.key === "Enter") doiImport(); });
+    $("#btnUndo").addEventListener("click", function () {
+      if (undoText === null) { toast("Nothing to undo", "err"); return; }
+      loadFromText(undoText);
+      undoText = null;
+      markDirty();
+      toast("Restored previous saved content");
+    });
+    document.addEventListener("keydown", function (e) {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") { e.preventDefault(); save(); }
+    });
+
+    if (window.showOpenFilePicker) {
+      var h = null;
+      try {
+        var db = await idbOpen();
+        h = await new Promise(function (res, rej) {
+          var tx = db.transaction("handles", "readonly");
+          var req = tx.objectStore("handles").get("bib-file");
+          req.onsuccess = function () { res(req.result || null); };
+          req.onerror = function () { rej(req.error); };
+        });
+      } catch (e) { console.warn("handle load failed", e); }
+
+      if (h) {
+        var perm = "prompt";
+        try {
+          perm = await h.queryPermission({ mode: "readwrite" });
+          if (perm === "prompt") perm = await h.requestPermission({ mode: "readwrite" });
+        } catch (e) { perm = "denied"; }
+        if (perm === "granted") {
+          try {
+            var f = await h.getFile();
+            fileHandle = h;
+            fileName = f.name;
+            loadFromText(await f.text());
+            $("#connectOverlay").classList.add("hidden");
+            $("#fileBadge").textContent = fileName + " (auto)";
+            return;
+          } catch (e) { console.warn("auto-load failed", e); }
+        }
+      }
+      $("#connectOverlay").classList.remove("hidden");
+    } else {
+      var saved = localStorage.getItem(FALLBACK_KEY);
+      if (saved) {
+        loadFromText(saved);
+        fileName = "publication_list.bib (local copy)";
+        $("#fileBadge").textContent = fileName;
+        toast("Loaded last session from memory (no File System Access API)", "ok");
+      } else {
+        $("#connectOverlay").classList.remove("hidden");
+        $("#connectCard h2").textContent = "This browser needs the File System Access API";
+        $("#connectCard p").innerHTML = "Chrome or Edge are required for direct read/write of publication_list.bib. Open this file in Chrome/Edge, or use a quick local server: <code>python -m http.server</code>.";
+        $("#btnConnect").classList.add("hidden");
+      }
+    }
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
