@@ -383,7 +383,7 @@ def get_paper_entry(entry_key, entry, thumbs=None):
     data_featured = ' data-featured="true"' if "highlight" in fields else ""
 
     s = f'<article class="pub-card{featured}"{data_year}{data_featured}>{badge}'
-    s += f'<div class="pub-thumb">{_img_tag(img, fields["title"], thumbs)}</div>'
+    s += f'<div class="pub-thumb">{_img_tag(img, fields["title"], thumbs, extra=' onerror="this.closest(\'.pub-thumb\').classList.add(\'img-missing\')"')}</div>'
     s += '<div class="pub-body">'
 
     award = ""
@@ -418,7 +418,7 @@ def get_talk_entry(entry_key, entry, thumbs=None):
     img = fields["img"]
     data_year = f' data-year="{html.escape(year, quote=True)}"'
     s = f'<article class="pub-card"{data_year}>'
-    s += f'<div class="pub-thumb">{_img_tag(img, fields["title"], thumbs)}</div>'
+    s += f'<div class="pub-thumb">{_img_tag(img, fields["title"], thumbs, extra=' onerror="this.closest(\'.pub-thumb\').classList.add(\'img-missing\')"')}</div>'
     s += '<div class="pub-body">'
     s += f'<h3 class="pub-title">{title}</h3>'
     s += f'<p class="pub-meta">{html.escape(format_venue(entry))}</p>'
@@ -579,7 +579,7 @@ def get_index_html():
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bona+Nova+SC:wght@400;700&family=IBM+Plex+Serif:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bona+Nova+SC:wght@400;700&family=IBM+Plex+Serif:ital,wght@0,400;0,700;1,400&family=Lora:wght@400;700&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
   <link rel="stylesheet" type="text/css" href="assets/stylesheet.css">
@@ -589,7 +589,7 @@ def get_index_html():
   <a class="skip-link" href="#top">Skip to content</a>
   <nav class="site-nav" id="site-nav">
     <div class="container nav-inner">
-      <a class="nav-brand" href="#top" aria-label="Da Yan"><img class="nav-brand-img" src="assets/img/signature.png" alt="Da Yan" width="121" height="38"></a>
+      <a class="nav-brand" href="#top" aria-label="Da Yan"><img class="nav-brand-img" src="assets/img/signature.webp" alt="Da Yan" width="121" height="38"></a>
       <div class="nav-links">
         <a href="#interests">Interests</a>
         <a href="#publications">Publications</a>

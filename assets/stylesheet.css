@@ -6,12 +6,12 @@
 /* ---------- Design tokens ---------- */
 :root {
   --font-display: "Bona Nova SC", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
-  --font-display-alt: "Simonetta", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+  --font-display-alt: "IBM Plex Serif", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
   --font-title: "Lora", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
-  --font-serif: "Simonetta", "Noto Serif SC", "Songti SC", "SimSun", Georgia, "Times New Roman", serif;
-  --font-ui: "Simonetta", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
-  --font-label: "Simonetta", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
-  --font-meta: "Simonetta", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+  --font-serif: "IBM Plex Serif", "Noto Serif SC", "Songti SC", "SimSun", Georgia, "Times New Roman", serif;
+  --font-ui: "IBM Plex Serif", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+  --font-label: "IBM Plex Serif", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+  --font-meta: "IBM Plex Serif", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
   --font-mono: "SF Mono", "Cascadia Code", Consolas, "Liberation Mono", Menlo, monospace;
 
   /* 设计原则：
@@ -39,7 +39,7 @@
   --shadow: 0 1px 2px rgba(90, 80, 55, 0.05);
   --shadow-hover: 0 1px 2px rgba(90, 80, 55, 0.05), 0 3px 10px rgba(90, 80, 55, 0.07);
   --radius: 12px;
-  --maxw: 920px;
+  --maxw: 880px;
 }
 
 /* ---------- Base ---------- */
@@ -171,11 +171,13 @@ section[id] {
   font-weight: 700;
   font-size: clamp(2.3rem, 6.4vw, 3.2rem);
   line-height: 1.12;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.01em;
   color: var(--text);
 }
 
 .hero-suffix {
+  font-family: var(--font-display-alt);
+  font-style: italic;
   font-weight: 400;
   color: var(--text-faint);
   font-size: 0.45em;
@@ -271,7 +273,7 @@ summary.link-pill:hover {
 
 .about-label {
   font-family: var(--font-label);
-  font-weight: 900;
+  font-weight: 700;
   color: var(--text);
 }
 
@@ -352,7 +354,7 @@ summary.link-pill:hover {
 
 /* ---------- Sections ---------- */
 .section {
-  padding: 20px 0 6px;
+  padding: 28px 0 8px;
   content-visibility: auto;
   contain-intrinsic-size: auto 600px;
 }
@@ -364,6 +366,7 @@ summary.link-pill:hover {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 1.85rem;
+  letter-spacing: 0.02em;
   color: var(--text);
   border-bottom: 1px solid var(--border);
 }
@@ -392,13 +395,27 @@ summary.link-pill:hover {
   width: 100%;
   height: 130px;
   object-fit: cover;
-  transform: scale(2.4);
-  transform-origin: 50% 50%;
-  transition: transform 0.2s ease;
 }
 
-.pub-thumb:hover img {
-  transform: scale(1);
+/* 缺失/损坏缩略图的衬线占位（onerror 由 build.py 注入 img-missing 类） */
+.pub-thumb.img-missing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 130px;
+}
+
+.pub-thumb.img-missing img {
+  display: none;
+}
+
+.pub-thumb.img-missing::after {
+  content: "DY";
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.9rem;
+  letter-spacing: 0.05em;
+  color: var(--text-faint);
 }
 
 .thumb-preview {
@@ -681,14 +698,6 @@ summary.link-pill:hover {
   .pub-thumb {
     cursor: default;
   }
-
-  .pub-thumb img {
-    transform: scale(1);
-  }
-
-  .pub-thumb:hover img {
-    transform: scale(1);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -767,7 +776,7 @@ summary.link-pill:hover {
 }
 
 .contact-item i {
-  font-size: 1.45rem;
+  font-size: 26px;
   color: var(--accent);
 }
 
@@ -779,7 +788,7 @@ summary.link-pill:hover {
 .contact-item .contact-icon.mono {
   font-family: var(--font-label);
   font-size: 0.8rem;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0.03em;
 }
 
@@ -1098,9 +1107,10 @@ html {
 }
 
 .filter-pill.active {
-  background: var(--accent);
+  background: var(--bg-subtle);
   border-color: var(--accent);
-  color: var(--badge-text);
+  color: var(--accent);
+  font-weight: 700;
 }
 
 .filter-divider {

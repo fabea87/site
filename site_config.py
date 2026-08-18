@@ -15,10 +15,10 @@ SITE = {
     "scholar": "28WTkNkAAAAJ",
     "orcid": "0000-0002-1265-9772",
     "github": "fabea87",
-    "cv_en": "https://870603.xyz/assets/pdf/CV.pdf",
-    "cv_cn": "https://870603.xyz/assets/pdf/CV-cn.pdf",
+    "cv_en": "https://fabea87.github.io/site/assets/pdf/CV.pdf",
+    "cv_cn": "https://fabea87.github.io/site/assets/pdf/CV-cn.pdf",
     # ---------- 站点元信息 ----------
-    "url": "https://870603.xyz",
+    "url": "https://fabea87.github.io/site",
     "description": (
         'Personal academic homepage of Da "Alex" Yan, Ph.D. — researcher in '
         "Computer-Assisted Language Learning (CALL), feedback, and formative "
