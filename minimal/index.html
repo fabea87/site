@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!--
+暖纸墨蓝 · minimal 样式 —— 色板 token 表
+  --paper #f5f4ed      页面底色（唯一背景）
+  --paper-raised #faf9f3  浮起面
+  --paper-sunken #efece0  凹陷面（代码块）
+  --ink-900 #24221b  标题        --ink-700 #403d33 正文
+  --ink-500 #6b6658  次要文字     --ink-400 #8d887a 弱说明
+  --ink-300 #b3ad9d  占位/饰符
+  --line-strong #d7d1ba  重边框   --line #e3ddc9 常规边框
+  --accent #1B365D   墨蓝强调（链接/眉题/焦点/唯一按钮）
+  --accent-soft rgba(27,54,93,.10)   --accent-line rgba(27,54,93,.35)
+  --shadow-1 0 1px 2px rgba(80,72,44,.05)
+  --shadow-2 0 2px 10px rgba(80,72,44,.07)
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Da &quot;Alex&quot; Yan, Ph.D. — CALL &amp; Feedback Researcher</title>
+<meta name="description" content="Personal academic homepage of Da &quot;Alex&quot; Yan, Ph.D. — researcher in Computer-Assisted Language Learning (CALL), feedback, and formative assessment at Wenzhou Medical University.">
+<style>
+/* ============================================================
+   暖纸墨蓝 · minimal 单文件版 —— 色板 token 表
+   --paper #f5f4ed   --paper-raised #faf9f3  --paper-sunken #efece0
+   --ink-900 #24221b --ink-700 #403d33 --ink-500 #6b6658
+   --ink-400 #8d887a --ink-300 #b3ad9d
+   --line-strong #d7d1ba --line #e3ddc9 --line-soft #ebe6d3
+   --accent #1B365D --accent-soft rgba(27,54,93,.10)
+   --accent-line rgba(27,54,93,.35)
+   --shadow-1 0 1px 2px rgba(80,72,44,.05)
+   --shadow-2 0 2px 10px rgba(80,72,44,.07)
+   ============================================================ */
+:root {
+  --paper: #f5f4ed;
+  --paper-raised: #faf9f3;
+  --paper-sunken: #efece0;
+  --ink-900: #24221b;
+  --ink-700: #403d33;
+  --ink-500: #6b6658;
+  --ink-400: #8d887a;
+  --ink-300: #b3ad9d;
+  --line-strong: #d7d1ba;
+  --line: #e3ddc9;
+  --line-soft: #ebe6d3;
+  --accent: #1B365D;
+  --accent-soft: rgba(27, 54, 93, 0.10);
+  --accent-line: rgba(27, 54, 93, 0.35);
+  --shadow-1: 0 1px 2px rgba(80, 72, 44, 0.05);
+  --shadow-2: 0 2px 10px rgba(80, 72, 44, 0.07);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink-700);
+  font-family: Georgia, "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  font-feature-settings: "onum" 1;
+  text-rendering: optimizeLegibility;
+}
+
+.wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.25rem; }
+
+::selection { background: var(--accent-soft); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--paper); }
+::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 2px; }
+html { scrollbar-color: var(--line-strong) var(--paper); scrollbar-width: thin; }
+
+/* ---- 链接：墨字 + 墨蓝细下划线 ---- */
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--accent-line);
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+a:hover { color: var(--accent); text-decoration-thickness: 1.5px; }
+
+/* ---- 页眉 ---- */
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.95rem;
+}
+.masthead .brand { font-weight: 700; color: var(--ink-900); text-decoration: none; }
+.masthead nav a { margin-left: 1rem; }
+
+/* ---- Hero ---- */
+header.hero { padding: 3rem 0 0.5rem; }
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 1rem;
+}
+h1 {
+  margin: 0 0 0.8rem;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink-900);
+}
+h1 .suffix {
+  font-size: 0.45em;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-500);
+  letter-spacing: 0;
+}
+.tagline { margin: 0 0 1.4rem; font-style: italic; color: var(--ink-500); font-size: 1.05rem; }
+.bio p { margin: 0 0 1.1em; }
+ruby rt { font-size: 0.55em; color: var(--ink-400); }
+
+.actions { margin: 1.4rem 0 0; display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; }
+.btn-primary {
+  display: inline-block;
+  padding: 0.45rem 1.1rem;
+  background: var(--accent);
+  color: var(--paper);
+  text-decoration: none;
+  border-radius: 2px;
+  font-size: 0.95rem;
+}
+.btn-primary:hover { color: var(--paper); opacity: 0.92; }
+.actions a.plain { font-size: 0.95rem; }
+
+/* ---- 分隔花饰 ---- */
+.orn { text-align: center; color: var(--ink-300); margin: 2.6rem 0; font-size: 1rem; user-select: none; }
+
+/* ---- 区块 ---- */
+section { padding: 0.5rem 0; }
+.year h2 {
+  margin: 2.2rem 0 0.9rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ink-900);
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 0.45rem;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+.year h2 .count { font-size: 0.85rem; font-weight: 400; color: var(--ink-400); margin-left: 0.4rem; }
+
+/* ---- 条目 ---- */
+.pub {
+  position: relative;
+  margin: 0 0 1.6rem;
+  padding: 0 0 1.4rem;
+  border-bottom: 1px solid var(--line);
+  display: flow-root;
+}
+.pub:last-child { border-bottom: none; }
+.thumb {
+  float: right;
+  width: 96px;
+  height: auto;
+  margin: 0.25rem 0 0.6rem 1.1rem;
+  border: 1px solid var(--line);
+  filter: sepia(0.1) saturate(0.9);
+}
+.flag {
+  margin: 0 0 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+h3.title { margin: 0 0 0.35rem; font-size: 1.15rem; font-weight: 700; line-height: 1.4; color: var(--ink-900); }
+h3.title .award { font-weight: 400; font-style: italic; font-size: 0.9em; color: var(--ink-500); }
+.authors { margin: 0 0 0.25rem; font-size: 0.95rem; }
+.self-name { font-weight: 700; }
+.venue { margin: 0 0 0.45rem; font-size: 0.95rem; font-style: italic; color: var(--ink-500); }
+.links { margin: 0 0 0.4rem; font-size: 0.9rem; }
+.links .sep { color: var(--ink-300); }
+
+details.bib { font-size: 0.9rem; }
+details.bib summary {
+  cursor: pointer;
+  list-style: none;
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-line);
+  text-underline-offset: 3px;
+}
+details.bib summary:hover { text-decoration-thickness: 1.5px; }
+details.bib summary::-webkit-details-marker { display: none; }
+details.bib[open] summary { margin-bottom: 0.5rem; }
+details.bib pre {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  background: var(--paper-sunken);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, "Courier New", monospace;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: var(--ink-500);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ---- 兴趣列表 ---- */
+ul.interests { margin: 0; padding-left: 1.3rem; columns: 2; column-gap: 2.5rem; font-size: 0.98rem; }
+ul.interests li { margin: 0 0 0.45rem; break-inside: avoid; }
+ul.interests li::marker { color: var(--accent); }
+
+/* ---- 联系 ---- */
+.contact p { margin: 0.4rem 0 0; font-size: 1rem; }
+.contact .sep { color: var(--ink-300); }
+
+/* ---- 页脚 ---- */
+footer {
+  margin: 3rem 0 0;
+  padding: 1.4rem 0 2.6rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--ink-400);
+}
+
+@media (max-width: 640px) {
+  .masthead { flex-direction: column; gap: 0.2rem; }
+  .masthead nav a:first-child { margin-left: 0; }
+  .thumb { width: 76px; }
+  ul.interests { columns: 1; }
+}
+
+@media print {
+  body { background: #fff; color: #000; font-size: 11pt; }
+  .masthead, .actions, details.bib, .orn { display: none !important; }
+  .wrap { max-width: none; padding: 0; }
+  .thumb { filter: none; }
+  a { color: #000; text-decoration: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="masthead">
+  <a class="brand" href="#top">Da Yan</a>
+  <nav>
+    <a href="#interests">Interests</a>
+    <a href="#publications">Publications</a>
+    <a href="#conferences">Conferences</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+
+<header class="hero" id="top">
+  <p class="eyebrow">Curriculum Vitae &#38; Research</p>
+  <h1>Da &quot;Alex&quot; Yan<span class="suffix">, Ph. D.</span></h1>
+  <p class="tagline">CALL &amp; Feedback Researcher</p>
+  <div class="bio">
+  
+                <p>
+                Da "Alex" Yan(<ruby>闫<rt>yán</rt></ruby> <ruby>达<rt>dá</rt></ruby>), PhD, works on CALL and feedback.</p>
+                <p>He teaches at <a href="https://www.wmu.edu.cn" target="_blank">Wenzhou Medical University</a>. His research interests include language learning; formative assessment; and human-computer interaction.
+                </p>
+                
+  </div>
+  <div class="actions">
+    <a class="btn-primary" href="https://870603.xyz/assets/pdf/CV.pdf" target="_blank" rel="noopener">CV&nbsp;&darr;</a>
+    <a class="plain" href="mailto:alexyan1987@outlook.com">Mail</a>
+    <a class="plain" href="https://scholar.google.com/citations?user=28WTkNkAAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
+    <a class="plain" href="https://github.com/fabea87" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="orn">&#10086;</div>
+
+<section id="interests">
+  <p class="eyebrow">Research Interests</p>
+  <ul class="interests">
+<li>Computer-Assisted Language Learning</li>
+<li>Language Learning</li>
+<li>Formative Assessment</li>
+<li>Feedback &amp; Feedback Seeking</li>
+<li>Human–Computer Interaction</li>
+<li>Translation &amp; Interpreting</li>
+<li>Data Science in Education</li>
+<li>GenAI in Education</li>
+</ul>
+</section>
+
+<div class="orn">&#10086;</div>
+
+<section id="publications">
+  <p class="eyebrow">Publications</p>
+  <div class="year"><h2>2026<span class="count">&#183;&#8202;2</span></h2>
+<article class="pub">
+<img class="thumb" src="../assets/img/publications/injal2026.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+<h3 class="title"><a href="https://doi.org/10.1111/ijal.70328" target="_blank" rel="noopener">Metacognitive instruction to enhance EFL writers&#x27; metacognition, feedback uptake, and revision performance in a GenAI-assisted feedback context</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span></p>
+<p class="venue">International Journal of Applied Linguistics, Accepted, 2026</p>
+<p class="links"><a href="https://doi.org/10.1111/ijal.70328" target="_blank" rel="noopener">Web view</a><span class="sep"> · </span><a href="assets/pdf/publications/injal2026.pdf" target="_blank" rel="noopener">Postprint archive</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@article{yan_injal_2026, 
+	author = {Da Yan}, 
+	title = {Metacognitive instruction to enhance EFL writers&amp;#x27; metacognition, feedback uptake, and revision performance in a GenAI-assisted feedback context}, 
+	booktitle = {International Journal of Applied Linguistics}, 
+	year = {2026}, 
+}</code></pre></details>
+</article>
+<article class="pub">
+<img class="thumb" src="../assets/img/publications/sys2025.jpg" alt="" loading="lazy" onerror="this.style.display='none'"><p class="flag">※&#8202;Featured</p>
+<h3 class="title"><a href="https://www.sciencedirect.com/science/article/pii/S0346251X25003057" target="_blank" rel="noopener">A GenAI-supported dialogic model to enhance the functions of peer feedback in EFL writing: a mixed-method interventional study</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span>, <a href="https://orcid.org/0009-0006-1905-3921" target="_blank">Feng Tian</a>, Haitao Li, <a href="https://www.xyafu.edu.cn/wgyxy/info/1126/7057.htm" target="_blank">Yu Gao</a>, Jinhui Li</p>
+<p class="venue">System, 136(1): 103895, 2026</p>
+<p class="links"><a href="https://www.sciencedirect.com/science/article/pii/S0346251X25003057" target="_blank" rel="noopener">Web view</a><span class="sep"> · </span><a href="assets/pdf/publications/sys2025.pdf" target="_blank" rel="noopener">Postprint archive</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@article{yan_sys_2025, 
+	author = {Da Yan and Feng Tian and Haitao Li and Yu Gao and Jinhui Li}, 
+	title = {A GenAI-supported dialogic model to enhance the functions of peer feedback in EFL writing: a mixed-method interventional study}, 
+	booktitle = {System}, 
+	year = {2026}, 
+}</code></pre></details>
+</article>
+</div>
+<div class="year"><h2>2025<span class="count">&#183;&#8202;3</span></h2>
+<article class="pub">
+<img class="thumb" src="../assets/img/publications/call2025.jpg" alt="" loading="lazy" onerror="this.style.display='none'"><p class="flag">※&#8202;Featured</p>
+<h3 class="title"><a href="https://www.tandfonline.com/doi/abs/10.1080/09588221.2025.2569352" target="_blank" rel="noopener">Effects of interactive vs. complementary approaches to integrating automated and peer feedback on L2 writers’ feedback quality and performance improvement</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span>, <a href="https://www.xyafu.edu.cn/wgyxy/info/1126/7057.htm" target="_blank">Yu Gao</a></p>
+<p class="venue">Computer Assisted Language Learning, Accepted, 2025</p>
+<p class="links"><a href="https://www.tandfonline.com/doi/abs/10.1080/09588221.2025.2569352" target="_blank" rel="noopener">Web view</a><span class="sep"> · </span><a href="assets/pdf/publications/call2025.pdf" target="_blank" rel="noopener">Postprint archive</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@article{yancall2025, 
+	author = {Da Yan and Yu Gao}, 
+	title = {Effects of interactive vs. complementary approaches to integrating automated and peer feedback on L2 writers’ feedback quality and performance improvement}, 
+	booktitle = {Computer Assisted Language Learning}, 
+	year = {2025}, 
+}</code></pre></details>
+</article>
+<article class="pub">
+<img class="thumb" src="../assets/img/publications/ile2025.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+<h3 class="title"><a href="https://www.tandfonline.com/doi/full/10.1080/10494820.2025.2491620" target="_blank" rel="noopener">Automated feedback complements online dialogic peer feedback: Fostering L2 writers’ feedback quality and self-regulatory writing strategy use</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span>, <a href="https://scholar.google.com/citations?hl=en&amp;user=Nk-Ar0IAAAAJ" target="_blank">Chenjin Jia</a>, <a href="https://orcid.org/0009-0006-1905-3921" target="_blank">Feng Tian</a></p>
+<p class="venue">Interactive Learning Environments, Accepted, 2025</p>
+<p class="links"><a href="https://www.tandfonline.com/doi/full/10.1080/10494820.2025.2491620" target="_blank" rel="noopener">Web view</a><span class="sep"> · </span><a href="assets/pdf/publications/ile2025.pdf" target="_blank" rel="noopener">Postprint archive</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@article{yan2025ile, 
+	author = {Da Yan and Chenjin Jia and Feng Tian}, 
+	title = {Automated feedback complements online dialogic peer feedback: Fostering L2 writers’ feedback quality and self-regulatory writing strategy use}, 
+	booktitle = {Interactive Learning Environments}, 
+	year = {2025}, 
+}</code></pre></details>
+</article>
+<article class="pub">
+<img class="thumb" src="../assets/img/publications/pers2025.png" alt="" loading="lazy" onerror="this.style.display='none'">
+<h3 class="title"><a href="https://www.tandfonline.com/doi/full/10.1080/0907676X.2025.2478403" target="_blank" rel="noopener">Occupational stress and turnover intentions among simultaneous interpreters: the mediating role of burnout and the moderating role of grit</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span>, <a href="https://scholar.google.com/citations?hl=en&amp;user=Nk-Ar0IAAAAJ" target="_blank">Chenjin Jia</a></p>
+<p class="venue">Perspectives: Studies in Translation Theory and Practice, Accepted, 2025</p>
+<p class="links"><a href="https://www.tandfonline.com/doi/full/10.1080/0907676X.2025.2478403" target="_blank" rel="noopener">Web view</a><span class="sep"> · </span><a href="assets/pdf/publications/pers2025.pdf" target="_blank" rel="noopener">Postprint archive</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@article{yan2025pers, 
+	author = {Da Yan and Chenjin Jia}, 
+	title = {Occupational stress and turnover intentions among simultaneous interpreters: the mediating role of burnout and the moderating role of grit}, 
+	booktitle = {Perspectives: Studies in Translation Theory and Practice}, 
+	year = {2025}, 
+}</code></pre></details>
+</article>
+</div>
+<div class="year"><h2>2024<span class="count">&#183;&#8202;4</span></h2>
+<article class="pub">
+<img class="thumb" src="../assets/img/publications/yan2024processing.jpg" alt="" loading="lazy" onerror="this.style.display='none'"><p class="flag">※&#8202;Featured</p>
+<h3 class="title"><a href="https://www.lltjournal.org/item/10125-73597/" target="_blank" rel="noopener">Comparing individual vs. collaborative processing of ChatGPT-generated feedback: Effects on L2 writing task improvement and learning</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span></p>
+<p class="venue">Language Learning &amp; Technology, 28(1), 2024</p>
+<p class="links"><a href="https://www.lltjournal.org/item/10125-73597/" target="_blank" rel="noopener">Web view</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@article{yan2024processing, 
+	author = {Da Yan}, 
+	title = {Comparing individual vs. collaborative processing of ChatGPT-generated feedback: Effects on L2 writing task improvement and learning}, 
+	booktitle = {Language Learning &amp;amp; Technology}, 
+	year = {2024}, 
+}</code></pre></details>
+</article>
+<article class="pub">
+<img class="thumb" src="../assets/img/publications/yan2024engagement.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+<h3 class="title"><a href="https://www.nature.com/articles/s41599-024-03543-y" target="_blank" rel="noopener">L2 writer engagement with automated written corrective feedback provided by ChatGPT: A mixed-method multiple case study</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span>, <a href="https://www.xyafu.edu.cn/wgyxy/info/1127/7073.htm" target="_blank">Shuxian Zhang</a></p>
+<p class="venue">Humanities and Social Sciences Communications, 11(1), 2024</p>
+<p class="links"><a href="https://www.nature.com/articles/s41599-024-03543-y" target="_blank" rel="noopener">Web view</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@article{yan2024engagement, 
+	author = {Da Yan and Shuxian Zhang}, 
+	title = {L2 writer engagement with automated written corrective feedback provided by ChatGPT: A mixed-method multiple case study}, 
+	booktitle = {Humanities and Social Sciences Communications}, 
+	year = {2024}, 
+}</code></pre></details>
+</article>
+<article class="pub">
+<img class="thumb" src="../assets/img/publications/yan2024rubric.jpg" alt="" loading="lazy" onerror="this.style.display='none'"><p class="flag">※&#8202;Featured</p>
+<h3 class="title"><a href="https://www.tandfonline.com/doi/full/10.1080/02602938.2024.2333005" target="_blank" rel="noopener">Rubric co-creation to promote quality, interactivity and uptake of peer feedback</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span></p>
+<p class="venue">Assessment &amp; Evaluation in Higher Education, 2024</p>
+<p class="links"><a href="https://www.tandfonline.com/doi/full/10.1080/02602938.2024.2333005" target="_blank" rel="noopener">Web view</a><span class="sep"> · </span><a href="assets/pdf/publications/yan2024rubric.pdf" target="_blank" rel="noopener">Postprint archive</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@article{yan2024rubric, 
+	author = {Da Yan}, 
+	title = {Rubric co-creation to promote quality, interactivity and uptake of peer feedback}, 
+	booktitle = {Assessment &amp;amp; Evaluation in Higher Education}, 
+	year = {2024}, 
+}</code></pre></details>
+</article>
+<article class="pub">
+<img class="thumb" src="../assets/img/publications/yan2024feedbackseeking.jpg" alt="" loading="lazy" onerror="this.style.display='none'"><p class="flag">※&#8202;Featured</p>
+<h3 class="title"><a href="https://www.emerald.com/insight/content/doi/10.1108/K-09-2023-1933/full/html" target="_blank" rel="noopener">Feedback seeking abilities of L2 writers using ChatGPT: a mixed method multiple case study</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span></p>
+<p class="venue">Kybernetes, 2024</p>
+<p class="links"><a href="https://www.emerald.com/insight/content/doi/10.1108/K-09-2023-1933/full/html" target="_blank" rel="noopener">Web view</a><span class="sep"> · </span><a href="assets/pdf/publications/yan2024feedbackseeking.pdf" target="_blank" rel="noopener">Postprint archive</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@article{yan2024feedbackseeking, 
+	author = {Da Yan}, 
+	title = {Feedback seeking abilities of L2 writers using ChatGPT: a mixed method multiple case study}, 
+	booktitle = {Kybernetes}, 
+	year = {2024}, 
+}</code></pre></details>
+</article>
+</div>
+<div class="year"><h2>2023<span class="count">&#183;&#8202;4</span></h2>
+<article class="pub">
+<img class="thumb" src="../assets/img/publications/yan2023status.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+<h3 class="title"><a href="https://ijarped.com/index.php/journal/article/view/830" target="_blank" rel="noopener">Status Quo of the Formative Assessment Enactments in Spoken Language Interpreter Training: A Scoping Review of Research and Practice</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span>, <a href="https://ppblt.usm.my/index.php/lecturer-profile/188-shaidatul-akma-adi-kasuma" target="_blank">Shaidatul Kasuma</a>, <a href="https://ppblt.usm.my/index.php/lecturer-profile/393-mansour-amini-dr" target="_blank">Mansour Amini</a></p>
+<p class="venue">International Journal of Academic Research in Progressive Education and Development, 12(4), 2023</p>
+<p class="links"><a href="https://ijarped.com/index.php/journal/article/view/830" target="_blank" rel="noopener">Web view</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@article{yan2023status, 
+	author = {Da Yan and Shaidatul Kasuma and Mansour Amini}, 
+	title = {Status Quo of the Formative Assessment Enactments in Spoken Language Interpreter Training: A Scoping Review of Research and Practice}, 
+	booktitle = {International Journal of Academic Research in Progressive Education and Development}, 
+	year = {2023}, 
+}</code></pre></details>
+</article>
+<article class="pub">
+<img class="thumb" src="../assets/img/publications/yan2023gender.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+<h3 class="title"><a href="https://ijarped.com/index.php/journal/article/view/991" target="_blank" rel="noopener">Gender Difference in Digital Literacy Among Translation Trainees: Self-perceptions and Application Abilities</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span>, <a href="https://ppblt.usm.my/index.php/lecturer-profile/188-shaidatul-akma-adi-kasuma" target="_blank">Shaidatul Kasuma</a>, <a href="https://ppblt.usm.my/index.php/lecturer-profile/393-mansour-amini-dr" target="_blank">Mansour Amini</a></p>
+<p class="venue">International Journal of Academic Research in Progressive Education and Development, 12(3), 2023</p>
+<p class="links"><a href="https://ijarped.com/index.php/journal/article/view/991" target="_blank" rel="noopener">Web view</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@article{yan2023gender, 
+	author = {Da Yan and Shaidatul Kasuma and Mansour Amini}, 
+	title = {Gender Difference in Digital Literacy Among Translation Trainees: Self-perceptions and Application Abilities}, 
+	booktitle = {International Journal of Academic Research in Progressive Education and Development}, 
+	year = {2023}, 
+}</code></pre></details>
+</article>
+<article class="pub">
+<img class="thumb" src="../assets/img/publications/yan2023impactgpt.jpg" alt="" loading="lazy" onerror="this.style.display='none'"><p class="flag">※&#8202;Featured</p>
+<h3 class="title"><a href="https://link.springer.com/article/10.1007/s10639-023-11742-4" target="_blank" rel="noopener">Impact of ChatGPT on learners in a L2 writing practicum: An exploratory investigation</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span></p>
+<p class="venue">Education and Information Technologies, 28(11), 2023</p>
+<p class="links"><a href="https://link.springer.com/article/10.1007/s10639-023-11742-4" target="_blank" rel="noopener">Web view</a><span class="sep"> · </span><a href="assets/pdf/publications/yan2023impactgpt.pdf" target="_blank" rel="noopener">Postprint archive</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@article{yan2023impactgpt, 
+	author = {Da Yan}, 
+	title = {Impact of ChatGPT on learners in a L2 writing practicum: An exploratory investigation}, 
+	booktitle = {Education and Information Technologies}, 
+	year = {2023}, 
+}</code></pre></details>
+</article>
+<article class="pub">
+<img class="thumb" src="../assets/img/publications/gong2023impactdanmaku.png" alt="" loading="lazy" onerror="this.style.display='none'">
+<h3 class="title"><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0284843" target="_blank" rel="noopener">The impact of Danmaku-based and synchronous peer feedback on L2 oral performance: A mixed-method investigation</a></h3>
+<p class="authors"><a href="https://s.wanfangdata.com.cn/paper?q=%E4%BD%9C%E8%80%85%3A%22%E9%BE%9A%E5%8D%8E%E7%8E%B2%22%20%E4%BD%9C%E8%80%85%E5%8D%95%E4%BD%8D%3A%20%22%E4%BF%A1%E9%98%B3%E5%86%9C%E6%9E%97%E5%AD%A6%E9%99%A2%22" target="_blank">Hualing Gong</a>, <span class="self-name">Da Yan</span></p>
+<p class="venue">Plos one, 18(4): e0284843, 2023</p>
+<p class="links"><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0284843" target="_blank" rel="noopener">Web view</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@article{gong2023impactdanmaku, 
+	author = {Hualing Gong and Da Yan}, 
+	title = {The impact of Danmaku-based and synchronous peer feedback on L2 oral performance: A mixed-method investigation}, 
+	booktitle = {Plos one}, 
+	year = {2023}, 
+}</code></pre></details>
+</article>
+</div>
+<div class="year"><h2>2022<span class="count">&#183;&#8202;3</span></h2>
+<article class="pub">
+<img class="thumb" src="../assets/img/publications/yan2022informal.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+<h3 class="title"><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277228" target="_blank" rel="noopener">Online informal learning community for interpreter training amid COVID-19: A pilot evaluation</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span>, <a href="https://www.xyafu.edu.cn/wgyxy/info/1127/7062.htm" target="_blank">Qiongqiong Fan</a></p>
+<p class="venue">PLOS ONE, 17(11): e0277228, 2022</p>
+<p class="links"><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277228" target="_blank" rel="noopener">Web view</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@article{yan2022informal, 
+	author = {Da Yan and Qiongqiong Fan}, 
+	title = {Online informal learning community for interpreter training amid COVID-19: A pilot evaluation}, 
+	booktitle = {PLOS ONE}, 
+	year = {2022}, 
+}</code></pre></details>
+</article>
+<article class="pub">
+<img class="thumb" src="../assets/img/publications/yan2022datascience.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+<h3 class="title"><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2022.939689/full" target="_blank" rel="noopener">Teaching Data Science to Undergraduate Translation Trainees: Pilot Evaluation of a Task-Based Course</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span>, <a href="https://www.xyafu.edu.cn/wgyxy/info/1127/7079.htm" target="_blank">Junyue Wang</a></p>
+<p class="venue">Frontiers in Psychology, 2022</p>
+<p class="links"><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2022.939689/full" target="_blank" rel="noopener">Web view</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@article{yan2022datascience, 
+	author = {Da Yan and Junyue Wang}, 
+	title = {Teaching Data Science to Undergraduate Translation Trainees: Pilot Evaluation of a Task-Based Course}, 
+	booktitle = {Frontiers in Psychology}, 
+	year = {2022}, 
+}</code></pre></details>
+</article>
+<article class="pub">
+<img class="thumb" src="../assets/img/publications/yan2022cognitive.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+<h3 class="title"><a href="https://revistaseug.ugr.es/index.php/portalin/article/view/23934" target="_blank" rel="noopener">Cognitive Bases of Second Language Fluency, Norman Segalowitz (Ed.), Routledge, 2010, 258 pages, ISBN:978-0-8058-5662-0</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span></p>
+<p class="venue">Porta Linguarum, 38(1), 2022</p>
+<p class="links"><a href="https://revistaseug.ugr.es/index.php/portalin/article/view/23934" target="_blank" rel="noopener">Web view</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@article{yan2022cognitive, 
+	author = {Da Yan}, 
+	title = {Cognitive Bases of Second Language Fluency, Norman Segalowitz (Ed.), Routledge, 2010, 258 pages, ISBN:978-0-8058-5662-0}, 
+	booktitle = {Porta Linguarum}, 
+	year = {2022}, 
+}</code></pre></details>
+</article>
+</div>
+<div class="year"><h2>2016<span class="count">&#183;&#8202;1</span></h2>
+<article class="pub">
+<img class="thumb" src="../assets/img/publications/yang2016translation.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+<h3 class="title"><a href="https://www.jbe-platform.com/content/journals/10.1075/babel.62.4.07yan" target="_blank" rel="noopener">The translation strategies for chinese diplomatic neologisms from the perspective of &quot;political equivalence&quot;</a></h3>
+<p class="authors">Mingxing Yang, <span class="self-name">Da Yan</span></p>
+<p class="venue">Babel, 62(4), 2016</p>
+<p class="links"><a href="https://www.jbe-platform.com/content/journals/10.1075/babel.62.4.07yan" target="_blank" rel="noopener">Web view</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@article{yang2016translation, 
+	author = {Mingxing Yang and Da Yan}, 
+	title = {The translation strategies for chinese diplomatic neologisms from the perspective of &amp;quot;political equivalence&amp;quot;}, 
+	booktitle = {Babel}, 
+	year = {2016}, 
+}</code></pre></details>
+</article>
+</div>
+</section>
+
+<div class="orn">&#10086;</div>
+
+<section id="conferences">
+  <p class="eyebrow">Conferences</p>
+  <div class="year"><h2>2023<span class="count">&#183;&#8202;2</span></h2>
+<article class="pub">
+<img class="thumb" src="../assets/img/talks/inpac2023.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+<h3 class="title"><a href="#" target="_blank" rel="noopener">L2 Writers&#x27; Feedback-Seeking from ChatGPT for Automated Written Corrective Feedback: Insights from a Multiple Case Study</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span></p>
+<p class="venue">6th International Postgraduate Colloquium (InPaC) 2023</p>
+<p class="links"><a href="assets/pdf/talks/inpac2023.pdf" target="_blank" rel="noopener">Slides</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@inproceedings{inpac2023, 
+	author = {Da Yan}, 
+	title = {L2 Writers&amp;#x27; Feedback-Seeking from ChatGPT for Automated Written Corrective Feedback: Insights from a Multiple Case Study}, 
+	booktitle = {6th International Postgraduate Colloquium (InPaC) 2023}, 
+	year = {2023}, 
+}</code></pre></details>
+</article>
+<article class="pub">
+<img class="thumb" src="../assets/img/talks/pgrc2023.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+<h3 class="title"><a href="#" target="_blank" rel="noopener">L2 writer&#x27;s feedback processing in the context of computer-mediated language learning</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span></p>
+<p class="venue">Post-Graduate Research Colloquium(PGRC 2023)</p>
+
+<details class="bib"><summary>BibTeX</summary><pre><code>@inproceedings{pgrc2023, 
+	author = {Da Yan}, 
+	title = {L2 writer&amp;#x27;s feedback processing in the context of computer-mediated language learning}, 
+	booktitle = {Post-Graduate Research Colloquium(PGRC 2023)}, 
+	year = {2023}, 
+}</code></pre></details>
+</article>
+</div>
+<div class="year"><h2>2022<span class="count">&#183;&#8202;1</span></h2>
+<article class="pub">
+<img class="thumb" src="../assets/img/talks/gender22.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+<h3 class="title"><a href="#" target="_blank" rel="noopener">Gender Difference in Digital Literacy Among Translation Trainees</a></h3>
+<p class="authors"><span class="self-name">Da Yan</span></p>
+<p class="venue">Asia Pacific Conference on Language and Gender 2022</p>
+<p class="links"><a href="assets/pdf/talks/gender22.pdf" target="_blank" rel="noopener">Slides</a></p>
+<details class="bib"><summary>BibTeX</summary><pre><code>@inproceedings{gender22, 
+	author = {Da Yan}, 
+	title = {Gender Difference in Digital Literacy Among Translation Trainees}, 
+	booktitle = {Asia Pacific Conference on Language and Gender 2022}, 
+	year = {2022}, 
+}</code></pre></details>
+</article>
+</div>
+</section>
+
+<div class="orn">&#10086;</div>
+
+<section id="contact" class="contact">
+  <p class="eyebrow">Contact</p>
+  <p><a href="mailto:alexyan1987@outlook.com" target="_blank" rel="noopener">Email</a><span class="sep"> &#183; </span><a href="https://orcid.org/0000-0002-1265-9772" target="_blank" rel="noopener">ORCID</a><span class="sep"> &#183; </span><a href="https://scholar.google.com/citations?user=28WTkNkAAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a><span class="sep"> &#183; </span><a href="https://github.com/fabea87" target="_blank" rel="noopener">GitHub</a><span class="sep"> &#183; </span><a href="https://www.researchgate.net/profile/Da-Yan-3" target="_blank" rel="noopener">ResearchGate</a></p>
+</section>
+
+<footer>
+  <p>&#169; 2026 Da &quot;Alex&quot; Yan &#183; Last updated 2026-08-22 &#183; set in Georgia on warm parchment</p>
+</footer>
+
+</div>
+</body>
+</html>

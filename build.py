@@ -157,6 +157,26 @@ def get_contact_html():
     return s
 
 
+def get_nav_html(root="", home="#top"):
+    """全站统一导航（唯一来源）。主站用默认参数；子目录页面传 root/home 前缀。
+
+    root: 指向站点根目录的资源/链接前缀（主站 ""，blog/ 下 "../"）
+    home: 品牌链接目标（主站页内锚点 "#top"，子目录回首页 "../index.html"）
+    """
+    return f"""<nav class="site-nav" id="site-nav">
+    <div class="container nav-inner">
+      <a class="nav-brand" href="{home}" aria-label="Da Yan"><img class="nav-brand-img" src="{root}assets/img/signature.webp" alt="Da Yan" width="121" height="38"></a>
+      <div class="nav-links">
+        <a href="{root}index.html#interests">Interests</a>
+        <a href="{root}index.html#publications">Publications</a>
+        <a href="{root}index.html#talks">Conferences</a>
+        <a href="{root}blog/index.html">Blog</a>
+        <a href="{root}index.html#contact">Contact</a>
+      </div>
+    </div>
+  </nav>"""
+
+
 def get_footer_html():
     today = datetime.date.today()
     year = today.year
@@ -587,17 +607,7 @@ def get_index_html():
 
 <body>
   <a class="skip-link" href="#top">Skip to content</a>
-  <nav class="site-nav" id="site-nav">
-    <div class="container nav-inner">
-      <a class="nav-brand" href="#top" aria-label="Da Yan"><img class="nav-brand-img" src="assets/img/signature.webp" alt="Da Yan" width="121" height="38"></a>
-      <div class="nav-links">
-        <a href="#interests">Interests</a>
-        <a href="#publications">Publications</a>
-        <a href="#talks">Conferences</a>
-        <a href="#contact">Contact</a>
-      </div>
-    </div>
-  </nav>
+  {get_nav_html()}
 
   <main id="top">
     <div class="container">
@@ -661,4 +671,7 @@ def write_index_html(filename="index.html"):
 
 
 if __name__ == "__main__":
+    from build_blog import generate_blog
+
+    generate_blog()
     write_index_html("index.html")

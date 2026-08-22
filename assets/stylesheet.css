@@ -1127,3 +1127,39 @@ html {
 .year-label.is-hidden {
   display: none !important;
 }
+
+/* ==========================================================
+   Blog（blog/*.md 生成页面，见 build_blog.py）
+   ========================================================== */
+.blog-intro { color: var(--text-soft); font-style: italic; }
+
+.blog-list { list-style: none; margin: 18px 0 0; padding: 0; }
+.blog-list li { padding: 13px 0; border-bottom: 1px solid var(--border); }
+.blog-list li:last-child { border-bottom: none; }
+.blog-list a { color: var(--text); text-decoration: none; display: block; }
+.blog-list a:hover .blog-title { color: var(--accent-strong); }
+.blog-date { display: block; font-family: var(--font-meta); font-style: italic; font-size: 0.9rem; color: var(--text-faint); margin-bottom: 2px; }
+.blog-title { font-family: var(--font-display); font-weight: 700; font-size: 1.18rem; color: var(--text); }
+.blog-summary { margin: 5px 0 0; color: var(--text-soft); font-size: 0.95rem; line-height: 1.6; }
+
+.blog-post { padding: 10px 0 0; }
+.blog-back { margin: 0 0 18px; font-size: 0.95rem; }
+.blog-back a { color: var(--accent); }
+.blog-title-large { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.25; color: var(--text); margin: 0 0 10px; }
+.blog-date-large { font-family: var(--font-meta); font-style: italic; color: var(--text-faint); margin: 0 0 26px; }
+
+.prose { color: var(--text); font-size: 1.02rem; line-height: 1.8; }
+.prose h2, .prose h3 { font-family: var(--font-display); font-weight: 700; color: var(--text); }
+.prose h2 { margin: 1.8em 0 0.5em; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.prose h3 { margin: 1.5em 0 0.4em; }
+.prose p { margin: 0 0 1.1em; }
+.prose ul, .prose ol { margin: 0 0 1.1em; padding-left: 1.6em; }
+.prose li { margin-bottom: 0.35em; }
+.prose blockquote { margin: 1.2em 0; padding: 4px 18px; border-left: 2px solid var(--border-strong); color: var(--text-soft); font-style: italic; }
+.prose pre { margin: 1.2em 0; padding: 14px 16px; background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; overflow-x: auto; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6; color: var(--code-text); }
+.prose code { font-family: var(--font-mono); font-size: 0.88em; background: var(--code-bg); padding: 2px 5px; border-radius: 4px; }
+.prose pre code { background: none; padding: 0; }
+.prose img { max-width: 100%; border: 1px solid var(--border); border-radius: 8px; margin: 0.8em 0; }
+.prose hr { border: none; border-top: 1px solid var(--border-strong); margin: 2.2em 0; }
+.prose a { color: var(--accent); }
+.prose a:hover { text-decoration: underline; text-underline-offset: 3px; }

@@ -1,3 +1,5 @@
 *.ffs_db
 __pycache__/
 public/
+.dsh*
+blog/*.html

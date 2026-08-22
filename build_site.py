@@ -29,7 +29,7 @@ for _stream in (sys.stdout, sys.stderr):
         pass
 
 # 需要部署到线上的顶层文件 / 目录（publication_tool.html 等本地工具不部署）
-DEPLOY_ITEMS = ["index.html", "assets"]
+DEPLOY_ITEMS = ["index.html", "assets", "blog"]
 
 # 构建脚本的 pip 依赖（模块名 -> 包名，便于诊断）
 REQUIRED_MODULES = ("pybtex", "PIL")  # PIL 是 Pillow 的导入名
