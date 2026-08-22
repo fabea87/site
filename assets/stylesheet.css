@@ -672,20 +672,19 @@ summary.link-pill:hover {
     padding-left: 12px;
   }
 
+  /* 手机端：2 x 2 表格式两行（Interests 已隐藏）；两行总高不超过签名图 28px */
   .nav-links {
-    gap: 2px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .nav-links::-webkit-scrollbar {
-    display: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, max-content));
+    justify-items: center;
+    column-gap: 20px;
+    row-gap: 0;
   }
 
   .nav-links a {
-    padding: 5px 7px;
-    font-size: 0.85rem;
-    white-space: nowrap;
+    font-size: 0.75rem;
+    padding: 0 10px;
+    line-height: 1.1;
   }
 
   .nav-brand-img {
@@ -1007,9 +1006,9 @@ summary.link-pill:hover {
 
 /* ---------- Small screens ---------- */
 @media (max-width: 640px) {
-  /* 手机端隐藏 Research Interests 板块及其导航入口 */
+  /* 手机端隐藏 Research Interests 板块及其导航入口（class 由 get_nav_html 注入） */
   #interests,
-  .nav-links a[href="#interests"] {
+  .nav-links .nav-sm-hide {
     display: none;
   }
 

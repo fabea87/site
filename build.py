@@ -167,7 +167,7 @@ def get_nav_html(root="", home="#top"):
     <div class="container nav-inner">
       <a class="nav-brand" href="{home}" aria-label="Da Yan"><img class="nav-brand-img" src="{root}assets/img/signature.webp" alt="Da Yan" width="121" height="38"></a>
       <div class="nav-links">
-        <a href="{root}index.html#interests">Interests</a>
+        <a class="nav-sm-hide" href="{root}index.html#interests">Interests</a>
         <a href="{root}index.html#publications">Publications</a>
         <a href="{root}index.html#talks">Conferences</a>
         <a href="{root}blog/index.html">Blog</a>

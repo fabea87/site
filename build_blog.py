@@ -7,7 +7,7 @@
 
 md 约定：
   - 头条完全由 Markdown 内容构成：标题取第一个 # 标题；
-    发布时间取文件的修改时间（mtime），md 内部不需要任何日期元数据
+    发布时间取文件的修改时间（mtime，精确到秒），md 内部不需要任何日期元数据
   - 可选 front matter（文件开头，仅用于补充信息，均可省略）：
       ---
       title: 标题          # 缺省时取第一个 # 标题
@@ -269,7 +269,8 @@ def collect_posts():
             m = re.search(r"^#\s+(.+)$", body, re.M)
             title = m.group(1) if m else stem
         # 发布时间 = 文件修改时间；md 内无需日期元数据
-        date = datetime.date.fromtimestamp(os.path.getmtime(path)).isoformat()
+        mtime = datetime.datetime.fromtimestamp(os.path.getmtime(path))
+        date = mtime.strftime("%Y-%m-%d %H:%M:%S")
         posts.append((date, stem, title, summary or "", body))
     # 按发布时间倒序（最新在前）
     posts.sort(key=lambda p: p[0], reverse=True)
