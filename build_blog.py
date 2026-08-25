@@ -195,8 +195,8 @@ def _parse_date(v):
 def slug_of(filename):
     """去掉 .md 与日期前缀，得到 URL slug；重复则由文件名后缀保证。"""
     stem = os.path.splitext(filename)[0]
-    m = re.match(r"^\d{4}-\d{2}-\d{2}-(.+)$", stem)
-    return m.group(1) if m else stem
+    m = re.match(r"^\d{4}-\d{2}-\d{2}(-\d{4})?-(.+)$", stem)
+    return m.group(2) if m else stem
 
 
 # --------------------------------------------------------------------------
@@ -298,7 +298,8 @@ def collect_posts():
 
 
 def generate_blog():
-    posts = collect_posts()
+    posts = [(d, slug_of(stem), title, summary, body)
+             for d, stem, title, summary, body in collect_posts()]
     index_rows = [(d, s, t, su) for d, s, t, su, b in posts]
     os.makedirs(BLOG_OUT_DIR, exist_ok=True)
     with open(os.path.join(BLOG_OUT_DIR, "index.html"), "w", encoding="utf-8", newline="\n") as fh:

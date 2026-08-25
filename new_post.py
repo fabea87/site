@@ -8,7 +8,7 @@
   python new_post.py --list                    # 列出现有文章及其 metadata
 
 行为：
-  - 文件名：<YYYY-MM-DD>-<slug>.md，写入 blog/ 目录
+  - 文件名：<YYYY-MM-DD-HHMM>-<slug>.md，写入 blog/ 目录
     （build_blog.py 会把日期前缀从 URL slug 中剥离）
   - Front Matter 自动填入 title 和 date（当前时间）；
     summary / tags 可选，留空则不写入该行
@@ -82,7 +82,7 @@ def main():
     summary = args.summary or ask("一句话简介（可回车跳过）")
     tags = [t for t in re.split("[,，]", args.tags or ask("标签，逗号分隔（可回车跳过）")) if t.strip()]
 
-    fname = f"{now[:10]}-{slugify(title)}.md"
+    fname = f"{now[:10]}-{now[11:13]}{now[14:16]}-{slugify(title)}.md"
     path = os.path.join(BLOG_DIR, fname)
     if os.path.exists(path):
         sys.exit(f"! 文件已存在: {path}")

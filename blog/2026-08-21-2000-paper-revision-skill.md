@@ -1,3 +1,10 @@
+---
+title: Teaching an AI to Revise Papers the Way I Do
+date: 2026-08-21 20:00:00
+summary: How I turned five rounds of peer-review revision habits into a reusable SKILL.md for my AI assistant.
+tags: AI, academic writing, peer review
+---
+
 # Teaching an AI to Revise Papers the Way I Do
 
 After five full rounds of peer review — three at *Computer Assisted Language Learning* and two at *System* — I realized my revision habits had quietly become a method: the same four standards behind every edit, the same structure in every response letter, the same discipline about what *not* to change. So I wrote the method down as a `SKILL.md` file and installed it as a reusable skill for my AI assistant. Whenever a revision task starts, the assistant loads this file first.
