@@ -663,7 +663,8 @@ def get_index_html():
     return s
 
 
-def write_index_html(filename="index.html"):
+def write_index_html(filename=os.path.join("public", "index.html")):
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
     s = get_index_html()
     with open(filename, "w", encoding="utf-8") as f:
         f.write(s)
@@ -674,4 +675,4 @@ if __name__ == "__main__":
     from build_blog import generate_blog
 
     generate_blog()
-    write_index_html("index.html")
+    write_index_html()  # 默认生成到 public/index.html

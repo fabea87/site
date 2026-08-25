@@ -384,6 +384,8 @@ summary.link-pill:hover {
 /* ---------- Thumbnail peek + hover preview ---------- */
 .pub-thumb {
   position: relative;
+  align-self: start; /* 不随卡片拉伸 */
+  height: fit-content; /* 双保险：即使被拉伸也只包住图片内容 */
   overflow: hidden;
   border-radius: 8px;
   border: 1px solid var(--border);
@@ -392,6 +394,7 @@ summary.link-pill:hover {
 }
 
 .pub-thumb img {
+  display: block; /* 消除 inline 图片基线空隙 */
   width: 100%;
   height: 130px;
   object-fit: cover;

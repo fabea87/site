@@ -31,7 +31,9 @@ from site_config import SITE  # noqa: E402
 from build import get_nav_html  # noqa: E402
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
+# 源文件目录（*.md）与生成输出目录（public/blog/）
 BLOG_DIR = os.path.join(ROOT, "blog")
+BLOG_OUT_DIR = os.path.join(ROOT, "public", "blog")
 TODAY = datetime.date.today().isoformat()
 
 FONTS_LINK = (
@@ -280,13 +282,14 @@ def collect_posts():
 def generate_blog():
     posts = collect_posts()
     index_rows = [(d, s, t, su) for d, s, t, su, b in posts]
-    with open(os.path.join(BLOG_DIR, "index.html"), "w", encoding="utf-8", newline="\n") as fh:
+    os.makedirs(BLOG_OUT_DIR, exist_ok=True)
+    with open(os.path.join(BLOG_OUT_DIR, "index.html"), "w", encoding="utf-8", newline="\n") as fh:
         fh.write(render_index(index_rows))
     for date, stem, title, summary, body in posts:
-        out = os.path.join(BLOG_DIR, stem + ".html")
+        out = os.path.join(BLOG_OUT_DIR, stem + ".html")
         with open(out, "w", encoding="utf-8", newline="\n") as fh:
             fh.write(render_post(date, title, md_to_html(body)))
-    print(f"Blog: {len(posts)} post(s) -> {os.path.join('blog', 'index.html')} + {len(posts)} page(s)")
+    print(f"Blog: {len(posts)} post(s) -> public/blog/index.html + {len(posts)} page(s)")
 
 
 if __name__ == "__main__":

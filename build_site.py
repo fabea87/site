@@ -28,8 +28,8 @@ for _stream in (sys.stdout, sys.stderr):
     except (AttributeError, ValueError):
         pass
 
-# 需要部署到线上的顶层文件 / 目录（publication_tool.html 等本地工具不部署）
-DEPLOY_ITEMS = ["index.html", "assets", "blog"]
+# 需要拷贝到 public/ 的静态资源目录（HTML 由 build.py / build_blog.py 直接生成到 public/）
+DEPLOY_ITEMS = ["assets"]
 
 # 构建脚本的 pip 依赖（模块名 -> 包名，便于诊断）
 REQUIRED_MODULES = ("pybtex", "PIL")  # PIL 是 Pillow 的导入名
@@ -39,9 +39,9 @@ def ensure_deps():
     """依赖缺失时自动 pip install；已安装则跳过（本地/线上都适用）。"""
     missing = [m for m in REQUIRED_MODULES if not _importable(m)]
     if not missing:
-        print("[1/3] 依赖已满足，跳过 pip install")
+        print("[1/4] 依赖已满足，跳过 pip install")
         return
-    print(f"[1/3] 缺少依赖 {missing}，执行 pip install -r requirements.txt ...")
+    print(f"[1/4] 缺少依赖 {missing}，执行 pip install -r requirements.txt ...")
     subprocess.check_call(
         [sys.executable, "-m", "pip", "install", "-r", "requirements.txt"],
         cwd=ROOT,
@@ -58,7 +58,7 @@ def _importable(module):
 
 def run_build():
     """调用站点构建器 build.py（生成 index.html 与缩略图）。"""
-    print("[2/3] 运行 build.py ...")
+    print("[3/4] 运行 build.py（生成 HTML 与缩略图）...")
     subprocess.check_call([sys.executable, "build.py"], cwd=ROOT)
 
 
@@ -77,10 +77,8 @@ def _rmtree_best_effort(path, attempts=8, delay=1.0):
 
 
 def stage_output():
-    """清空并重建 public/，只复制可部署的静态文件。"""
-    print(f"[3/3] 暂存部署文件到 {OUTPUT_DIR}")
-    if os.path.isdir(OUTPUT_DIR):
-        _rmtree_best_effort(OUTPUT_DIR)
+    """把 assets 等静态资源拷贝进 public/（HTML 已由构建步骤直接生成在那里）。"""
+    print(f"[4/4] 拷贝静态资源到 {OUTPUT_DIR}")
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     for item in DEPLOY_ITEMS:
         src = os.path.join(ROOT, item)
@@ -98,6 +96,10 @@ def stage_output():
 def main():
     print(f"站点构建开始（仓库根目录: {ROOT}）")
     ensure_deps()
+    print("[2/4] 清空旧输出 public/ ...")
+    if os.path.isdir(OUTPUT_DIR):
+        _rmtree_best_effort(OUTPUT_DIR)
+    print("[3/4] 生成 HTML 与缩略图 ...")
     run_build()
     stage_output()
     print("构建完成。输出目录: public")
