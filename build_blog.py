@@ -150,8 +150,12 @@ def md_to_html(md):
 
 
 def parse_front(md):
-    """解析可选 front matter，返回 (title, date, summary, tags, body)。
-    date 恒为 None——发布时间统一由文件 mtime 决定。"""
+    """解析可选的 YAML Front Matter（--- 包围的简单 key: value 行），
+    返回 (title, date, summary, tags, body)。
+
+    支持字段：title / summary / tags / date（创作时间，格式 YYYY-MM-DD[ HH:MM[:SS]]）。
+    date 缺省时返回 None，由调用方回退到文件 mtime。
+    """
     title = date = summary = None
     tags = []
     body = md
@@ -161,18 +165,31 @@ def parse_front(md):
             fm = md[3:end]
             body = md[end + 4:].lstrip("\n")
             for line in fm.splitlines():
-                if ":" not in line:
+                line = line.strip()
+                if not line or line.startswith("#") or ":" not in line:
                     continue
                 k, v = line.split(":", 1)
                 k = k.strip().lower()
-                v = v.strip().strip('"\'')
+                v = v.strip().strip("'\"")
                 if k == "title":
                     title = v
                 elif k == "summary":
                     summary = v
                 elif k == "tags":
-                    tags = [t.strip() for t in v.split(",") if t.strip()]
+                    tags = [t.strip() for t in re.split("[,，]", v) if t.strip()]
+                elif k in ("date", "created", "created_at"):
+                    date = _parse_date(v)
     return title, date, summary, tags, body
+
+
+def _parse_date(v):
+    """把 front matter 的日期字符串解析为 'YYYY-MM-DD HH:MM:SS'；失败返回 None。"""
+    for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M", "%Y-%m-%d", "%Y/%m/%d"):
+        try:
+            return datetime.datetime.strptime(v.strip(), fmt).strftime("%Y-%m-%d %H:%M:%S")
+        except ValueError:
+            continue
+    return None
 
 
 def slug_of(filename):
@@ -270,9 +287,10 @@ def collect_posts():
         if not title:
             m = re.search(r"^#\s+(.+)$", body, re.M)
             title = m.group(1) if m else stem
-        # 发布时间 = 文件修改时间；md 内无需日期元数据
-        mtime = datetime.datetime.fromtimestamp(os.path.getmtime(path))
-        date = mtime.strftime("%Y-%m-%d %H:%M:%S")
+        # 发布时间优先用 front matter 的 date，缺省时回退到文件修改时间（mtime）
+        if not date:
+            mtime = datetime.datetime.fromtimestamp(os.path.getmtime(path))
+            date = mtime.strftime("%Y-%m-%d %H:%M:%S")
         posts.append((date, stem, title, summary or "", body))
     # 按发布时间倒序（最新在前）
     posts.sort(key=lambda p: p[0], reverse=True)
