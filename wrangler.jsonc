@@ -6,7 +6,7 @@
   //   python build_site.py --deploy   # build public/ then deploy it
   //   npx wrangler deploy             # deploy the existing public/
   //   npx wrangler dev                # local preview
-  "name": "dayan-site",
+  "name": "site",
   "compatibility_date": "2026-09-01",
   "workers_dev": true,
   "assets": {
