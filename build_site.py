@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
 """
-站点构建脚本（GitHub Pages / 任意静态托管通用）
+站点构建脚本（Cloudflare Workers / 任意静态托管通用）
 =============================================
 
-工作流程（共三步）：
+工作流程：
   1. 确保 pip 依赖已安装（见 requirements.txt：pybtex、Pillow）
   2. 运行站点构建器 build.py（生成 index.html、WebP 缩略图等）
   3. 把可部署的静态文件（index.html、assets/）暂存到 public/
+  4. 加 --deploy 参数时，用 wrangler 把 public/ 部署到 Cloudflare Worker
 
-GitHub Actions 里由 .github/workflows/deploy.yml 调用本脚本，
-本地也可以直接运行：python build_site.py
+用法（在本目录下）：
+  python build_site.py            # 只构建，输出到 public/
+  python build_site.py --deploy   # 构建后部署（读取 wrangler.jsonc）
+
+本地预览：npx wrangler dev
 """
 
 import os
@@ -93,6 +97,20 @@ def stage_output():
         print(f"  + {item}")
 
 
+def deploy_worker():
+    """把 public/ 部署到 Cloudflare Worker（配置见仓库根目录 wrangler.jsonc）。
+
+    需要先 `npx wrangler login` 登录，或设置环境变量
+    CLOUDFLARE_API_TOKEN 与 CLOUDFLARE_ACCOUNT_ID。
+    """
+    print("部署到 Cloudflare Worker（npx wrangler deploy）...")
+    cmd = ["npx", "--yes", "wrangler@4", "deploy"]
+    if os.name == "nt":
+        # Windows 上 npx 是 .cmd 脚本，需要通过 cmd 解释器启动
+        cmd = ["cmd", "/c"] + cmd
+    subprocess.check_call(cmd, cwd=ROOT)
+
+
 def main():
     print(f"站点构建开始（仓库根目录: {ROOT}）")
     ensure_deps()
@@ -103,6 +121,11 @@ def main():
     run_build()
     stage_output()
     print("构建完成。输出目录: public")
+    if "--deploy" in sys.argv[1:]:
+        deploy_worker()
+        print("部署完成。")
+    else:
+        print("如需部署到 Cloudflare Worker，请运行：python build_site.py --deploy")
 
 
 if __name__ == "__main__":

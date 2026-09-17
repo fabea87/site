@@ -1,0 +1,15 @@
+{
+  // Cloudflare Worker with static assets only (no Worker script):
+  // `wrangler deploy` uploads everything in public/ as the site.
+  // GitHub holds the code only; hosting is entirely on Cloudflare.
+  //
+  //   python build_site.py --deploy   # build public/ then deploy it
+  //   npx wrangler deploy             # deploy the existing public/
+  //   npx wrangler dev                # local preview
+  "name": "dayan-site",
+  "compatibility_date": "2026-09-01",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./public"
+  }
+}

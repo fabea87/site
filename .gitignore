@@ -4,3 +4,4 @@ public/
 .dsh*
 blog/*.html
 index.html
+.wrangler/
