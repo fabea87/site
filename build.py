@@ -541,7 +541,7 @@ def get_index_html():
     footer = get_footer_html()
     short_name = SITE["short_name"]
     tagline = SITE["tagline"]
-    title_suffix = SITE["title"]
+    title_suffix = html.unescape(SITE["title"])
     site_url = SITE["url"].rstrip("/")
     page_title = f"{name[0]}{name[1]} | {title_suffix}"
     description = SITE["description"]
@@ -584,10 +584,11 @@ def get_index_html():
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{page_title}</title>
+  <title>{html.escape(page_title)}</title>
   <meta name="description" content="{html.escape(description, quote=True)}">
   <meta name="color-scheme" content="light">
   <link rel="canonical" href="{site_url}/">
+  <link rel="alternate" type="application/rss+xml" title="Blog" href="{site_url}/feed.xml">
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   <meta property="og:type" content="profile">
   <meta property="og:title" content="{html.escape(page_title, quote=True)}">

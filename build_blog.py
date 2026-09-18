@@ -21,9 +21,11 @@ md 约定：
 """
 import datetime
 import html
+import json
 import os
 import re
 import sys
+from email.utils import formatdate
 
 sys.stdout.reconfigure(encoding="utf-8")
 
@@ -208,15 +210,35 @@ def nav_html():
     return get_nav_html(root="../", home="../index.html")
 
 
-def page(title, body, meta_desc=""):
-    desc = f'\n  <meta name="description" content="{html.escape(meta_desc, quote=True)}">' if meta_desc else ""
+def page(title, body, meta_desc="", canonical=None, ld_json=None):
+    """博客页面骨架。canonical 用绝对 URL；ld_json 为 JSON-LD 字符串（可省略）。"""
+    site_url = SITE["url"].rstrip("/")
+    short_name = SITE["short_name"]
+    head = []
+    if meta_desc:
+        head.append(f'<meta name="description" content="{html.escape(meta_desc, quote=True)}">')
+    if canonical:
+        head.append(f'<link rel="canonical" href="{html.escape(canonical, quote=True)}">')
+        head.append('<meta property="og:type" content="article">')
+        head.append(f'<meta property="og:title" content="{html.escape(title, quote=True)}">')
+        if meta_desc:
+            head.append(f'<meta property="og:description" content="{html.escape(meta_desc, quote=True)}">')
+        head.append(f'<meta property="og:url" content="{html.escape(canonical, quote=True)}">')
+    head.append(
+        f'<link rel="alternate" type="application/rss+xml" '
+        f'title="{html.escape(short_name)} — Blog" href="{site_url}/feed.xml">'
+    )
+    if ld_json:
+        head.append("<script type=\"application/ld+json\">\n" + ld_json + "\n</script>")
+    seo = "\n  ".join(head)
     return f"""<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <title>{html.escape(title)}</title>{desc}
+  <title>{html.escape(title)}</title>
+  {seo}
   {FAVICON}
   {FONTS_LINK}
   {CSS_LINK}
@@ -252,10 +274,15 @@ def render_index(posts):
 {chr(10).join(rows)}
   </ul>
 </section>"""
-    return page("Blog · Da Yan", body)
+    return page(
+        "Blog · Da Yan",
+        body,
+        meta_desc="Blog posts by Da Yan on CALL, feedback, and language data science.",
+        canonical=SITE["url"].rstrip("/") + "/blog/",
+    )
 
 
-def render_post(date, title, content_html):
+def render_post(date, title, content_html, slug="", summary="", tags=None):
     back = f'<p class="blog-back"><a href="index.html">← Back to Blog</a></p>'
     date_html = f'<p class="blog-date-large">{html.escape(date)}</p>' if date else ""
     body = f"""<article class="blog-post">
@@ -267,12 +294,39 @@ def render_post(date, title, content_html):
   </div>
   {back}
 </article>"""
-    return page(title + " · Da Yan", body,
-                 meta_desc=(title + " — blog post on Da Yan's homepage."))
+    meta_desc = summary or (title + " — blog post on Da Yan's homepage.")
+    site_url = SITE["url"].rstrip("/")
+    url = f"{site_url}/blog/{slug}.html"
+    post_json = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": title,
+        "url": url,
+        "mainEntityOfPage": url,
+        "datePublished": (date or TODAY).replace(" ", "T"),
+        "dateModified": (date or TODAY).replace(" ", "T"),
+        "inLanguage": "en",
+        "author": {
+            "@type": "Person",
+            "name": SITE["short_name"],
+            "url": site_url + "/",
+        },
+        "publisher": {"@type": "Person", "name": SITE["short_name"]},
+        "image": site_url + "/assets/img/profile.jpg",
+        "description": meta_desc,
+        "keywords": tags or [],
+    }
+    return page(
+        title + " · Da Yan",
+        body,
+        meta_desc=meta_desc,
+        canonical=url,
+        ld_json=json.dumps(post_json, ensure_ascii=False, indent=2),
+    )
 
 
 def collect_posts():
-    """读取 blog/*.md，返回按日期倒序的元组列表 (date, stem, title, summary, md)。"""
+    """读取 blog/*.md，返回按日期倒序的元组列表 (date, stem, title, summary, md, tags)。"""
     if not os.path.isdir(BLOG_DIR):
         return []
     posts = []
@@ -291,24 +345,109 @@ def collect_posts():
         if not date:
             mtime = datetime.datetime.fromtimestamp(os.path.getmtime(path))
             date = mtime.strftime("%Y-%m-%d %H:%M:%S")
-        posts.append((date, stem, title, summary or "", body))
+        posts.append((date, stem, title, summary or "", body, tags))
     # 按发布时间倒序（最新在前）
     posts.sort(key=lambda p: p[0], reverse=True)
     return posts
 
 
+# --------------------------------------------------------------------------
+# SEO 附属文件：robots.txt / sitemap.xml / feed.xml
+# --------------------------------------------------------------------------
+
+def _write_file(path, text):
+    with open(path, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(text)
+    print(f"Written {os.path.relpath(path, ROOT)}.")
+
+
+def _rfc822(date):
+    """'YYYY-MM-DD HH:MM:SS' -> RFC 822（RSS 用），按 UTC 处理。"""
+    try:
+        dt = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
+        dt = dt.replace(tzinfo=datetime.timezone.utc)
+        return formatdate(dt.timestamp(), usegmt=True)
+    except (TypeError, ValueError):
+        return formatdate(usegmt=True)
+
+
+def write_seo_files(posts):
+    """生成 robots.txt、sitemap.xml、feed.xml（RSS 2.0，全文）。"""
+    site_url = SITE["url"].rstrip("/")
+    out_dir = os.path.dirname(BLOG_OUT_DIR)  # public/
+
+    _write_file(
+        os.path.join(out_dir, "robots.txt"),
+        f"User-agent: *\nAllow: /\n\nSitemap: {site_url}/sitemap.xml\n",
+    )
+
+    urls = [(site_url + "/", TODAY), (site_url + "/blog/", TODAY)]
+    urls += [(f"{site_url}/blog/{p['slug']}.html", p["date"][:10]) for p in posts]
+    entries = "\n".join(
+        f"  <url>\n    <loc>{html.escape(u)}</loc>\n    <lastmod>{d}</lastmod>\n  </url>"
+        for u, d in urls
+    )
+    _write_file(
+        os.path.join(out_dir, "sitemap.xml"),
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{entries}\n</urlset>\n",
+    )
+
+    items = []
+    for p in posts:
+        url = f"{site_url}/blog/{p['slug']}.html"
+        cats = "".join(f"\n    <category>{html.escape(t)}</category>" for t in p["tags"])
+        content = p["html"].replace("]]>", "]]&gt;")
+        items.append(
+            "  <item>\n"
+            f"    <title>{html.escape(p['title'])}</title>\n"
+            f"    <link>{url}</link>\n"
+            f'    <guid isPermaLink="true">{url}</guid>\n'
+            f"    <pubDate>{_rfc822(p['date'])}</pubDate>\n"
+            f"    <description>{html.escape(p['summary'] or p['title'])}</description>{cats}\n"
+            f"    <content:encoded><![CDATA[{content}]]></content:encoded>\n"
+            "  </item>"
+        )
+    last_build = _rfc822(posts[0]["date"]) if posts else formatdate(usegmt=True)
+    _write_file(
+        os.path.join(out_dir, "feed.xml"),
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"'
+        ' xmlns:atom="http://www.w3.org/2005/Atom">\n<channel>\n'
+        f"  <title>{html.escape(SITE['short_name'])} — Blog</title>\n"
+        f"  <link>{site_url}/blog/</link>\n"
+        "  <description>Notes on CALL, feedback, and language data science.</description>\n"
+        "  <language>en</language>\n"
+        f"  <lastBuildDate>{last_build}</lastBuildDate>\n"
+        f'  <atom:link href="{site_url}/feed.xml" rel="self" type="application/rss+xml"/>\n'
+        f"{chr(10).join(items)}\n</channel>\n</rss>\n",
+    )
+
+
 def generate_blog():
-    posts = [(d, slug_of(stem), title, summary, body)
-             for d, stem, title, summary, body in collect_posts()]
-    index_rows = [(d, s, t, su) for d, s, t, su, b in posts]
+    posts = []
+    for date, stem, title, summary, body, tags in collect_posts():
+        posts.append({
+            "date": date,
+            "slug": slug_of(stem),
+            "title": title,
+            "summary": summary,
+            "tags": tags,
+            "body": body,
+            "html": md_to_html(body),
+        })
     os.makedirs(BLOG_OUT_DIR, exist_ok=True)
-    with open(os.path.join(BLOG_OUT_DIR, "index.html"), "w", encoding="utf-8", newline="\n") as fh:
-        fh.write(render_index(index_rows))
-    for date, stem, title, summary, body in posts:
-        out = os.path.join(BLOG_OUT_DIR, stem + ".html")
-        with open(out, "w", encoding="utf-8", newline="\n") as fh:
-            fh.write(render_post(date, title, md_to_html(body)))
+    index_rows = [(p["date"], p["slug"], p["title"], p["summary"]) for p in posts]
+    _write_file(os.path.join(BLOG_OUT_DIR, "index.html"), render_index(index_rows))
+    for p in posts:
+        _write_file(
+            os.path.join(BLOG_OUT_DIR, p["slug"] + ".html"),
+            render_post(p["date"], p["title"], p["html"],
+                        slug=p["slug"], summary=p["summary"], tags=p["tags"]),
+        )
     print(f"Blog: {len(posts)} post(s) -> public/blog/index.html + {len(posts)} page(s)")
+    write_seo_files(posts)
 
 
 if __name__ == "__main__":
