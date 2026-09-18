@@ -5,13 +5,15 @@
 
 /* ---------- Design tokens ---------- */
 :root {
-  --font-display: "Bona Nova SC", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
-  --font-display-alt: "IBM Plex Serif", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
-  --font-title: "Lora", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
-  --font-serif: "IBM Plex Serif", "Noto Serif SC", "Songti SC", "SimSun", Georgia, "Times New Roman", serif;
-  --font-ui: "IBM Plex Serif", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
-  --font-label: "IBM Plex Serif", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
-  --font-meta: "IBM Plex Serif", "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+  /* 只加载 Bona Nova SC + IBM Plex Serif 两个字族；
+     中日韩字形交给系统 Songti SC / SimSun，
+     避免为 105 个汉字下载整套 CJK 字体（原先 202 个 @font-face 块） */
+  --font-display: "Bona Nova SC", "Songti SC", "SimSun", Georgia, serif;
+  --font-display-alt: "IBM Plex Serif", "Songti SC", "SimSun", Georgia, serif;
+  --font-serif: "IBM Plex Serif", "Songti SC", "SimSun", Georgia, "Times New Roman", serif;
+  --font-ui: "IBM Plex Serif", "Songti SC", "SimSun", Georgia, serif;
+  --font-label: "IBM Plex Serif", "Songti SC", "SimSun", Georgia, serif;
+  --font-meta: "IBM Plex Serif", "Songti SC", "SimSun", Georgia, serif;
   --font-mono: "SF Mono", "Cascadia Code", Consolas, "Liberation Mono", Menlo, monospace;
 
   /* 设计原则：
@@ -238,8 +240,16 @@ summary.link-pill:hover {
   box-shadow: var(--shadow);
 }
 
-.link-pill i {
+.link-pill .icon {
   color: var(--accent);
+}
+
+/* 内联 SVG 图标（取代 Font Awesome 图标字体）：随字号缩放，不参与 flex 拉伸 */
+.icon {
+  width: 1em;
+  height: 1em;
+  flex: none;
+  vertical-align: -0.125em;
 }
 
 /* About toggle */
@@ -513,7 +523,7 @@ summary.link-pill:hover {
 
 .pub-title {
   margin: 0 0 7px;
-  font-family: var(--font-title);
+  font-family: var(--font-serif);
   font-weight: 700;
   font-size: 1.08rem;
   line-height: 1.4;
@@ -764,7 +774,6 @@ summary.link-pill:hover {
   font-size: 0.92rem;
 }
 
-.contact-item i,
 .contact-item .contact-icon {
   display: inline-flex;
   align-items: center;
@@ -774,12 +783,8 @@ summary.link-pill:hover {
   background: var(--bg-elevated);
   border: 1px solid var(--border-strong);
   border-radius: 50%;
-  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
-}
-
-.contact-item i {
-  font-size: 26px;
   color: var(--accent);
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
 }
 
 .contact-item .contact-icon svg {
@@ -808,7 +813,6 @@ summary.link-pill:hover {
   text-decoration: none;
 }
 
-.contact-item:hover i,
 .contact-item:hover .contact-icon {
   border-color: var(--accent);
   background: var(--accent-soft);

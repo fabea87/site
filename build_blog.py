@@ -42,9 +42,7 @@ FONTS_LINK = (
     '<link rel="preconnect" href="https://fonts.googleapis.com">\n'
     '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
     '  <link href="https://fonts.googleapis.com/css2?family=Bona+Nova+SC:wght@400;700'
-    '&family=IBM+Plex+Serif:ital,wght@0,400;0,700;1,400'
-    '&family=Lora:wght@400;700'
-    '&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">'
+    '&family=IBM+Plex+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">'
 )
 
 CSS_LINK = '<link rel="stylesheet" href="../assets/stylesheet.css">'

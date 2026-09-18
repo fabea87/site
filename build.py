@@ -29,18 +29,18 @@ def get_social_media_html():
     return f"""
                 <div class="hero-links">
                 <details class="about-details">
-                <summary class="link-pill"><i class="fa-solid fa-graduation-cap"></i>About</summary>
+                <summary class="link-pill">{icon("graduation-cap")}About</summary>
                 <div class="about-body">{SITE["bio"]}</div>
                 </details>
                 <div class="cv-menu">
-                <button type="button" class="link-pill cv-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="cv-panel"><i class="fa-solid fa-address-card"></i>CV <span class="cv-chev">▾</span></button>
+                <button type="button" class="link-pill cv-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="cv-panel">{icon("address-card")}CV <span class="cv-chev">▾</span></button>
                 <div class="cv-menu-panel" id="cv-panel">
                 <a class="cv-menu-item" href="{cv_en}" target="_blank">English CV</a>
                 <a class="cv-menu-item" href="{cv_cn}" target="_blank">中文简历</a>
                 </div>
                 </div>
-                <a class="link-pill" href="mailto:{email}"><i class="fa-solid fa-envelope-open"></i>Mail</a>
-                <a class="link-pill" href="https://scholar.google.com/citations?user={scholar}&hl=en" target="_blank"><i class="fa-brands fa-google-scholar"></i>Scholar</a>
+                <a class="link-pill" href="mailto:{email}">{icon("envelope-open")}Mail</a>
+                <a class="link-pill" href="https://scholar.google.com/citations?user={scholar}&hl=en" target="_blank">{icon("google-scholar")}Scholar</a>
                 </div>
     """
 
@@ -74,37 +74,53 @@ def _load_svg_body(name):
         return None
 
 
+def icon(name, css_class="icon"):
+    """内联图标：读取 assets/img/icons/{name}.svg，按 1em 尺寸内联（无需图标字体）。
+
+    图标缺失时返回空串并打印提示，构建不会因此中断。
+    """
+    loaded = _load_svg_body(name)
+    if not loaded:
+        print(f"[build] 缺少 {_CONTACT_SVG_DIR}/{name}.svg，该处图标留空")
+        return ""
+    body, viewbox = loaded
+    return (
+        f'<svg class="{css_class}" viewBox="{html.escape(viewbox, quote=True)}" '
+        f'width="1em" height="1em" fill="currentColor" aria-hidden="true">{body}</svg>'
+    )
+
+
 def get_contact_html():
     email = SITE["email"]
     items = [
-        ("fa", "fa-solid fa-envelope", "Email", f"mailto:{email}", False, ""),
+        ("svg", "envelope", "Email", f"mailto:{email}", False, ""),
         (
-            "fa",
-            "fa-brands fa-orcid",
+            "svg",
+            "orcid",
             "ORCID",
             f"https://orcid.org/{SITE['orcid']}",
             True,
             "",
         ),
         (
-            "fa",
-            "fa-brands fa-google-scholar",
+            "svg",
+            "google-scholar",
             "Scholar",
             f"https://scholar.google.com/citations?user={SITE['scholar']}&hl=en",
             True,
             "",
         ),
         (
-            "fa",
-            "fa-brands fa-github",
+            "svg",
+            "github",
             "GitHub",
             f"https://github.com/{SITE['github']}",
             True,
             "",
         ),
         (
-            "fa",
-            "fa-brands fa-researchgate",
+            "svg",
+            "researchgate",
             "ResearchGate",
             "https://www.researchgate.net/profile/Da-Yan-3?ev=hdr_xprf",
             True,
@@ -128,27 +144,24 @@ def get_contact_html():
         ),
     ]
     s = '<div class="contact-grid">'
-    for kind, icon, label, href, external, brand in items:
+    for kind, icon_name, label, href, external, brand in items:
         target = ' target="_blank" rel="me noopener"' if external else ""
         brand_attr = f" {brand}" if brand else ""
-        if kind == "fa":
-            inner = f'<i class="{icon}" aria-hidden="true"></i>'
+        loaded = _load_svg_body(icon_name)
+        if loaded:
+            body, viewbox = loaded
+            inner = (
+                f'<span class="contact-icon"><svg viewBox="{html.escape(viewbox, quote=True)}" '
+                f'width="26" height="26" fill="currentColor" aria-hidden="true">'
+                f"{body}</svg></span>"
+            )
         else:
-            loaded = _load_svg_body(icon)
-            if loaded:
-                body, viewbox = loaded
-                inner = (
-                    f'<span class="contact-icon"><svg viewBox="{html.escape(viewbox, quote=True)}" '
-                    f'width="26" height="26" fill="currentColor" aria-hidden="true">'
-                    f"{body}</svg></span>"
-                )
-            else:
-                mono = "WoS" if icon == "webofscience" else "S"
-                inner = f'<span class="contact-icon mono" aria-hidden="true">{mono}</span>'
-                print(
-                    f"[build] 缺少 {_CONTACT_SVG_DIR}/{icon}.svg，"
-                    f"Contact 区“{label}”使用字母徽标降级"
-                )
+            mono = "WoS" if icon_name == "webofscience" else icon_name[:1].upper()
+            inner = f'<span class="contact-icon mono" aria-hidden="true">{mono}</span>'
+            print(
+                f"[build] 缺少 {_CONTACT_SVG_DIR}/{icon_name}.svg，"
+                f"Contact 区“{label}”使用字母徽标降级"
+            )
         s += (
             f'<a class="contact-item{brand_attr}" href="{html.escape(href, quote=True)}"{target}>'
             f"{inner}<span>{html.escape(label)}</span></a>"
@@ -509,7 +522,7 @@ def get_pub_filter_html(entries):
     s += (
         '<button type="button" class="filter-pill download" id="bib-download" '
         'aria-label="Download all BibTeX">'
-        '<i class="fa-solid fa-download"></i>&nbsp;BibTeX</button>'
+        f'{icon("download")}&nbsp;BibTeX</button>'
     )
     s += "</div>"
     return s
@@ -600,9 +613,7 @@ def get_index_html():
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bona+Nova+SC:wght@400;700&family=IBM+Plex+Serif:ital,wght@0,400;0,700;1,400&family=Lora:wght@400;700&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=Bona+Nova+SC:wght@400;700&family=IBM+Plex+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="assets/stylesheet.css">
 </head>
 
