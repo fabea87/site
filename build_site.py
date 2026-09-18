@@ -12,6 +12,7 @@
 用法（在本目录下）：
   python build_site.py            # 只构建，输出到 public/
   python build_site.py --deploy   # 构建后部署（读取 wrangler.jsonc）
+  python build_site.py --watch    # 构建后监视源文件改动并自动重建
 
 本地预览：npx wrangler dev
 """
@@ -28,12 +29,23 @@ OUTPUT_DIR = os.path.join(ROOT, "public")
 # Windows 控制台默认 GBK，可能无法输出部分字符；统一按 UTF-8 输出，避免构建日志崩溃
 for _stream in (sys.stdout, sys.stderr):
     try:
-        _stream.reconfigure(encoding="utf-8", errors="replace")
+        _stream.reconfigure(encoding="utf-8", errors="replace", line_buffering=True)
     except (AttributeError, ValueError):
         pass
 
 # 需要拷贝到 public/ 的静态资源目录（HTML 由 build.py / build_blog.py 直接生成到 public/）
 DEPLOY_ITEMS = ["assets"]
+
+# --watch 监视的构建输入（目录会递归检查 .md）
+WATCH_SOURCES = [
+    "build.py",
+    "build_blog.py",
+    "site_config.py",
+    "publication_list.bib",
+    "talk_list.bib",
+    "blog",
+]
+WATCH_INTERVAL = 2.0  # 轮询间隔（秒）
 
 # 构建脚本的 pip 依赖（模块名 -> 包名，便于诊断）
 REQUIRED_MODULES = ("pybtex", "PIL")  # PIL 是 Pillow 的导入名
@@ -97,6 +109,55 @@ def stage_output():
         print(f"  + {item}")
 
 
+def _newest_mtime(path, suffixes=None):
+    """返回文件（或目录下匹配后缀的文件）的最新 mtime；无匹配返回 0。"""
+    if os.path.isfile(path):
+        return os.path.getmtime(path)
+    if not os.path.isdir(path):
+        return 0.0
+    newest = 0.0
+    for dirpath, _dirnames, filenames in os.walk(path):
+        for fn in filenames:
+            if suffixes and not fn.endswith(suffixes):
+                continue
+            newest = max(newest, os.path.getmtime(os.path.join(dirpath, fn)))
+    return newest
+
+
+def _sources_stamp():
+    return max(_newest_mtime(os.path.join(ROOT, item), (".md",)) for item in WATCH_SOURCES)
+
+
+def _assets_stamp():
+    return _newest_mtime(os.path.join(ROOT, "assets"))
+
+
+def watch_loop(assets_stamp):
+    """轮询源文件 mtime，有改动就重建；assets/ 未变时跳过 18MB 拷贝。"""
+    print(f"[watch] 监视中（每 {WATCH_INTERVAL:g}s 检查一次）；Ctrl+C 退出")
+    print("[watch] 预览：另开终端运行 npx wrangler dev，打开它提示的本地地址")
+    last = _sources_stamp()
+    while True:
+        time.sleep(WATCH_INTERVAL)
+        current = _sources_stamp()
+        new_assets = _assets_stamp()
+        if current == last and new_assets == assets_stamp:
+            continue
+        if current != last:
+            last = current
+            print("[watch] 检测到内容改动，重新构建 ...")
+            try:
+                run_build()
+            except subprocess.CalledProcessError as exc:
+                print(f"[watch] 构建失败（{exc}），继续监视")
+                continue
+        if new_assets != assets_stamp:
+            assets_stamp = new_assets
+            print("[watch] 检测到 assets 改动，重新拷贝静态资源 ...")
+            stage_output()
+        print("[watch] 构建完成，等待下一次改动")
+
+
 def deploy_worker():
     """把 public/ 部署到 Cloudflare Worker（配置见仓库根目录 wrangler.jsonc）。
 
@@ -121,6 +182,9 @@ def main():
     run_build()
     stage_output()
     print("构建完成。输出目录: public")
+    if "--watch" in sys.argv[1:]:
+        watch_loop(_assets_stamp())
+        return
     if "--deploy" in sys.argv[1:]:
         deploy_worker()
         print("部署完成。")
