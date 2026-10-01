@@ -1,15 +1,16 @@
 {
   // Cloudflare Worker with static assets only (no Worker script):
-  // `wrangler deploy` uploads everything in public/ as the site.
+  // `wrangler deploy` uploads everything in dist/ as the site.
   // GitHub holds the code only; hosting is entirely on Cloudflare.
   //
-  //   python build_site.py --deploy   # build public/ then deploy it
-  //   npx wrangler deploy             # deploy the existing public/
+  //   npm run build                   # build dist/ with Vite
+  //   npm run dev                     # local Vite dev server
+  //   npm run deploy                  # build and deploy to Cloudflare Worker
   //   npx wrangler dev                # local preview
   "name": "site",
   "compatibility_date": "2026-09-01",
   "workers_dev": true,
   "assets": {
-    "directory": "./public"
+    "directory": "./dist"
   }
 }

@@ -1,6 +1,8 @@
 *.ffs_db
 __pycache__/
 public/
+dist/
+node_modules/
 .dsh*
 blog/*.html
 index.html

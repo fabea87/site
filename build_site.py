@@ -78,6 +78,15 @@ def run_build():
     subprocess.check_call([sys.executable, "build.py"], cwd=ROOT)
 
 
+def run_vite_build():
+    """调用 vite build 将站点资源打包到 dist/。"""
+    print("[4/4] 运行 vite build 打包到 dist/ ...")
+    cmd = ["npx", "vite", "build"]
+    if os.name == "nt":
+        cmd = ["cmd", "/c"] + cmd
+    subprocess.check_call(cmd, cwd=ROOT)
+
+
 def _rmtree_best_effort(path, attempts=8, delay=1.0):
     """尽力删除旧输出目录。Windows 上 OneDrive/杀软可能短暂占用目录句柄，
     导致 os.rmdir 报 PermissionError；重试多次，仍失败就容忍并靠覆盖合并。"""
@@ -181,7 +190,8 @@ def main():
     print("[3/4] 生成 HTML 与缩略图 ...")
     run_build()
     stage_output()
-    print("构建完成。输出目录: public")
+    run_vite_build()
+    print("构建完成。输出目录: dist（Vite 生产包）与 public")
     if "--watch" in sys.argv[1:]:
         watch_loop(_assets_stamp())
         return
@@ -189,7 +199,7 @@ def main():
         deploy_worker()
         print("部署完成。")
     else:
-        print("如需部署到 Cloudflare Worker，请运行：python build_site.py --deploy")
+        print("如需部署到 Cloudflare Worker，请运行：python build_site.py --deploy 或 npm run deploy")
 
 
 if __name__ == "__main__":

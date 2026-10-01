@@ -259,7 +259,7 @@ def page(title, body, meta_desc="", canonical=None, ld_json=None):
   <p>© {TODAY[:4]} {html.escape(SITE["short_name"])} · Last updated {TODAY} · <a href="../index.html">Back to homepage</a></p>
   <p>This website follows the design of <a href="https://m-niemeyer.github.io/" target="_blank">Michael Niemeyer</a> and <a href="https://jonbarron.info/" target="_blank">Jon Barron</a>.</p>
 </footer>
-<script src="../assets/nav.js"></script>
+<script type="module" src="../assets/nav.js"></script>
 </body>
 </html>"""
 
@@ -347,6 +347,11 @@ def collect_posts():
         if not title:
             m = re.search(r"^#\s+(.+)$", body, re.M)
             title = m.group(1) if m else stem
+            if m:
+                body = body[:m.start()] + body[m.end():]
+        else:
+            body = re.sub(r"^\s*#\s+.*?\n+", "", body, count=1)
+        body = body.lstrip()
         # 发布时间优先用 front matter 的 date，缺省时回退到文件修改时间（mtime）
         if not date:
             mtime = datetime.datetime.fromtimestamp(os.path.getmtime(path))
@@ -445,14 +450,17 @@ def generate_blog():
         })
     os.makedirs(BLOG_OUT_DIR, exist_ok=True)
     index_rows = [(p["date"], p["slug"], p["title"], p["summary"]) for p in posts]
-    _write_file(os.path.join(BLOG_OUT_DIR, "index.html"), render_index(index_rows))
+    index_html = render_index(index_rows)
+    _write_file(os.path.join(BLOG_OUT_DIR, "index.html"), index_html)
+    _write_file(os.path.join(BLOG_DIR, "index.html"), index_html)
     for p in posts:
-        _write_file(
-            os.path.join(BLOG_OUT_DIR, p["slug"] + ".html"),
-            render_post(p["date"], p["title"], p["html"],
-                        slug=p["slug"], summary=p["summary"], tags=p["tags"]),
+        post_html = render_post(
+            p["date"], p["title"], p["html"],
+            slug=p["slug"], summary=p["summary"], tags=p["tags"]
         )
-    print(f"Blog: {len(posts)} post(s) -> public/blog/index.html + {len(posts)} page(s)")
+        _write_file(os.path.join(BLOG_OUT_DIR, p["slug"] + ".html"), post_html)
+        _write_file(os.path.join(BLOG_DIR, p["slug"] + ".html"), post_html)
+    print(f"Blog: {len(posts)} post(s) -> public/blog/ and blog/")
     write_seo_files(posts)
 
 

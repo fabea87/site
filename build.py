@@ -680,7 +680,9 @@ def get_index_html():
             {social_media}
           </div>
           <div class="hero-photo">
-            {hero_img}
+            <div class="hero-photo-frame">
+              {hero_img}
+            </div>
           </div>
         </div>
       </header>
@@ -712,10 +714,10 @@ def get_index_html():
     </div>
   </main>
 
-  <script src="assets/thumbs.js"></script>
-  <script src="assets/cvmenu.js"></script>
-  <script src="assets/nav.js"></script>
-  <script src="assets/pubs.js"></script>
+  <script type="module" src="assets/thumbs.js"></script>
+  <script type="module" src="assets/cvmenu.js"></script>
+  <script type="module" src="assets/nav.js"></script>
+  <script type="module" src="assets/pubs.js"></script>
 </body>
 
 </html>
@@ -723,12 +725,17 @@ def get_index_html():
     return s
 
 
-def write_index_html(filename=os.path.join("public", "index.html")):
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
+def write_index_html(filename="index.html"):
     s = get_index_html()
     with open(filename, "w", encoding="utf-8") as f:
         f.write(s)
     print(f"Written index content to {filename}.")
+    # Also write to public/index.html
+    pub_path = os.path.join("public", "index.html")
+    os.makedirs("public", exist_ok=True)
+    with open(pub_path, "w", encoding="utf-8") as f:
+        f.write(s)
+    print(f"Written index content to {pub_path}.")
 
 
 if __name__ == "__main__":
