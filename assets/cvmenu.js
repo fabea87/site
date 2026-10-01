@@ -1,4 +1,6 @@
 (function () {
+  "use strict";
+
   function isOpen(menu) {
     return menu.classList.contains("open");
   }
@@ -13,23 +15,17 @@
     var menus = document.querySelectorAll(".cv-menu");
     if (!menus.length) return;
 
-    var fine = !!(window.matchMedia && window.matchMedia("(pointer: fine)").matches);
-    var hoverOK = !!(window.matchMedia && window.matchMedia("(hover: hover)").matches) && fine;
-
     menus.forEach(function (menu) {
       var trig = menu.querySelector(".cv-trigger");
       if (!trig) return;
 
-      if (!hoverOK) {
-        trig.addEventListener("click", function (e) {
-          e.preventDefault();
-          setOpen(menu, !isOpen(menu));
-        });
-      } else {
-        trig.addEventListener("click", function (e) {
-          e.preventDefault();
-        });
-      }
+      trig.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var wasOpen = isOpen(menu);
+        menus.forEach(function (m) { setOpen(m, false); });
+        setOpen(menu, !wasOpen);
+      });
 
       menu.addEventListener("click", function (e) {
         if (e.target.closest(".cv-menu-item")) {
@@ -40,14 +36,20 @@
       });
     });
 
-    if (!hoverOK) {
-      document.addEventListener("click", function (e) {
-        if (!e.target.closest(".cv-menu")) {
-          menus.forEach(function (m) {
-            setOpen(m, false);
-          });
-        }
-      });
-    }
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest(".cv-menu")) {
+        menus.forEach(function (m) {
+          setOpen(m, false);
+        });
+      }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        menus.forEach(function (m) {
+          setOpen(m, false);
+        });
+      }
+    });
   });
 })();

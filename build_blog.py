@@ -234,9 +234,16 @@ def page(title, body, meta_desc="", canonical=None, ld_json=None):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light">
+  <meta name="color-scheme" content="light dark">
   <title>{html.escape(title)}</title>
   {seo}
+  <script>
+    (function () {{
+      var saved = localStorage.getItem('theme');
+      var pref = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', saved || pref);
+    }})();
+  </script>
   {FAVICON}
   {FONTS_LINK}
   {CSS_LINK}
@@ -252,6 +259,7 @@ def page(title, body, meta_desc="", canonical=None, ld_json=None):
   <p>© {TODAY[:4]} {html.escape(SITE["short_name"])} · Last updated {TODAY} · <a href="../index.html">Back to homepage</a></p>
   <p>This website follows the design of <a href="https://m-niemeyer.github.io/" target="_blank">Michael Niemeyer</a> and <a href="https://jonbarron.info/" target="_blank">Jon Barron</a>.</p>
 </footer>
+<script src="../assets/nav.js"></script>
 </body>
 </html>"""
 

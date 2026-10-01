@@ -105,7 +105,7 @@ def get_contact_html():
         (
             "svg",
             "google-scholar",
-            "Scholar",
+            "Google Scholar",
             f"https://scholar.google.com/citations?user={SITE['scholar']}&hl=en",
             True,
             "",
@@ -143,7 +143,7 @@ def get_contact_html():
             "brand-scopus",
         ),
     ]
-    s = '<div class="contact-grid">'
+    s = '<div class="contact-links">'
     for kind, icon_name, label, href, external, brand in items:
         target = ' target="_blank" rel="me noopener"' if external else ""
         brand_attr = f" {brand}" if brand else ""
@@ -152,7 +152,7 @@ def get_contact_html():
             body, viewbox = loaded
             inner = (
                 f'<span class="contact-icon"><svg viewBox="{html.escape(viewbox, quote=True)}" '
-                f'width="26" height="26" fill="currentColor" aria-hidden="true">'
+                f'width="16" height="16" fill="currentColor" aria-hidden="true">'
                 f"{body}</svg></span>"
             )
         else:
@@ -163,8 +163,10 @@ def get_contact_html():
                 f"Contact 区“{label}”使用字母徽标降级"
             )
         s += (
-            f'<a class="contact-item{brand_attr}" href="{html.escape(href, quote=True)}"{target}>'
-            f"{inner}<span>{html.escape(label)}</span></a>"
+            f'<a class="contact-pill{brand_attr}" href="{html.escape(href, quote=True)}"{target}>'
+            f"{inner}<span>{html.escape(label)}</span>"
+            f'<span class="contact-arrow" aria-hidden="true">↗</span>'
+            f"</a>"
         )
     s += "</div>"
     return s
@@ -178,14 +180,20 @@ def get_nav_html(root="", home="#top"):
     """
     return f"""<nav class="site-nav" id="site-nav">
     <div class="container nav-inner">
-      <a class="nav-brand" href="{home}" aria-label="Da Yan"><img class="nav-brand-img" src="{root}assets/img/signature.webp" alt="Da Yan" width="121" height="38"></a>
+      <a class="nav-brand" href="{home}" aria-label="Da Yan">
+        <img class="nav-brand-img" src="{root}assets/img/signature.webp" alt="Da Yan" width="121" height="38">
+      </a>
       <div class="nav-links">
-        <a class="nav-sm-hide" href="{root}index.html#interests">Interests</a>
+        <a href="{root}index.html#interests">Interests</a>
         <a href="{root}index.html#publications">Publications</a>
         <a href="{root}index.html#talks">Conferences</a>
         <a href="{root}blog/index.html">Blog</a>
         <a href="{root}index.html#contact">Contact</a>
       </div>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
     </div>
   </nav>"""
 
@@ -390,16 +398,19 @@ _TALK_ARTEFACTS = {
 def _artefact_links(fields, artefacts):
     """渲染条目附带资源链接；缺失的可选字段静默跳过。"""
     s = ""
-    first = True
     for key, label in artefacts.items():
         if key in fields:
-            if not first:
-                s += '<span class="sep">·</span>'
+            icon_svg = ""
+            if key == "html":
+                icon_svg = '<svg class="pub-link-icon" viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg>'
+            elif key == "pdf":
+                icon_svg = '<svg class="pub-link-icon" viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>'
+            elif key == "slides":
+                icon_svg = '<svg class="pub-link-icon" viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2z"/><path d="M8.5 13a.5.5 0 0 0-.5.5v1.5H5.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1H9v-1.5a.5.5 0 0 0-.5-.5z"/></svg>'
             s += (
                 f'<a class="pub-link" href="{html.escape(fields[key], quote=True)}" '
-                f'target="_blank">{label}</a>'
+                f'target="_blank" rel="noopener">{icon_svg}<span>{label}</span></a>'
             )
-            first = False
     return s
 
 
@@ -408,20 +419,21 @@ def get_paper_entry(entry_key, entry, thumbs=None):
     fields = entry.fields
     year = fields.get("year", "").strip() or "n.d."
     featured = " featured" if "highlight" in fields else ""
-    badge = '<span class="featured-badge">Featured</span>' if "highlight" in fields else ""
+    badge = '<span class="featured-badge"><svg class="featured-star" viewBox="0 0 16 16" width="10" height="10" fill="currentColor" aria-hidden="true"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg>Featured</span>' if "highlight" in fields else ""
     title = html.escape(fields["title"])
     href = html.escape(fields["html"], quote=True)
     img = fields["img"]
     data_year = f' data-year="{html.escape(year, quote=True)}"'
     data_featured = ' data-featured="true"' if "highlight" in fields else ""
 
+    onerror_handler = ' onerror="this.closest(\'.pub-thumb\').classList.add(\'img-missing\')"'
     s = f'<article class="pub-card{featured}"{data_year}{data_featured}>{badge}'
-    s += f'<div class="pub-thumb">{_img_tag(img, fields["title"], thumbs, extra=' onerror="this.closest(\'.pub-thumb\').classList.add(\'img-missing\')"')}</div>'
+    s += f'<div class="pub-thumb">{_img_tag(img, fields["title"], thumbs, extra=onerror_handler)}</div>'
     s += '<div class="pub-body">'
 
     award = ""
     if "award" in fields:
-        award = f'<span class="pub-award">({html.escape(fields["award"])})</span>'
+        award = f' <span class="pub-award">({html.escape(fields["award"])})</span>'
     s += f'<h3 class="pub-title"><a href="{href}" target="_blank">{title}</a>{award}</h3>'
 
     if "equal_contribution" in fields:
@@ -435,9 +447,10 @@ def get_paper_entry(entry_key, entry, thumbs=None):
     s += f'<p class="pub-meta">{html.escape(format_venue(entry))}</p>'
     s += '<div class="pub-links">'
     s += _artefact_links(fields, _PAPER_ARTEFACTS)
+    bib_icon = '<svg class="pub-link-icon" viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>'
     s += (
-        '<details class="bib"><summary>Bibtex</summary>'
-        "<pre><code>" + build_cite(entry, entry_key) + "</code></pre></details>"
+        f'<details class="bib"><summary>{bib_icon}<span>BibTeX</span></summary>'
+        f'<div class="bib-drawer"><pre><code>{build_cite(entry, entry_key)}</code></pre></div></details>'
     )
     s += "</div></div></article>"
     return s
@@ -450,8 +463,9 @@ def get_talk_entry(entry_key, entry, thumbs=None):
     title = html.escape(fields["title"])
     img = fields["img"]
     data_year = f' data-year="{html.escape(year, quote=True)}"'
+    onerror_handler = ' onerror="this.closest(\'.pub-thumb\').classList.add(\'img-missing\')"'
     s = f'<article class="pub-card"{data_year}>'
-    s += f'<div class="pub-thumb">{_img_tag(img, fields["title"], thumbs, extra=' onerror="this.closest(\'.pub-thumb\').classList.add(\'img-missing\')"')}</div>'
+    s += f'<div class="pub-thumb">{_img_tag(img, fields["title"], thumbs, extra=onerror_handler)}</div>'
     s += '<div class="pub-body">'
     s += f'<h3 class="pub-title">{title}</h3>'
     s += f'<p class="pub-meta">{html.escape(format_venue(entry))}</p>'
@@ -503,26 +517,49 @@ def get_talks_html(entries, thumbs=None):
 def get_pub_filter_html(entries):
     groups = _group_by_year(entries)
     years = sorted(groups, key=lambda y: y if y.isdigit() else "0", reverse=True)
-    s = (
-        '<div class="pub-filter" id="pub-filter" role="group" '
+    recent_years = [y for y in years if y.isdigit()][:5]
+    featured_count = sum(1 for e in entries.values() if "highlight" in e.fields)
+    total_count = len(entries)
+
+    s = '<div class="pub-toolbar">'
+    # Search box
+    s += (
+        '<div class="pub-search-wrapper">'
+        f'{icon("search", "pub-search-icon")}'
+        '<input type="search" id="pub-search" class="pub-search-input" '
+        'placeholder="Search publications by title, keyword, or author..." '
+        'aria-label="Search publications" autocomplete="off">'
+        '<button type="button" id="pub-search-clear" class="pub-search-clear" aria-label="Clear search" hidden>&times;</button>'
+        '</div>'
+    )
+    # Filter tabs: All + Featured + latest 5 years
+    s += (
+        '<div class="pub-filter" id="pub-filter" role="tablist" '
         'aria-label="Filter publications">'
     )
-    s += '<button type="button" class="filter-pill active" data-filter="all">All</button>'
     s += (
-        '<button type="button" class="filter-pill" data-filter="featured">'
-        "Featured</button>"
+        f'<button type="button" class="filter-pill active" data-filter="all" role="tab" aria-selected="true">'
+        f'All <span class="filter-count">{total_count}</span></button>'
+    )
+    s += (
+        f'<button type="button" class="filter-pill" data-filter="featured" role="tab" aria-selected="false">'
+        f'Featured <span class="filter-count">{featured_count}</span></button>'
     )
     s += '<span class="filter-divider" aria-hidden="true"></span>'
-    for year in years:
+    for year in recent_years:
+        cnt = len(groups[year])
         s += (
             f'<button type="button" class="filter-pill" '
-            f'data-filter="{html.escape(year, quote=True)}">'
-            f"{html.escape(year)}</button>"
+            f'data-filter="{html.escape(year, quote=True)}" role="tab" aria-selected="false">'
+            f'{html.escape(year)} <span class="filter-count">{cnt}</span></button>'
         )
+    s += "</div>"
+    # Empty message container
     s += (
-        '<button type="button" class="filter-pill download" id="bib-download" '
-        'aria-label="Download all BibTeX">'
-        f'{icon("download")}&nbsp;BibTeX</button>'
+        '<div id="pub-empty" class="pub-empty" hidden>'
+        '<p class="pub-empty-text">No publications found matching your search.</p>'
+        '<button type="button" id="pub-empty-reset" class="pub-empty-reset">Reset search filters</button>'
+        '</div>'
     )
     s += "</div>"
     return s
@@ -599,7 +636,7 @@ def get_index_html():
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{html.escape(page_title)}</title>
   <meta name="description" content="{html.escape(description, quote=True)}">
-  <meta name="color-scheme" content="light">
+  <meta name="color-scheme" content="light dark">
   <link rel="canonical" href="{site_url}/">
   <link rel="alternate" type="application/rss+xml" title="Blog" href="{site_url}/feed.xml">
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
@@ -610,6 +647,13 @@ def get_index_html():
   <meta property="og:image" content="{site_url}/assets/img/profile.jpg">
   <script type="application/ld+json">
   {ld_json}
+  </script>
+  <script>
+    (function () {{
+      var saved = localStorage.getItem('theme');
+      var pref = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', saved || pref);
+    }})();
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -627,7 +671,11 @@ def get_index_html():
         <div class="hero-grid">
           <div class="hero-text">
             <h1 class="hero-name">{name[0]}<span class="hero-suffix">{name[1]}</span></h1>
-            <p class="hero-tagline">{tagline}</p>
+            <p class="hero-tagline">
+              <span class="tagline-role">{tagline}</span>
+              <span class="tagline-sep">@</span>
+              <a class="tagline-affiliation" href="{affiliation_url}" target="_blank" rel="noopener">{affiliation_name}</a>
+            </p>
             <div class="hero-bio">{bio_text}</div>
             {social_media}
           </div>
