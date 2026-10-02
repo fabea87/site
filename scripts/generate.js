@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { execSync } from "child_process";
 import { fileURLToPath } from "url";
 import { marked } from "marked";
 import { SITE, AUTHOR_LINKS } from "../site.config.js";
@@ -285,7 +286,7 @@ function imgTag(imgPath, alt, { lazy = true, extra = "", sizes = "150px" } = {})
 // Navigation and Layout Components
 // --------------------------------------------------------------------------
 export function getNavHtml(root = "", home = "#top") {
-  return `<nav class="site-nav" id="site-nav">
+  return `<nav class="site-nav" id="site-nav" data-pagefind-ignore>
     <div class="container nav-inner">
       <a class="nav-brand" href="${home}" aria-label="Da Yan">
         <img class="nav-brand-img" src="${root}assets/img/signature.webp" alt="Da Yan" width="121" height="38">
@@ -297,12 +298,33 @@ export function getNavHtml(root = "", home = "#top") {
         <a href="${root}blog/index.html">Blog</a>
         <a href="${root}index.html#contact">Contact</a>
       </div>
-      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
-        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-      </button>
+      <div class="nav-right">
+        <button type="button" class="nav-search-btn" id="nav-search-btn" aria-label="Search site" data-tooltip="Search site (⌘K)">
+          ${icon("search", "nav-search-icon")}
+          <span class="nav-search-text">Search</span>
+          <kbd class="nav-search-kbd">⌘K</kbd>
+        </button>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme" data-tooltip="Toggle light/dark theme">
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+      </div>
     </div>
-  </nav>`;
+  </nav>
+  <dialog id="search-modal" class="search-modal" aria-label="Search site" data-pagefind-ignore>
+    <div class="search-modal-box">
+      <div class="search-modal-header">
+        <div class="search-input-wrap">
+          ${icon("search", "search-input-icon")}
+          <input type="search" id="search-modal-input" class="search-modal-input" placeholder="Search publications, talks, blogs... (↑↓ to navigate, Esc to close)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+          <button type="button" class="search-esc-btn" id="search-modal-close" aria-label="Close search">Esc</button>
+        </div>
+      </div>
+      <div class="search-modal-body" id="search-modal-results">
+        <div class="search-hint">Type keyword or title to search across all content...</div>
+      </div>
+    </div>
+  </dialog>`;
 }
 
 export function getFooterHtml() {
@@ -659,7 +681,7 @@ ${ldJson}
   <a class="skip-link" href="#top">Skip to content</a>
   ${getNavHtml()}
 
-  <main id="top">
+  <main id="top" data-pagefind-body>
     <div class="container">
       <header class="hero">
         <div class="hero-grid">
@@ -702,7 +724,7 @@ ${ldJson}
         ${getContactHtml()}
       </section>
 
-      <footer class="site-footer">
+      <footer class="site-footer" data-pagefind-ignore>
         ${getFooterHtml()}
       </footer>
     </div>
@@ -798,12 +820,12 @@ export function blogPage(title, body, { metaDesc = "", canonical = null, ldJson 
 </head>
 <body>
 ${getNavHtml("../", "../index.html")}
-<main>
+<main data-pagefind-body>
   <div class="container">
 ${body}
   </div>
 </main>
-<footer class="site-footer">
+<footer class="site-footer" data-pagefind-ignore>
   <p>© ${TODAY.slice(0, 4)} ${escapeHtml(SITE.short_name)} · Last updated ${TODAY} · <a href="../index.html">Back to homepage</a></p>
   <p>This website follows the design of <a href="https://m-niemeyer.github.io/" target="_blank">Michael Niemeyer</a> and <a href="https://jonbarron.info/" target="_blank">Jon Barron</a>.</p>
 </footer>
@@ -1042,6 +1064,13 @@ export function generateSite({ outDir = path.join(ROOT, "dist") } = {}) {
   const favicon = path.join(ROOT, "assets", "favicon.ico");
   if (fs.existsSync(favicon)) {
     fs.copyFileSync(favicon, path.join(outDir, "favicon.ico"));
+  }
+
+  // 4. Index search with Pagefind
+  try {
+    execSync(`npx pagefind --site "${outDir}"`, { stdio: "inherit" });
+  } catch (err) {
+    console.warn("[generator] Pagefind indexing warning:", err);
   }
 
   console.log(`[generator] Done: all assets written directly to product directory: ${outDir}`);

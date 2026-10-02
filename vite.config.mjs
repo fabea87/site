@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
-import { resolve } from "path";
+import { resolve, extname } from "path";
+import { execSync } from "child_process";
 import fs from "fs";
 import {
   generateIndexHtml,
@@ -112,6 +113,13 @@ function academicSitePlugin() {
       copyDirRecursive(resolve(rootDir, "assets", "pdf"), resolve(distDir, "assets", "pdf"));
       copyDirRecursive(resolve(rootDir, "assets", "img"), resolve(distDir, "assets", "img"));
 
+      console.log("[vite] Building Pagefind search index...");
+      try {
+        execSync("npx pagefind --site dist", { stdio: "inherit" });
+      } catch (err) {
+        console.warn("[vite] Pagefind indexing warning:", err);
+      }
+
       cleanGeneratedHtml();
       console.log("[vite] Verified workspace code folder is completely clean.");
     },
@@ -192,6 +200,28 @@ function academicSitePlugin() {
           if (fs.existsSync(faviconPath)) {
             res.setHeader("Content-Type", "image/x-icon");
             res.end(fs.readFileSync(faviconPath));
+            return;
+          }
+        }
+
+        // 5. Pagefind assets in dev mode
+        if (rawUrl.startsWith("/pagefind/")) {
+          const rel = rawUrl.slice("/pagefind/".length);
+          const filePath = resolve(rootDir, "dist", "pagefind", rel);
+          if (fs.existsSync(filePath)) {
+            const ext = extname(filePath);
+            const mimeMap = {
+              ".js": "application/javascript; charset=utf-8",
+              ".css": "text/css; charset=utf-8",
+              ".json": "application/json; charset=utf-8",
+              ".pf_meta": "application/octet-stream",
+              ".pf_index": "application/octet-stream",
+              ".pf_fragment": "application/octet-stream",
+              ".pagefind": "application/octet-stream",
+              ".wasm": "application/wasm",
+            };
+            res.setHeader("Content-Type", mimeMap[ext] || "application/octet-stream");
+            res.end(fs.readFileSync(filePath));
             return;
           }
         }
