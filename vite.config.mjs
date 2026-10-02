@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import { resolve } from "path";
 import fs from "fs";
-import { execSync } from "child_process";
+import { generateSite } from "./scripts/generate.js";
 
 const rootDir = import.meta.dirname;
 
@@ -40,11 +40,9 @@ function academicSitePlugin() {
   return {
     name: "academic-site-generator",
     buildStart() {
-      console.log("[vite] Running Python static site generator...");
-      execSync("python build.py", { cwd: rootDir, stdio: "inherit" });
+      generateSite();
     },
     closeBundle() {
-      // Ensure raw static assets like PDFs and SEO files are available in dist
       console.log("[vite] Syncing static assets to dist...");
       const distDir = resolve(rootDir, "dist");
       const pdfSrc = resolve(rootDir, "assets", "pdf");
@@ -63,7 +61,7 @@ function academicSitePlugin() {
     configureServer(server) {
       try {
         console.log("[vite] Dev server start: generating HTML...");
-        execSync("python build.py", { cwd: rootDir, stdio: "inherit" });
+        generateSite();
       } catch (err) {
         console.error("[vite] Failed to generate HTML on start:", err);
       }
@@ -71,10 +69,10 @@ function academicSitePlugin() {
       const watchItems = [
         "publication_list.bib",
         "talk_list.bib",
-        "site_config.py",
-        "build.py",
-        "build_blog.py",
+        "site.config.js",
+        "scripts",
         "blog",
+        "assets/img/icons",
       ];
       watchItems.forEach((item) => {
         const p = resolve(rootDir, item);
@@ -85,11 +83,12 @@ function academicSitePlugin() {
         if (
           file.endsWith(".bib") ||
           file.endsWith(".md") ||
-          file.endsWith(".py")
+          file.endsWith(".js") ||
+          file.endsWith(".svg")
         ) {
           console.log(`[vite] Source content changed (${file}), regenerating...`);
           try {
-            execSync("python build.py", { cwd: rootDir, stdio: "inherit" });
+            generateSite();
             server.ws.send({ type: "full-reload" });
           } catch (err) {
             console.error("[vite] Content regeneration failed:", err);

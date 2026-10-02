@@ -8,9 +8,11 @@
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "vite build && wrangler deploy",
-    "generate": "python build.py"
+    "generate": "node scripts/generate.js",
+    "new-post": "node scripts/new-post.js"
   },
   "devDependencies": {
+    "marked": "^18.0.14",
     "vite": "^8.3.2",
     "wrangler": "^4.76.0"
   }

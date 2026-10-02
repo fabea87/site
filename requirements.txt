@@ -1,3 +1,0 @@
-# 站点构建依赖（本地构建/部署时安装：pip install -r requirements.txt）
-pybtex>=0.24
-Pillow>=10.0
