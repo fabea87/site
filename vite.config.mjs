@@ -2,13 +2,14 @@ import { defineConfig } from "vite";
 import { resolve } from "path";
 import fs from "fs";
 import {
-  generateSite,
   generateIndexHtml,
   cleanGeneratedHtml,
   getBlogPosts,
   renderBlogIndex,
   renderBlogPost,
-  slugOf,
+  generateRobotsTxt,
+  generateSitemapXml,
+  generateFeedXml,
 } from "./scripts/generate.js";
 
 const rootDir = import.meta.dirname;
@@ -27,61 +28,96 @@ function copyDirRecursive(src, dest) {
   }
 }
 
-function getHtmlInputs() {
+function getVirtualHtmlRoutes() {
+  const posts = getBlogPosts();
+  const routes = new Map();
+
+  const mainPath = resolve(rootDir, "index.html");
+  const blogIndexPath = resolve(rootDir, "blog", "index.html");
+
+  routes.set(mainPath, () => generateIndexHtml());
+  routes.set(blogIndexPath, () => renderBlogIndex(posts));
+
   const inputs = {
-    main: resolve(rootDir, "index.html"),
-    blog_index: resolve(rootDir, "blog", "index.html"),
+    main: mainPath,
+    blog_index: blogIndexPath,
   };
-  const blogDir = resolve(rootDir, "blog");
-  if (fs.existsSync(blogDir)) {
-    const files = fs.readdirSync(blogDir);
-    for (const f of files) {
-      if (f.endsWith(".md")) {
-        const slug = slugOf(f);
-        inputs["blog_" + slug] = resolve(blogDir, `${slug}.html`);
-      }
-    }
+
+  for (const post of posts) {
+    const postPath = resolve(rootDir, "blog", `${post.slug}.html`);
+    routes.set(postPath, () => renderBlogPost(post));
+    inputs[`blog_${post.slug}`] = postPath;
   }
-  return inputs;
+
+  return { routes, inputs, posts };
 }
 
 function academicSitePlugin() {
+  let isBuild = false;
+  let virtualRoutes = null;
+
   return {
     name: "academic-site-generator",
+    config(_config, { command }) {
+      isBuild = command === "build";
+    },
     buildStart() {
-      // Production build: create temporary HTML files for Vite / Rollup bundler
-      generateSite({ writeHtml: true });
+      cleanGeneratedHtml();
+      virtualRoutes = getVirtualHtmlRoutes();
+    },
+    resolveId(id) {
+      if (!virtualRoutes) virtualRoutes = getVirtualHtmlRoutes();
+      if (virtualRoutes.routes.has(id)) {
+        return id;
+      }
+    },
+    load(id) {
+      if (!virtualRoutes) virtualRoutes = getVirtualHtmlRoutes();
+      if (virtualRoutes.routes.has(id)) {
+        return virtualRoutes.routes.get(id)();
+      }
+    },
+    generateBundle() {
+      if (!isBuild) return;
+      const posts = getBlogPosts();
+      this.emitFile({
+        type: "asset",
+        fileName: "robots.txt",
+        source: generateRobotsTxt(),
+      });
+      this.emitFile({
+        type: "asset",
+        fileName: "sitemap.xml",
+        source: generateSitemapXml(posts),
+      });
+      this.emitFile({
+        type: "asset",
+        fileName: "feed.xml",
+        source: generateFeedXml(posts),
+      });
+
+      const faviconPath = resolve(rootDir, "assets", "favicon.ico");
+      if (fs.existsSync(faviconPath)) {
+        this.emitFile({
+          type: "asset",
+          fileName: "favicon.ico",
+          source: fs.readFileSync(faviconPath),
+        });
+      }
     },
     closeBundle() {
-      console.log("[vite] Syncing static assets to dist...");
+      if (!isBuild) return;
+      console.log("[vite] Syncing static PDF and image assets to dist...");
       const distDir = resolve(rootDir, "dist");
-      const pdfSrc = resolve(rootDir, "assets", "pdf");
-      const pdfDest = resolve(distDir, "assets", "pdf");
-      copyDirRecursive(pdfSrc, pdfDest);
+      copyDirRecursive(resolve(rootDir, "assets", "pdf"), resolve(distDir, "assets", "pdf"));
+      copyDirRecursive(resolve(rootDir, "assets", "img"), resolve(distDir, "assets", "img"));
 
-      const pubDir = resolve(rootDir, "public");
-      for (const fn of ["feed.xml", "sitemap.xml", "robots.txt", "favicon.ico"]) {
-        const srcFile = resolve(pubDir, fn);
-        const destFile = resolve(distDir, fn);
-        if (fs.existsSync(srcFile) && !fs.existsSync(destFile)) {
-          fs.copyFileSync(srcFile, destFile);
-        }
-      }
-
-      // Keep root and blog/ clean of any generated HTML files
       cleanGeneratedHtml();
-      console.log("[vite] Cleaned up temporary HTMLs. Workspace contains only source files.");
+      console.log("[vite] Verified workspace code folder is completely clean.");
     },
     configureServer(server) {
-      try {
-        console.log("[vite] Dev server start: generating SEO files...");
-        generateSite({ writeHtml: false });
-        cleanGeneratedHtml();
-      } catch (err) {
-        console.error("[vite] Failed to generate on start:", err);
-      }
+      cleanGeneratedHtml();
 
-      // Dev middleware: dynamically serve index and blog pages purely in memory with zero HTML files on disk
       server.middlewares.use(async (req, res, next) => {
         const rawUrl = req.url?.split("?")[0] || "";
 
@@ -130,6 +166,36 @@ function academicSitePlugin() {
           }
         }
 
+        // 4. Dynamic SEO & favicon endpoints
+        if (rawUrl === "/robots.txt") {
+          res.setHeader("Content-Type", "text/plain; charset=utf-8");
+          res.end(generateRobotsTxt());
+          return;
+        }
+
+        if (rawUrl === "/sitemap.xml") {
+          const posts = getBlogPosts();
+          res.setHeader("Content-Type", "application/xml; charset=utf-8");
+          res.end(generateSitemapXml(posts));
+          return;
+        }
+
+        if (rawUrl === "/feed.xml") {
+          const posts = getBlogPosts();
+          res.setHeader("Content-Type", "application/xml; charset=utf-8");
+          res.end(generateFeedXml(posts));
+          return;
+        }
+
+        if (rawUrl === "/favicon.ico") {
+          const faviconPath = resolve(rootDir, "assets", "favicon.ico");
+          if (fs.existsSync(faviconPath)) {
+            res.setHeader("Content-Type", "image/x-icon");
+            res.end(fs.readFileSync(faviconPath));
+            return;
+          }
+        }
+
         next();
       });
 
@@ -139,7 +205,7 @@ function academicSitePlugin() {
         "site.config.js",
         "scripts",
         "blog",
-        "assets/img/icons",
+        "assets",
       ];
       watchItems.forEach((item) => {
         const p = resolve(rootDir, item);
@@ -151,15 +217,11 @@ function academicSitePlugin() {
           file.endsWith(".bib") ||
           file.endsWith(".md") ||
           file.endsWith(".js") ||
-          file.endsWith(".svg")
+          file.endsWith(".svg") ||
+          file.endsWith(".css")
         ) {
-          console.log(`[vite] Source content changed (${file}), regenerating...`);
-          try {
-            generateSite({ writeHtml: false });
-            server.ws.send({ type: "full-reload" });
-          } catch (err) {
-            console.error("[vite] Content regeneration failed:", err);
-          }
+          console.log(`[vite] Source content changed (${file}), sending reload...`);
+          server.ws.send({ type: "full-reload" });
         }
       });
     },
@@ -167,12 +229,13 @@ function academicSitePlugin() {
 }
 
 export default defineConfig({
+  publicDir: false,
   plugins: [academicSitePlugin()],
   build: {
     outDir: "dist",
     emptyOutDir: true,
     rollupOptions: {
-      input: getHtmlInputs(),
+      input: getVirtualHtmlRoutes().inputs,
     },
   },
 });

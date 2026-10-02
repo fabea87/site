@@ -7,7 +7,6 @@ import { SITE, AUTHOR_LINKS } from "../site.config.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, "..");
-const PUBLIC_DIR = path.join(ROOT, "public");
 const BLOG_DIR = path.join(ROOT, "blog");
 
 const TODAY = new Date().toISOString().slice(0, 10);
@@ -948,29 +947,37 @@ export function cleanGeneratedHtml() {
       }
     }
   }
-}
-
-export function writeBlogHtmls(posts) {
-  const blogIndexHtml = renderBlogIndex(posts);
-  fs.writeFileSync(path.join(BLOG_DIR, "index.html"), blogIndexHtml, "utf8");
-  for (const p of posts) {
-    const postHtml = renderBlogPost(p);
-    fs.writeFileSync(path.join(BLOG_DIR, `${p.slug}.html`), postHtml, "utf8");
+  const publicDir = path.join(ROOT, "public");
+  if (fs.existsSync(publicDir)) {
+    try {
+      fs.rmSync(publicDir, { recursive: true, force: true });
+    } catch {
+      // ignore
+    }
   }
 }
 
-export function writeSeoFiles(posts) {
+export function copyDirRecursive(src, dest) {
+  if (!fs.existsSync(src)) return;
+  fs.mkdirSync(dest, { recursive: true });
+  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
+    if (entry.isDirectory()) {
+      copyDirRecursive(srcPath, destPath);
+    } else {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  }
+}
+
+export function generateRobotsTxt() {
   const siteUrl = SITE.url.replace(/\/+$/, "");
-  fs.mkdirSync(PUBLIC_DIR, { recursive: true });
+  return `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`;
+}
 
-  // 1. robots.txt
-  fs.writeFileSync(
-    path.join(PUBLIC_DIR, "robots.txt"),
-    `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`,
-    "utf8"
-  );
-
-  // 2. sitemap.xml
+export function generateSitemapXml(posts = getBlogPosts()) {
+  const siteUrl = SITE.url.replace(/\/+$/, "");
   const urls = [
     { loc: `${siteUrl}/`, lastmod: TODAY },
     { loc: `${siteUrl}/blog/`, lastmod: TODAY },
@@ -986,13 +993,11 @@ export function writeSeoFiles(posts) {
       (u) => `  <url>\n    <loc>${escapeHtml(u.loc)}</loc>\n    <lastmod>${u.lastmod}</lastmod>\n  </url>`
     )
     .join("\n");
-  fs.writeFileSync(
-    path.join(PUBLIC_DIR, "sitemap.xml"),
-    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries}\n</urlset>\n`,
-    "utf8"
-  );
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries}\n</urlset>\n`;
+}
 
-  // 3. feed.xml (RSS 2.0)
+export function generateFeedXml(posts = getBlogPosts()) {
+  const siteUrl = SITE.url.replace(/\/+$/, "");
   const feedItems = posts.map((p) => {
     const url = `${siteUrl}/blog/${p.slug}.html`;
     const cats = (p.tags || [])
@@ -1002,30 +1007,44 @@ export function writeSeoFiles(posts) {
     return `  <item>\n    <title>${escapeHtml(p.title)}</title>\n    <link>${url}</link>\n    <guid isPermaLink="true">${url}</guid>\n    <pubDate>${toRfc822(p.date)}</pubDate>\n    <description>${escapeHtml(p.summary || p.title)}</description>${cats}\n    <content:encoded><![CDATA[${content}]]></content:encoded>\n  </item>`;
   });
   const lastBuild = posts.length > 0 ? toRfc822(posts[0].date) : new Date().toUTCString();
-  fs.writeFileSync(
-    path.join(PUBLIC_DIR, "feed.xml"),
-    `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">\n<channel>\n  <title>${escapeHtml(SITE.short_name)} — Blog</title>\n  <link>${siteUrl}/blog/</link>\n  <description>Notes on CALL, feedback, and language data science.</description>\n  <language>en</language>\n  <lastBuildDate>${lastBuild}</lastBuildDate>\n  <atom:link href="${siteUrl}/feed.xml" rel="self" type="application/rss+xml"/>\n${feedItems.join("\n")}\n</channel>\n</rss>\n`,
-    "utf8"
-  );
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">\n<channel>\n  <title>${escapeHtml(SITE.short_name)} — Blog</title>\n  <link>${siteUrl}/blog/</link>\n  <description>Notes on CALL, feedback, and language data science.</description>\n  <language>en</language>\n  <lastBuildDate>${lastBuild}</lastBuildDate>\n  <atom:link href="${siteUrl}/feed.xml" rel="self" type="application/rss+xml"/>\n${feedItems.join("\n")}\n</channel>\n</rss>\n`;
 }
 
 // --------------------------------------------------------------------------
-// Master Generator
+// Master Generator: writes exclusively to product directory (dist)
+// Never writes to workspace root, blog source, or non-product directories
 // --------------------------------------------------------------------------
-export function generateSite({ writeHtml = true } = {}) {
-  console.log("[generator] Compiling academic site...");
+export function generateSite({ outDir = path.join(ROOT, "dist") } = {}) {
+  const relOut = path.relative(ROOT, outDir) || outDir;
+  console.log(`[generator] Compiling academic site to product directory (${relOut})...`);
+
+  // Ensure workspace code folder stays pristine
+  cleanGeneratedHtml();
 
   const posts = getBlogPosts();
+  const blogOutDir = path.join(outDir, "blog");
+  fs.mkdirSync(blogOutDir, { recursive: true });
 
-  if (writeHtml) {
-    writeBlogHtmls(posts);
-    const indexHtml = generateIndexHtml();
-    fs.writeFileSync(path.join(ROOT, "index.html"), indexHtml, "utf8");
-    console.log(`[generator] Generated temporary HTML entries for bundling.`);
+  // 1. Output HTML directly into product directory
+  fs.writeFileSync(path.join(outDir, "index.html"), generateIndexHtml(), "utf8");
+  fs.writeFileSync(path.join(blogOutDir, "index.html"), renderBlogIndex(posts), "utf8");
+  for (const p of posts) {
+    fs.writeFileSync(path.join(blogOutDir, `${p.slug}.html`), renderBlogPost(p), "utf8");
   }
 
-  // Write SEO files to public/
-  writeSeoFiles(posts);
+  // 2. Output SEO files directly into product directory
+  fs.writeFileSync(path.join(outDir, "robots.txt"), generateRobotsTxt(), "utf8");
+  fs.writeFileSync(path.join(outDir, "sitemap.xml"), generateSitemapXml(posts), "utf8");
+  fs.writeFileSync(path.join(outDir, "feed.xml"), generateFeedXml(posts), "utf8");
+
+  // 3. Sync static assets to product directory
+  copyDirRecursive(path.join(ROOT, "assets"), path.join(outDir, "assets"));
+  const favicon = path.join(ROOT, "assets", "favicon.ico");
+  if (fs.existsSync(favicon)) {
+    fs.copyFileSync(favicon, path.join(outDir, "favicon.ico"));
+  }
+
+  console.log(`[generator] Done: all assets written directly to product directory: ${outDir}`);
 }
 
 // Direct execution CLI
