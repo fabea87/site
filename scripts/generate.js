@@ -9,7 +9,6 @@ const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, "..");
 const PUBLIC_DIR = path.join(ROOT, "public");
 const BLOG_DIR = path.join(ROOT, "blog");
-const BLOG_OUT_DIR = path.join(PUBLIC_DIR, "blog");
 
 const TODAY = new Date().toISOString().slice(0, 10);
 
@@ -749,13 +748,13 @@ function parseFrontMatter(text) {
   return { meta, body };
 }
 
-function slugOf(filename) {
+export function slugOf(filename) {
   const stem = filename.replace(/\.md$/, "");
   const m = stem.match(/^\d{4}-\d{2}-\d{2}(-\d{4})?-(.+)$/);
   return m ? m[2] : stem;
 }
 
-function blogPage(title, body, { metaDesc = "", canonical = null, ldJson = null } = {}) {
+export function blogPage(title, body, { metaDesc = "", canonical = null, ldJson = null } = {}) {
   const siteUrl = SITE.url.replace(/\/+$/, "");
   const shortName = SITE.short_name;
   const head = [];
@@ -814,7 +813,7 @@ ${body}
 </html>`;
 }
 
-function renderBlogIndex(posts) {
+export function renderBlogIndex(posts) {
   const rows = posts.map((p) => {
     const dateHtml = p.date ? `<span class="blog-date">${escapeHtml(p.date)}</span>` : "";
     const sumHtml = p.summary ? `<p class="blog-summary">${escapeHtml(p.summary)}</p>` : "";
@@ -835,7 +834,7 @@ ${rows.join("\n")}
   });
 }
 
-function renderBlogPost(post) {
+export function renderBlogPost(post) {
   const back = '<p class="blog-back"><a href="index.html">← Back to Blog</a></p>';
   const dateHtml = post.date ? `<p class="blog-date-large">${escapeHtml(post.date)}</p>` : "";
   const body = `<article class="blog-post">
@@ -890,7 +889,68 @@ function toRfc822(dateStr) {
   }
 }
 
-function writeSeoFiles(posts) {
+export function getBlogPosts() {
+  const posts = [];
+  if (!fs.existsSync(BLOG_DIR)) return posts;
+  const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith(".md")).sort();
+  for (const fn of files) {
+    const filePath = path.join(BLOG_DIR, fn);
+    const raw = fs.readFileSync(filePath, "utf8");
+    const { meta, body } = parseFrontMatter(raw);
+
+    let title = meta.title;
+    let cleanedBody = body;
+    if (!title) {
+      const h1Match = body.match(/^#\s+(.+)$/m);
+      title = h1Match ? h1Match[1] : fn.replace(/\.md$/, "");
+      if (h1Match) {
+        cleanedBody = body.slice(0, h1Match.index) + body.slice(h1Match.index + h1Match[0].length);
+      }
+    } else {
+      cleanedBody = cleanedBody.replace(/^\s*#\s+.*?\r?\n+/, "");
+    }
+    cleanedBody = cleanedBody.trimStart();
+
+    let date = meta.date;
+    if (!date) {
+      const stat = fs.statSync(filePath);
+      date = stat.mtime.toISOString().replace("T", " ").slice(0, 19);
+    }
+
+    const summary = meta.summary || "";
+    const tags = meta.tags ? meta.tags.split(/[,，]/).map((t) => t.trim()).filter(Boolean) : [];
+    const slug = slugOf(fn);
+    const html = marked.parse(cleanedBody);
+
+    posts.push({ date, slug, title, summary, tags, html });
+  }
+
+  posts.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+  return posts;
+}
+
+export function cleanBlogHtml() {
+  if (!fs.existsSync(BLOG_DIR)) return;
+  const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith(".html"));
+  for (const f of files) {
+    try {
+      fs.unlinkSync(path.join(BLOG_DIR, f));
+    } catch {
+      // ignore
+    }
+  }
+}
+
+export function writeBlogHtmls(posts) {
+  const blogIndexHtml = renderBlogIndex(posts);
+  fs.writeFileSync(path.join(BLOG_DIR, "index.html"), blogIndexHtml, "utf8");
+  for (const p of posts) {
+    const postHtml = renderBlogPost(p);
+    fs.writeFileSync(path.join(BLOG_DIR, `${p.slug}.html`), postHtml, "utf8");
+  }
+}
+
+export function writeSeoFiles(posts) {
   const siteUrl = SITE.url.replace(/\/+$/, "");
   fs.mkdirSync(PUBLIC_DIR, { recursive: true });
 
@@ -943,61 +1003,16 @@ function writeSeoFiles(posts) {
 // --------------------------------------------------------------------------
 // Master Generator
 // --------------------------------------------------------------------------
-export function generateSite() {
+export function generateSite({ writeBlogHtml = true } = {}) {
   console.log("[generator] Building academic site with JavaScript...");
 
   // 1. Build blog posts
-  const posts = [];
-  if (fs.existsSync(BLOG_DIR)) {
-    const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith(".md")).sort();
-    for (const fn of files) {
-      const filePath = path.join(BLOG_DIR, fn);
-      const raw = fs.readFileSync(filePath, "utf8");
-      const { meta, body } = parseFrontMatter(raw);
+  const posts = getBlogPosts();
 
-      let title = meta.title;
-      let cleanedBody = body;
-      if (!title) {
-        const h1Match = body.match(/^#\s+(.+)$/m);
-        title = h1Match ? h1Match[1] : fn.replace(/\.md$/, "");
-        if (h1Match) {
-          cleanedBody = body.slice(0, h1Match.index) + body.slice(h1Match.index + h1Match[0].length);
-        }
-      } else {
-        cleanedBody = cleanedBody.replace(/^\s*#\s+.*?\r?\n+/, "");
-      }
-      cleanedBody = cleanedBody.trimStart();
-
-      let date = meta.date;
-      if (!date) {
-        const stat = fs.statSync(filePath);
-        date = stat.mtime.toISOString().replace("T", " ").slice(0, 19);
-      }
-
-      const summary = meta.summary || "";
-      const tags = meta.tags ? meta.tags.split(/[,，]/).map((t) => t.trim()).filter(Boolean) : [];
-      const slug = slugOf(fn);
-      const html = marked.parse(cleanedBody);
-
-      posts.push({ date, slug, title, summary, tags, html });
-    }
+  if (writeBlogHtml) {
+    writeBlogHtmls(posts);
+    console.log(`[generator] Blog: ${posts.length} post(s) compiled to temporary HTML.`);
   }
-
-  // Sort posts by date descending
-  posts.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
-
-  // Write blog HTMLs
-  fs.mkdirSync(BLOG_OUT_DIR, { recursive: true });
-  const blogIndexHtml = renderBlogIndex(posts);
-  fs.writeFileSync(path.join(BLOG_DIR, "index.html"), blogIndexHtml, "utf8");
-  fs.writeFileSync(path.join(BLOG_OUT_DIR, "index.html"), blogIndexHtml, "utf8");
-
-  for (const p of posts) {
-    const postHtml = renderBlogPost(p);
-    fs.writeFileSync(path.join(BLOG_DIR, `${p.slug}.html`), postHtml, "utf8");
-    fs.writeFileSync(path.join(BLOG_OUT_DIR, `${p.slug}.html`), postHtml, "utf8");
-  }
-  console.log(`[generator] Blog: ${posts.length} post(s) compiled.`);
 
   // Write SEO files
   writeSeoFiles(posts);
@@ -1005,8 +1020,7 @@ export function generateSite() {
   // 2. Build index.html
   const indexHtml = generateIndexHtml();
   fs.writeFileSync(path.join(ROOT, "index.html"), indexHtml, "utf8");
-  fs.writeFileSync(path.join(PUBLIC_DIR, "index.html"), indexHtml, "utf8");
-  console.log("[generator] Index HTML written to index.html and public/index.html.");
+  console.log("[generator] Index HTML written to index.html.");
 }
 
 // Direct execution CLI
