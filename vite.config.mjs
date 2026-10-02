@@ -3,6 +3,7 @@ import { resolve, extname } from "path";
 import { execSync } from "child_process";
 import fs from "fs";
 import {
+  generateSite,
   generateIndexHtml,
   cleanGeneratedHtml,
   getBlogPosts,
@@ -125,6 +126,16 @@ function academicSitePlugin() {
     },
     configureServer(server) {
       cleanGeneratedHtml();
+
+      const pagefindDir = resolve(rootDir, "dist", "pagefind");
+      if (!fs.existsSync(pagefindDir)) {
+        console.log("[vite] Dev server start: generating initial Pagefind search index...");
+        try {
+          generateSite({ outDir: resolve(rootDir, "dist") });
+        } catch (err) {
+          console.warn("[vite] Pagefind index generation warning:", err);
+        }
+      }
 
       server.middlewares.use(async (req, res, next) => {
         const rawUrl = req.url?.split("?")[0] || "";

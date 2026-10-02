@@ -1,4 +1,3 @@
-import mediumZoom from "medium-zoom";
 import { computePosition, flip, shift, offset, arrow } from "@floating-ui/dom";
 
 // Mark JS enabled
@@ -291,27 +290,6 @@ document.querySelectorAll(".bib").forEach((det) => {
   });
 });
 
-/* ---------- Medium Zoom: Smooth Lightbox for Figures & Diagrams ---------- */
-function initMediumZoom() {
-  const getBg = () =>
-    document.documentElement.getAttribute("data-theme") === "dark"
-      ? "rgba(12, 16, 23, 0.94)"
-      : "rgba(250, 248, 245, 0.96)";
-
-  const zoom = mediumZoom(".prose img, .pub-thumb img, [data-zoomable]", {
-    margin: 24,
-    background: getBg(),
-    scrollOffset: 40,
-  });
-
-  window.addEventListener("themechange", (e) => {
-    zoom.update({
-      background: e.detail === "dark" ? "rgba(12, 16, 23, 0.94)" : "rgba(250, 248, 245, 0.96)",
-    });
-  });
-}
-initMediumZoom();
-
 /* ---------- Pagefind Static Full-Text Search Modal ---------- */
 function initSearchModal() {
   const modal = document.getElementById("search-modal");
@@ -331,10 +309,16 @@ function initSearchModal() {
     if (pagefindLoading) return null;
     pagefindLoading = true;
     try {
-      const isBlog = window.location.pathname.includes("/blog/");
-      const pfPath = isBlog ? "../pagefind/pagefind.js" : "./pagefind/pagefind.js";
-      pagefind = await import(/* @vite-ignore */ pfPath);
-      await pagefind.init();
+      // Use absolute origin path so it works across root, blog, and assets
+      const pfUrl = new URL("/pagefind/pagefind.js", window.location.origin).href;
+      const mod = await import(/* @vite-ignore */ pfUrl);
+      if (mod.options) {
+        await mod.options({ basePath: "/pagefind/" });
+      }
+      if (mod.init) {
+        await mod.init();
+      }
+      pagefind = mod;
       return pagefind;
     } catch (err) {
       console.warn("[pagefind] Static search index not loaded:", err);
@@ -342,6 +326,59 @@ function initSearchModal() {
     } finally {
       pagefindLoading = false;
     }
+  }
+
+  // Client fallback search if static index is unavailable
+  function clientFallbackSearch(query) {
+    const q = query.toLowerCase();
+    const results = [];
+
+    document.querySelectorAll(".pub-card").forEach((card) => {
+      const title = card.querySelector(".pub-title")?.textContent || "";
+      const authors = card.querySelector(".pub-authors")?.textContent || "";
+      const meta = card.querySelector(".pub-meta")?.textContent || "";
+      const text = `${title} ${authors} ${meta}`.toLowerCase();
+      if (text.includes(q)) {
+        const id = card.id ? `#${card.id}` : "#publications";
+        results.push({
+          url: id,
+          tag: "Publication",
+          title,
+          excerpt: meta || authors,
+        });
+      }
+    });
+
+    document.querySelectorAll(".talk-card, .talk-item").forEach((talk) => {
+      const title = talk.querySelector(".talk-title")?.textContent || "";
+      const meta = talk.querySelector(".talk-meta")?.textContent || "";
+      const text = `${title} ${meta}`.toLowerCase();
+      if (text.includes(q)) {
+        results.push({
+          url: "#talks",
+          tag: "Talk",
+          title,
+          excerpt: meta,
+        });
+      }
+    });
+
+    document.querySelectorAll(".blog-list li").forEach((li) => {
+      const a = li.querySelector("a");
+      const title = a?.querySelector(".blog-title")?.textContent || a?.textContent || "";
+      const summary = li.querySelector(".blog-summary")?.textContent || "";
+      const text = `${title} ${summary}`.toLowerCase();
+      if (text.includes(q) && a) {
+        results.push({
+          url: a.getAttribute("href") || "#",
+          tag: "Blog",
+          title,
+          excerpt: summary,
+        });
+      }
+    });
+
+    return results.slice(0, 8);
   }
 
   function openSearch() {
@@ -424,39 +461,57 @@ function initSearchModal() {
     debounceTimer = setTimeout(async () => {
       resultsContainer.innerHTML = '<div class="search-hint">Searching...</div>';
       const pf = await loadPagefind();
-      if (!pf) {
-        resultsContainer.innerHTML =
-          '<div class="search-hint">Search index is built statically during <code>npm run build</code>.<br>Run build once to search locally.</div>';
-        return;
+
+      if (pf) {
+        try {
+          const search = await pf.search(q);
+          if (search.results && search.results.length > 0) {
+            const topResults = await Promise.all(search.results.slice(0, 8).map((r) => r.data()));
+            selectedIndex = 0;
+
+            resultsContainer.innerHTML = topResults
+              .map((item, idx) => {
+                const isBlog = item.url.includes("/blog/");
+                const tag = isBlog ? "Blog" : "Page";
+                return `<a href="${item.url}" class="search-result-item ${idx === 0 ? "active" : ""}" data-index="${idx}">
+                  <div class="search-result-meta">
+                    <span class="search-result-tag">${tag}</span>
+                    <span class="search-result-title">${item.meta?.title || item.url}</span>
+                  </div>
+                  ${item.excerpt ? `<p class="search-result-excerpt">${item.excerpt}</p>` : ""}
+                </a>`;
+              })
+              .join("");
+            return;
+          }
+        } catch (err) {
+          console.warn("[pagefind] Search error:", err);
+        }
       }
 
-      try {
-        const search = await pf.search(q);
-        if (!search.results || !search.results.length) {
-          resultsContainer.innerHTML = `<div class="search-empty">No results found for "<strong>${q.replace(/</g, "&lt;")}</strong>".</div>`;
-          selectedIndex = -1;
-          return;
-        }
-
-        const topResults = await Promise.all(search.results.slice(0, 8).map((r) => r.data()));
+      // Fallback to in-page search
+      const fallbackResults = clientFallbackSearch(q);
+      if (fallbackResults.length > 0) {
         selectedIndex = 0;
-
-        resultsContainer.innerHTML = topResults
+        const reg = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
+        resultsContainer.innerHTML = fallbackResults
           .map((item, idx) => {
-            const isBlog = item.url.includes("/blog/");
-            const tag = isBlog ? "Blog" : "Page";
+            const highlightedTitle = item.title.replace(reg, "<mark>$1</mark>");
+            const highlightedExcerpt = item.excerpt.replace(reg, "<mark>$1</mark>");
             return `<a href="${item.url}" class="search-result-item ${idx === 0 ? "active" : ""}" data-index="${idx}">
               <div class="search-result-meta">
-                <span class="search-result-tag">${tag}</span>
-                <span class="search-result-title">${item.meta?.title || item.url}</span>
+                <span class="search-result-tag">${item.tag}</span>
+                <span class="search-result-title">${highlightedTitle}</span>
               </div>
-              ${item.excerpt ? `<p class="search-result-excerpt">${item.excerpt}</p>` : ""}
+              ${item.excerpt ? `<p class="search-result-excerpt">${highlightedExcerpt}</p>` : ""}
             </a>`;
           })
           .join("");
-      } catch (err) {
-        resultsContainer.innerHTML = '<div class="search-empty">Search encountered an issue.</div>';
+        return;
       }
+
+      resultsContainer.innerHTML = `<div class="search-empty">No results found for "<strong>${q.replace(/</g, "&lt;")}</strong>".</div>`;
+      selectedIndex = -1;
     }, 120);
   });
 }

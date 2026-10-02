@@ -2094,30 +2094,6 @@ button.link-pill:hover {
   }
 }
 
-/* ---------- Medium Zoom Lightbox ---------- */
-.medium-zoom-overlay {
-  z-index: 1000;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: opacity 0.25s ease;
-}
-
-.medium-zoom-image--opened {
-  z-index: 1001;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-popover);
-}
-
-.pub-thumb img,
-.prose img,
-[data-zoomable] {
-  cursor: zoom-in;
-}
-
-.medium-zoom-image--opened {
-  cursor: zoom-out;
-}
-
 /* ---------- Floating UI Tooltip ---------- */
 .floating-tooltip {
   position: absolute;
