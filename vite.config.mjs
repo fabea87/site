@@ -3,7 +3,8 @@ import { resolve } from "path";
 import fs from "fs";
 import {
   generateSite,
-  cleanBlogHtml,
+  generateIndexHtml,
+  cleanGeneratedHtml,
   getBlogPosts,
   renderBlogIndex,
   renderBlogPost,
@@ -48,8 +49,8 @@ function academicSitePlugin() {
   return {
     name: "academic-site-generator",
     buildStart() {
-      // During production build, generate temporary HTMLs for Rollup bundling
-      generateSite({ writeBlogHtml: true });
+      // Production build: create temporary HTML files for Vite / Rollup bundler
+      generateSite({ writeHtml: true });
     },
     closeBundle() {
       console.log("[vite] Syncing static assets to dist...");
@@ -67,22 +68,37 @@ function academicSitePlugin() {
         }
       }
 
-      // Keep blog/ strictly clean with only *.md files
-      cleanBlogHtml();
-      console.log("[vite] Cleaned up temporary blog HTMLs. Only .md files retained in blog/.");
+      // Keep root and blog/ clean of any generated HTML files
+      cleanGeneratedHtml();
+      console.log("[vite] Cleaned up temporary HTMLs. Workspace contains only source files.");
     },
     configureServer(server) {
       try {
-        console.log("[vite] Dev server start: generating HTML and SEO files...");
-        generateSite({ writeBlogHtml: false });
-        cleanBlogHtml();
+        console.log("[vite] Dev server start: generating SEO files...");
+        generateSite({ writeHtml: false });
+        cleanGeneratedHtml();
       } catch (err) {
         console.error("[vite] Failed to generate on start:", err);
       }
 
-      // Dev middleware: serve blog pages dynamically from .md files with zero HTML files on disk
+      // Dev middleware: dynamically serve index and blog pages purely in memory with zero HTML files on disk
       server.middlewares.use(async (req, res, next) => {
         const rawUrl = req.url?.split("?")[0] || "";
+
+        // 1. Homepage
+        if (rawUrl === "/" || rawUrl === "/index.html") {
+          try {
+            const rawHtml = generateIndexHtml();
+            const html = await server.transformIndexHtml("/", rawHtml);
+            res.setHeader("Content-Type", "text/html; charset=utf-8");
+            res.end(html);
+            return;
+          } catch (e) {
+            return next(e);
+          }
+        }
+
+        // 2. Blog list
         if (rawUrl === "/blog" || rawUrl === "/blog/" || rawUrl === "/blog/index.html") {
           try {
             const posts = getBlogPosts();
@@ -95,6 +111,8 @@ function academicSitePlugin() {
             return next(e);
           }
         }
+
+        // 3. Blog post
         if (rawUrl.startsWith("/blog/") && rawUrl.endsWith(".html")) {
           const slug = rawUrl.slice("/blog/".length).replace(/\.html$/, "");
           try {
@@ -111,6 +129,7 @@ function academicSitePlugin() {
             return next(e);
           }
         }
+
         next();
       });
 
@@ -136,7 +155,7 @@ function academicSitePlugin() {
         ) {
           console.log(`[vite] Source content changed (${file}), regenerating...`);
           try {
-            generateSite({ writeBlogHtml: false });
+            generateSite({ writeHtml: false });
             server.ws.send({ type: "full-reload" });
           } catch (err) {
             console.error("[vite] Content regeneration failed:", err);

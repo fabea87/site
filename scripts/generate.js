@@ -929,14 +929,23 @@ export function getBlogPosts() {
   return posts;
 }
 
-export function cleanBlogHtml() {
-  if (!fs.existsSync(BLOG_DIR)) return;
-  const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith(".html"));
-  for (const f of files) {
+export function cleanGeneratedHtml() {
+  const rootIndex = path.join(ROOT, "index.html");
+  if (fs.existsSync(rootIndex)) {
     try {
-      fs.unlinkSync(path.join(BLOG_DIR, f));
+      fs.unlinkSync(rootIndex);
     } catch {
       // ignore
+    }
+  }
+  if (fs.existsSync(BLOG_DIR)) {
+    const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith(".html"));
+    for (const f of files) {
+      try {
+        fs.unlinkSync(path.join(BLOG_DIR, f));
+      } catch {
+        // ignore
+      }
     }
   }
 }
@@ -1003,24 +1012,20 @@ export function writeSeoFiles(posts) {
 // --------------------------------------------------------------------------
 // Master Generator
 // --------------------------------------------------------------------------
-export function generateSite({ writeBlogHtml = true } = {}) {
-  console.log("[generator] Building academic site with JavaScript...");
+export function generateSite({ writeHtml = true } = {}) {
+  console.log("[generator] Compiling academic site...");
 
-  // 1. Build blog posts
   const posts = getBlogPosts();
 
-  if (writeBlogHtml) {
+  if (writeHtml) {
     writeBlogHtmls(posts);
-    console.log(`[generator] Blog: ${posts.length} post(s) compiled to temporary HTML.`);
+    const indexHtml = generateIndexHtml();
+    fs.writeFileSync(path.join(ROOT, "index.html"), indexHtml, "utf8");
+    console.log(`[generator] Generated temporary HTML entries for bundling.`);
   }
 
-  // Write SEO files
+  // Write SEO files to public/
   writeSeoFiles(posts);
-
-  // 2. Build index.html
-  const indexHtml = generateIndexHtml();
-  fs.writeFileSync(path.join(ROOT, "index.html"), indexHtml, "utf8");
-  console.log("[generator] Index HTML written to index.html.");
 }
 
 // Direct execution CLI
