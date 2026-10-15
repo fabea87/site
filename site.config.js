@@ -17,26 +17,27 @@ export const SITE = {
   // Site metadata
   url: "https://870603.xyz",
   description:
-    'Personal academic homepage of Da "Alex" Yan, Ph.D. — researcher in Computer-Assisted Language Learning (CALL), feedback, and formative assessment at Wenzhou Medical University.',
+    'Personal academic homepage of Da "Alex" Yan, Ph.D. — researcher in Computer-Assisted Language Learning (CALL), feedback, and formative assessment at Wenzhou Medical University. Listed in World\'s Top 2% Scientists (2026).',
   affiliation: ["Wenzhou Medical University", "https://www.wmu.edu.cn"],
 
   // Hero bio snippets
   bio_text: `
                 <p>
                 Da "Alex" Yan(<ruby>闫<rt>yán</rt></ruby> <ruby>达<rt>dá</rt></ruby>), PhD, works on CALL and feedback.</p>
-                <p>He teaches at <a href="https://www.wmu.edu.cn" target="_blank">Wenzhou Medical University</a>. His research interests include language learning; formative assessment; and human-computer interaction.
+                <p>He teaches at <a href="https://www.wmu.edu.cn" target="_blank" rel="noopener">Wenzhou Medical University</a>. His research interests include language learning, formative assessment, and human-computer interaction. He is listed in the <a href="assets/img/yan-da-alex-topscinet-single-year-2026.jpg" target="_blank" rel="noopener">2026 World's Top 2% Scientists</a> (Stanford / Elsevier).
                 </p>
                 `,
   bio: `
                     <p>
                     <span class="about-label">Bio:</span>
-                    I hold a Ph.D. degree in Translation (2022–2025) from <a href="https://www.usm.my/" target="_blank">University of Science, Malaysia (USM)</a>.
+                    I hold a Ph.D. degree in Translation (2022–2025) from <a href="https://www.usm.my/" target="_blank" rel="noopener">University of Science, Malaysia (USM)</a>.
                     With over a decade of teaching experience at
-                    <a href="https://www.wmu.edu.cn" target="_blank">Wenzhou Medical University</a> and
-                    <a href="https://www.xyafu.edu.cn/" target="_blank">Xinyang Agriculture and Forestry University (XYAFU)</a>,
+                    <a href="https://www.wmu.edu.cn" target="_blank" rel="noopener">Wenzhou Medical University</a> and
+                    <a href="https://www.xyafu.edu.cn/" target="_blank" rel="noopener">Xinyang Agriculture and Forestry University (XYAFU)</a>,
                     I have taught core courses such as Introduction to Translation, Basic and Advanced Interpreting, and Computer-Assisted Translation, and many other English as a second language courses.
                     I have served as the principal investigator or main contributor for 12 social science research projects, focusing on translation and educational practices.
                     I have published 19 peer-reviewed papers and received several teaching awards, including the second prize in the Central China Translation Technology Teaching Competition.
+                    In 2026, I was named to Stanford University &amp; Elsevier's <a href="assets/img/yan-da-alex-topscinet-single-year-2026.jpg" target="_blank" rel="noopener">World's Top 2% Scientists</a> list (single-year impact in Education, subfield rank #615).
                     In addition to my academic work, I have provided interpreting services for several international events, including the International Tea Culture Festival and foreign cooperation projects with local governments and universities.
                     I also review for multiple international journals.
                     </p>
