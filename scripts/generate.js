@@ -347,7 +347,7 @@ function getSocialMediaHtml() {
                 <a class="cv-menu-item" href="${SITE.cv_cn}" target="_blank">中文简历</a>
                 </div>
                 </div>
-                <a class="link-pill" href="mailto:${SITE.email}">${icon("envelope-open")}Mail</a>
+                <a class="link-pill email-pill" href="#" data-u="alexyan1987" data-d="outlook.com" title="Click to email">${icon("envelope-open")}alexyan1987(AT)outlook.com</a>
                 </div>
   `;
 }
@@ -358,7 +358,15 @@ function getInterestsHtml() {
 
 function getContactHtml() {
   const items = [
-    { iconName: "envelope", label: "Email", href: `mailto:${SITE.email}`, ext: false, brand: "" },
+    {
+      iconName: "envelope",
+      label: "alexyan1987(AT)outlook.com",
+      href: "#",
+      ext: false,
+      brand: "email-pill",
+      dataU: "alexyan1987",
+      dataD: "outlook.com",
+    },
     {
       iconName: "orcid",
       label: "ORCID",
@@ -407,6 +415,7 @@ function getContactHtml() {
   for (const item of items) {
     const target = item.ext ? ' target="_blank" rel="me noopener"' : "";
     const brandAttr = item.brand ? ` ${item.brand}` : "";
+    const dataAttrs = item.dataU ? ` data-u="${escapeHtml(item.dataU)}" data-d="${escapeHtml(item.dataD)}"` : "";
     const loaded = loadSvgBody(item.iconName);
     let inner = "";
     if (loaded) {
@@ -415,7 +424,7 @@ function getContactHtml() {
       const mono = item.iconName === "webofscience" ? "WoS" : item.iconName.slice(0, 1).toUpperCase();
       inner = `<span class="contact-icon mono" aria-hidden="true">${mono}</span>`;
     }
-    s += `<a class="contact-pill${brandAttr}" href="${escapeHtml(item.href)}"${target}>${inner}<span>${escapeHtml(item.label)}</span><span class="contact-arrow" aria-hidden="true">↗</span></a>`;
+    s += `<a class="contact-pill${brandAttr}" href="${escapeHtml(item.href)}"${target}${dataAttrs}>${inner}<span>${escapeHtml(item.label)}</span><span class="contact-arrow" aria-hidden="true">↗</span></a>`;
   }
   s += "</div>";
   return s;
@@ -660,7 +669,6 @@ export function generateIndexHtml() {
     name: SITE.short_name,
     alternateName: name[0],
     url: `${siteUrl}/`,
-    email: `mailto:${SITE.email}`,
     affiliation: {
       "@type": "Organization",
       name: affiliationName,

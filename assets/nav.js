@@ -530,3 +530,13 @@ function initSearchModal() {
   });
 }
 initSearchModal();
+
+/* ---------- Obfuscated Email Pill Click ---------- */
+document.addEventListener("click", (e) => {
+  const pill = e.target.closest(".email-pill");
+  if (!pill) return;
+  e.preventDefault();
+  const u = pill.getAttribute("data-u") || "alexyan1987";
+  const d = pill.getAttribute("data-d") || "outlook.com";
+  window.location.href = `mailto:${u}@${d}`;
+});
