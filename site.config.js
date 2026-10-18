@@ -43,6 +43,16 @@ export const SITE = {
                     </p>
                 `,
 
+  // Research interests narrative
+  interests_narrative: `
+    <p>
+      My research centers on <strong>Computer-Assisted Language Learning (CALL)</strong>, <strong>Generative AI in Education</strong>, and <strong>Formative Assessment</strong>. Specifically, I investigate how intelligent technologies—such as large language models (LLMs) and automated corrective feedback systems—shape second language (L2) writers' feedback seeking, metacognitive processing, and revision trajectories. Through mixed-methods interventions and process-oriented analytics, my work explores how rubric co-creation and dialogic human–AI interaction foster feedback literacy, agency, and productive feedback uptake.
+    </p>
+    <p>
+      In parallel, my scholarship extends to <strong>Translation Technology and Interpreting Studies</strong>, with a focus on human–computer interaction (HCI), translator agency, and cross-cultural communication. I examine how emergent technologies and data-driven methods transform pedagogical practices in translation training, intercultural mediation, and language education.
+    </p>
+  `,
+
   // Research interests tags
   interests: [
     "Computer-Assisted Language Learning",

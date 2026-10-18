@@ -294,8 +294,7 @@ export function getNavHtml(root = "", home = "#top") {
       <div class="nav-links">
         <a href="${root}index.html#interests">Interests</a>
         <a href="${root}index.html#publications">Publications</a>
-        <a href="${root}index.html#talks">Conferences</a>
-        <a href="${root}blog/index.html">Blog</a>
+        <a href="${root}index.html#talks">Conf &amp; Talks</a>
         <a href="${root}index.html#contact">Contact</a>
       </div>
       <div class="nav-right">
@@ -316,7 +315,7 @@ export function getNavHtml(root = "", home = "#top") {
       <div class="search-modal-header">
         <div class="search-input-wrap">
           ${icon("search", "search-input-icon")}
-          <input type="search" id="search-modal-input" class="search-modal-input" placeholder="Search publications, talks, blogs... (↑↓ to navigate, Esc to close)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+          <input type="search" id="search-modal-input" class="search-modal-input" placeholder="Search publications, talks... (↑↓ to navigate, Esc to close)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
           <button type="button" class="search-esc-btn" id="search-modal-close" aria-label="Close search">Esc</button>
         </div>
       </div>
@@ -349,15 +348,12 @@ function getSocialMediaHtml() {
                 </div>
                 </div>
                 <a class="link-pill" href="mailto:${SITE.email}">${icon("envelope-open")}Mail</a>
-                <a class="link-pill" href="https://scholar.google.com/citations?user=${SITE.scholar}&hl=en" target="_blank">${icon("google-scholar")}Scholar</a>
                 </div>
   `;
 }
 
 function getInterestsHtml() {
-  return `<div class="interests">${SITE.interests
-    .map((item) => `<span class="interest-chip">${escapeHtml(item)}</span>`)
-    .join("")}</div>`;
+  return `<div class="interests-narrative">${SITE.interests_narrative}</div>`;
 }
 
 function getContactHtml() {
@@ -589,7 +585,7 @@ function getTalksHtml(entries) {
   });
 
   let s = '<div class="table-responsive">';
-  s += '<table class="talk-table" id="talk-table" aria-label="Conferences table">';
+  s += '<table class="talk-table" id="talk-table" aria-label="Conf and Talks table">';
   s += '<thead>';
   s += '<tr>';
   s += '<th class="th-year" scope="col">Year</th>';
@@ -691,7 +687,6 @@ export function generateIndexHtml() {
   <meta name="description" content="${escapeHtml(description)}">
   <meta name="color-scheme" content="light dark">
   <link rel="canonical" href="${siteUrl}/">
-  <link rel="alternate" type="application/rss+xml" title="Blog" href="${siteUrl}/feed.xml">
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   <meta property="og:type" content="profile">
   <meta property="og:title" content="${escapeHtml(pageTitle)}">
@@ -752,7 +747,7 @@ ${ldJson}
       </section>
 
       <section id="talks" class="section">
-        <h2 class="section-heading">Conferences</h2>
+        <h2 class="section-heading">Conf &amp; Talks</h2>
         ${getTalksHtml(talkEntries)}
       </section>
 
@@ -1034,24 +1029,9 @@ export function generateRobotsTxt() {
   return `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`;
 }
 
-export function generateSitemapXml(posts = getBlogPosts()) {
+export function generateSitemapXml() {
   const siteUrl = SITE.url.replace(/\/+$/, "");
-  const urls = [
-    { loc: `${siteUrl}/`, lastmod: TODAY },
-    { loc: `${siteUrl}/blog/`, lastmod: TODAY },
-  ];
-  for (const p of posts) {
-    urls.push({
-      loc: `${siteUrl}/blog/${p.slug}.html`,
-      lastmod: p.date ? p.date.slice(0, 10) : TODAY,
-    });
-  }
-  const sitemapEntries = urls
-    .map(
-      (u) => `  <url>\n    <loc>${escapeHtml(u.loc)}</loc>\n    <lastmod>${u.lastmod}</lastmod>\n  </url>`
-    )
-    .join("\n");
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries}\n</urlset>\n`;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>${siteUrl}/</loc>\n    <lastmod>${TODAY}</lastmod>\n  </url>\n</urlset>\n`;
 }
 
 export function generateFeedXml(posts = getBlogPosts()) {

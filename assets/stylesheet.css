@@ -904,6 +904,34 @@ button.link-pill:hover {
   border-radius: 2px;
 }
 
+/* ---------- Research Interests Narrative ---------- */
+.interests-narrative {
+  max-width: 1080px;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.82;
+  color: var(--text);
+  margin-top: 14px;
+}
+
+.interests-narrative p {
+  margin: 0 0 16px;
+}
+
+.interests-narrative p:last-child {
+  margin-bottom: 0;
+}
+
+.interests-narrative strong {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+[data-theme="dark"] .interests-narrative strong {
+  color: var(--accent-strong);
+}
+
 /* ---------- Research Interests Chips ---------- */
 .interests {
   display: flex;

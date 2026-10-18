@@ -31,27 +31,13 @@ function copyDirRecursive(src, dest) {
 }
 
 function getVirtualHtmlRoutes() {
-  const posts = getBlogPosts();
   const routes = new Map();
-
   const mainPath = resolve(rootDir, "index.html");
-  const blogIndexPath = resolve(rootDir, "blog", "index.html");
-
   routes.set(mainPath, () => generateIndexHtml());
-  routes.set(blogIndexPath, () => renderBlogIndex(posts));
-
   const inputs = {
     main: mainPath,
-    blog_index: blogIndexPath,
   };
-
-  for (const post of posts) {
-    const postPath = resolve(rootDir, "blog", `${post.slug}.html`);
-    routes.set(postPath, () => renderBlogPost(post));
-    inputs[`blog_${post.slug}`] = postPath;
-  }
-
-  return { routes, inputs, posts };
+  return { routes, inputs, posts: [] };
 }
 
 function academicSitePlugin() {
@@ -81,7 +67,6 @@ function academicSitePlugin() {
     },
     generateBundle() {
       if (!isBuild) return;
-      const posts = getBlogPosts();
       this.emitFile({
         type: "asset",
         fileName: "robots.txt",
@@ -90,12 +75,7 @@ function academicSitePlugin() {
       this.emitFile({
         type: "asset",
         fileName: "sitemap.xml",
-        source: generateSitemapXml(posts),
-      });
-      this.emitFile({
-        type: "asset",
-        fileName: "feed.xml",
-        source: generateFeedXml(posts),
+        source: generateSitemapXml(),
       });
 
       const faviconPath = resolve(rootDir, "assets", "favicon.ico");
