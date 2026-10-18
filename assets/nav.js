@@ -50,7 +50,7 @@ if (window.matchMedia) {
 
 /* ---------- Scroll Reveal (Subtle Stagger) ---------- */
 const revealEls = document.querySelectorAll(
-  ".section-heading, .pub-card, .year-label, .contact-pill"
+  ".section-heading, .pub-card, .year-fold-summary, .year-label, .contact-pill"
 );
 let revealCounter = 0;
 if ("IntersectionObserver" in window && revealEls.length) {
@@ -513,6 +513,23 @@ function initSearchModal() {
       resultsContainer.innerHTML = `<div class="search-empty">No results found for "<strong>${q.replace(/</g, "&lt;")}</strong>".</div>`;
       selectedIndex = -1;
     }, 120);
+  });
+
+  resultsContainer.addEventListener("click", (e) => {
+    const a = e.target.closest("a.search-result-item");
+    if (!a) return;
+    const href = a.getAttribute("href");
+    if (href && href.startsWith("#")) {
+      closeSearch();
+      const target = document.querySelector(href);
+      if (target) {
+        const fold = target.closest("details.year-fold");
+        if (fold) {
+          fold.open = true;
+          fold.querySelectorAll(".pub-card").forEach((c) => c.classList.add("in"));
+        }
+      }
+    }
   });
 }
 initSearchModal();

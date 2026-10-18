@@ -1139,7 +1139,216 @@ button.link-pill:hover {
   background: var(--accent-soft);
 }
 
-/* ---------- Year Groups ---------- */
+/* ---------- Section Heading Row with Controls ---------- */
+.section-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 38px 0 16px;
+}
+
+.section-heading-row .section-heading {
+  margin: 0;
+}
+
+/* ---------- Fold Toggle All Button ---------- */
+.fold-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--bg-elevated);
+  color: var(--text-soft);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.25;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+  user-select: none;
+}
+
+.fold-toggle-btn:hover {
+  border-color: var(--accent-border);
+  color: var(--accent);
+  background: var(--bg-subtle);
+}
+
+.fold-toggle-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.fold-toggle-icon {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  color: currentColor;
+}
+
+.fold-toggle-btn.all-open .fold-toggle-icon {
+  transform: rotate(180deg);
+}
+
+.pub-filter .fold-toggle-btn {
+  margin-left: auto;
+}
+
+/* ---------- Year Groups / Collapsible Accordions ---------- */
+.year-fold {
+  margin: 18px 0 22px;
+  border-radius: var(--radius);
+  transition: background-color 0.2s ease;
+}
+
+.year-fold.is-hidden {
+  display: none !important;
+}
+
+.year-fold-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 10px 10px 6px;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  border-radius: var(--radius);
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.year-fold-summary::-webkit-details-marker {
+  display: none;
+}
+
+.year-fold-summary:hover {
+  background: var(--bg-subtle);
+}
+
+.year-fold-summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.year-fold-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.fold-chevron {
+  width: 15px;
+  height: 15px;
+  color: var(--accent);
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+.year-fold[open] > .year-fold-summary .fold-chevron {
+  transform: rotate(90deg);
+}
+
+.year-fold-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  margin: 0;
+  line-height: 1;
+}
+
+.year-fold-count {
+  display: inline-flex;
+  align-items: center;
+  padding: 2.5px 9px;
+  border-radius: var(--radius-full);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  font-family: var(--font-ui);
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--text-faint);
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+.year-fold-summary:hover .year-fold-count {
+  border-color: var(--border-strong);
+  color: var(--text-soft);
+}
+
+.year-fold-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  min-width: 24px;
+  transition: background-color 0.18s ease;
+}
+
+.year-fold-summary:hover .year-fold-line {
+  background: var(--border-strong);
+}
+
+.year-fold-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-faint);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+
+.year-fold-summary:hover .year-fold-badge {
+  color: var(--accent);
+  border-color: var(--accent-border);
+  background: var(--bg-subtle);
+}
+
+.badge-hide {
+  display: none;
+}
+
+.year-fold[open] > .year-fold-summary .badge-show {
+  display: none;
+}
+
+.year-fold[open] > .year-fold-summary .badge-hide {
+  display: inline;
+}
+
+.year-fold-content {
+  margin-top: 14px;
+  animation: foldReveal 0.22s ease-out;
+}
+
+@keyframes foldReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fallback legacy Year Groups */
 .year-label {
   display: flex;
   align-items: center;
@@ -1796,9 +2005,50 @@ button.link-pill:hover {
     padding: 6px 12px;
     font-size: 0.84rem;
   }
+
+  /* Year fold controls on mobile */
+  .section-heading-row {
+    margin: 28px 0 14px;
+  }
+
+  .pub-filter .fold-toggle-btn {
+    margin-left: 0;
+  }
+
+  .year-fold {
+    margin: 14px 0 18px;
+  }
+
+  .year-fold-summary {
+    padding: 8px 6px;
+    gap: 8px;
+    min-height: 44px;
+  }
+
+  .year-fold-header {
+    gap: 8px;
+  }
+
+  .year-fold-title {
+    font-size: 1.08rem;
+  }
+
+  .year-fold-count {
+    font-size: 0.72rem;
+    padding: 2px 7px;
+  }
 }
 
 @media (max-width: 440px) {
+  .year-fold-badge {
+    display: none !important;
+  }
+
+  .year-fold-summary {
+    padding: 10px 4px;
+    min-height: 48px;
+  }
+
   .pub-card {
     grid-template-columns: 74px 1fr;
     gap: 12px;
@@ -2046,8 +2296,20 @@ button.link-pill:hover {
   .back-to-top,
   .pub-toolbar,
   .theme-toggle,
-  .thumb-preview {
+  .thumb-preview,
+  .fold-chevron,
+  .year-fold-badge,
+  .fold-toggle-btn {
     display: none !important;
+  }
+
+  details.year-fold {
+    display: block !important;
+    margin: 16px 0 !important;
+  }
+
+  details.year-fold > .year-fold-content {
+    display: block !important;
   }
 
   body {

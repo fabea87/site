@@ -480,7 +480,7 @@ function getPaperEntry(entry) {
   const dataFeatured = fields.highlight ? ' data-featured="true"' : "";
 
   const onerrorHandler = ' onerror="this.closest(\'.pub-thumb\').classList.add(\'img-missing\')"';
-  let s = `<article class="pub-card${featured}"${dataYear}${dataFeatured}>${badge}`;
+  let s = `<article class="pub-card${featured}" id="${escapeHtml(entry.key)}"${dataYear}${dataFeatured}>${badge}`;
   s += `<div class="pub-thumb">${imgTag(img, fields.title, { extra: onerrorHandler })}</div>`;
   s += '<div class="pub-body">';
 
@@ -511,7 +511,7 @@ function getTalkEntry(entry) {
   const dataYear = ` data-year="${escapeHtml(year)}"`;
   const onerrorHandler = ' onerror="this.closest(\'.pub-thumb\').classList.add(\'img-missing\')"';
 
-  let s = `<article class="pub-card"${dataYear}>`;
+  let s = `<article class="pub-card" id="${escapeHtml(entry.key)}"${dataYear}>`;
   s += `<div class="pub-thumb">${imgTag(img, fields.title, { extra: onerrorHandler })}</div>`;
   s += '<div class="pub-body">';
   s += `<h3 class="pub-title">${title}</h3>`;
@@ -541,14 +541,29 @@ function getPublicationsHtml(entries) {
   });
 
   let s = "";
-  for (const year of sortedYears) {
+  sortedYears.forEach((year, idx) => {
     const groupEntries = groups.get(year);
     const count = groupEntries.length;
-    s += `<h3 class="year-label" data-year="${escapeHtml(year)}">${year}<span class="year-count">&nbsp;·&nbsp;${count}</span></h3>`;
+    const countText = count === 1 ? "1 publication" : `${count} publications`;
+    const isOpen = idx === 0 ? " open" : "";
+
+    s += `<details class="year-fold pub-year-fold" data-year="${escapeHtml(year)}"${isOpen}>`;
+    s += '<summary class="year-fold-summary">';
+    s += '<div class="year-fold-header">';
+    s += '<svg class="fold-chevron" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+    s += `<h3 class="year-fold-title">${escapeHtml(year)}</h3>`;
+    s += `<span class="year-fold-count">${countText}</span>`;
+    s += "</div>";
+    s += '<span class="year-fold-line" aria-hidden="true"></span>';
+    s += '<span class="year-fold-badge"><span class="badge-show">Show</span><span class="badge-hide">Hide</span></span>';
+    s += "</summary>";
+    s += '<div class="year-fold-content">';
     for (const entry of groupEntries) {
       s += getPaperEntry(entry);
     }
-  }
+    s += "</div>";
+    s += "</details>";
+  });
   return s;
 }
 
@@ -561,13 +576,29 @@ function getTalksHtml(entries) {
   });
 
   let s = "";
-  for (const year of sortedYears) {
+  sortedYears.forEach((year, idx) => {
     const groupEntries = groups.get(year);
-    s += `<h3 class="year-label" data-year="${escapeHtml(year)}">${year}</h3>`;
+    const count = groupEntries.length;
+    const countText = count === 1 ? "1 presentation" : `${count} presentations`;
+    const isOpen = idx === 0 ? " open" : "";
+
+    s += `<details class="year-fold talk-year-fold" data-year="${escapeHtml(year)}"${isOpen}>`;
+    s += '<summary class="year-fold-summary">';
+    s += '<div class="year-fold-header">';
+    s += '<svg class="fold-chevron" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+    s += `<h3 class="year-fold-title">${escapeHtml(year)}</h3>`;
+    s += `<span class="year-fold-count">${countText}</span>`;
+    s += "</div>";
+    s += '<span class="year-fold-line" aria-hidden="true"></span>';
+    s += '<span class="year-fold-badge"><span class="badge-show">Show</span><span class="badge-hide">Hide</span></span>';
+    s += "</summary>";
+    s += '<div class="year-fold-content">';
     for (const entry of groupEntries) {
       s += getTalkEntry(entry);
     }
-  }
+    s += "</div>";
+    s += "</details>";
+  });
   return s;
 }
 
@@ -592,6 +623,7 @@ function getPubFilterHtml(entries) {
     const cnt = groups.get(year).length;
     s += `<button type="button" class="filter-pill" data-filter="${escapeHtml(year)}" role="tab" aria-selected="false">${escapeHtml(year)} <span class="filter-count">${cnt}</span></button>`;
   }
+  s += '<button type="button" class="filter-pill fold-toggle-btn" id="pub-fold-toggle" aria-expanded="false" title="Expand or collapse all years"><svg class="fold-toggle-icon" viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg><span class="fold-toggle-text">Expand all</span></button>';
   s += "</div>";
   s += '<div id="pub-empty" class="pub-empty" hidden><p class="pub-empty-text">No publications found matching your search.</p><button type="button" id="pub-empty-reset" class="pub-empty-reset">Reset search filters</button></div>';
   s += "</div>";
@@ -715,7 +747,13 @@ ${ldJson}
       </section>
 
       <section id="talks" class="section">
-        <h2 class="section-heading">Conferences</h2>
+        <div class="section-heading-row">
+          <h2 class="section-heading">Conferences</h2>
+          <button type="button" class="filter-pill fold-toggle-btn" id="talk-fold-toggle" aria-expanded="false" title="Expand or collapse all conferences">
+            <svg class="fold-toggle-icon" viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg>
+            <span class="fold-toggle-text">Expand all</span>
+          </button>
+        </div>
         ${getTalksHtml(talkEntries)}
       </section>
 
