@@ -347,7 +347,7 @@ function getSocialMediaHtml() {
                 <a class="cv-menu-item" href="${SITE.cv_cn}" target="_blank">中文简历</a>
                 </div>
                 </div>
-                <a class="link-pill email-pill" href="#" data-u="alexyan1987" data-d="outlook.com" title="Click to email">${icon("envelope-open")}alexyan1987(AT)outlook.com</a>
+                <button type="button" class="link-pill email-copy-btn" data-u="alexyan1987" data-d="outlook.com" data-tooltip="alexyan1987(AT)outlook.com" aria-label="Email">${icon("envelope-open")}<span>Email</span></button>
                 </div>
   `;
 }
@@ -360,12 +360,11 @@ function getContactHtml() {
   const items = [
     {
       iconName: "envelope",
-      label: "alexyan1987(AT)outlook.com",
-      href: "#",
-      ext: false,
-      brand: "email-pill",
+      label: "Email",
+      isEmail: true,
       dataU: "alexyan1987",
       dataD: "outlook.com",
+      dataTooltip: "alexyan1987(AT)outlook.com",
     },
     {
       iconName: "orcid",
@@ -413,9 +412,6 @@ function getContactHtml() {
 
   let s = '<div class="contact-links">';
   for (const item of items) {
-    const target = item.ext ? ' target="_blank" rel="me noopener"' : "";
-    const brandAttr = item.brand ? ` ${item.brand}` : "";
-    const dataAttrs = item.dataU ? ` data-u="${escapeHtml(item.dataU)}" data-d="${escapeHtml(item.dataD)}"` : "";
     const loaded = loadSvgBody(item.iconName);
     let inner = "";
     if (loaded) {
@@ -424,7 +420,14 @@ function getContactHtml() {
       const mono = item.iconName === "webofscience" ? "WoS" : item.iconName.slice(0, 1).toUpperCase();
       inner = `<span class="contact-icon mono" aria-hidden="true">${mono}</span>`;
     }
-    s += `<a class="contact-pill${brandAttr}" href="${escapeHtml(item.href)}"${target}${dataAttrs}>${inner}<span>${escapeHtml(item.label)}</span><span class="contact-arrow" aria-hidden="true">↗</span></a>`;
+    if (item.isEmail) {
+      const copyIcon = '<svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>';
+      s += `<button type="button" class="contact-pill email-copy-btn" data-u="${escapeHtml(item.dataU)}" data-d="${escapeHtml(item.dataD)}" data-tooltip="${escapeHtml(item.dataTooltip)}" aria-label="Email">${inner}<span>${escapeHtml(item.label)}</span><span class="contact-arrow" aria-hidden="true">${copyIcon}</span></button>`;
+    } else {
+      const target = item.ext ? ' target="_blank" rel="me noopener"' : "";
+      const brandAttr = item.brand ? ` ${item.brand}` : "";
+      s += `<a class="contact-pill${brandAttr}" href="${escapeHtml(item.href)}"${target}>${inner}<span>${escapeHtml(item.label)}</span><span class="contact-arrow" aria-hidden="true">↗</span></a>`;
+    }
   }
   s += "</div>";
   return s;

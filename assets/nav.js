@@ -531,12 +531,61 @@ function initSearchModal() {
 }
 initSearchModal();
 
-/* ---------- Obfuscated Email Pill Click ---------- */
+/* ---------- Email Copy on Click & Tooltip on Hover ---------- */
+document.querySelectorAll(".email-copy-btn").forEach((el) => {
+  let timer;
+  el.addEventListener("mouseenter", () => {
+    const tipText = el.getAttribute("data-tooltip");
+    if (!tipText) return;
+    timer = setTimeout(() => {
+      showFloatingTooltip(el, tipText, { duration: 2500 });
+    }, 80);
+  });
+  el.addEventListener("mouseleave", () => {
+    clearTimeout(timer);
+  });
+});
+
 document.addEventListener("click", (e) => {
-  const pill = e.target.closest(".email-pill");
-  if (!pill) return;
+  const btn = e.target.closest(".email-copy-btn");
+  if (!btn) return;
   e.preventDefault();
-  const u = pill.getAttribute("data-u") || "alexyan1987";
-  const d = pill.getAttribute("data-d") || "outlook.com";
-  window.location.href = `mailto:${u}@${d}`;
+  const u = btn.getAttribute("data-u") || "alexyan1987";
+  const d = btn.getAttribute("data-d") || "outlook.com";
+  const email = `${u}@${d}`;
+
+  function onCopied(ok) {
+    if (ok) {
+      showFloatingTooltip(btn, `✓ Copied: ${email}`, { placement: "top", duration: 2500 });
+      btn.classList.add("copied");
+    } else {
+      showFloatingTooltip(btn, `Email: ${email}`, { placement: "top", duration: 2500 });
+    }
+    setTimeout(() => btn.classList.remove("copied"), 1600);
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(email).then(
+      () => onCopied(true),
+      () => fallback()
+    );
+  } else {
+    fallback();
+  }
+
+  function fallback() {
+    const ta = document.createElement("textarea");
+    ta.value = email;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      onCopied(document.execCommand("copy"));
+    } catch {
+      onCopied(false);
+    }
+    document.body.removeChild(ta);
+  }
 });
