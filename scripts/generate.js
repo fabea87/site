@@ -472,7 +472,7 @@ function getPaperEntry(entry) {
   const year = (fields.year || "").trim() || "n.d.";
   const featured = fields.highlight ? " featured" : "";
   const badge = fields.highlight
-    ? '<span class="featured-badge-inline" title="Featured Publication"><svg class="featured-star" viewBox="0 0 16 16" width="10" height="10" fill="currentColor" aria-hidden="true"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg>Featured</span>'
+    ? '<span class="featured-badge-corner" title="Featured Publication"><svg class="featured-star" viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg><span>Featured</span></span>'
     : "";
   const title = escapeHtml(fields.title);
   const href = escapeHtml(fields.html || fields.pdf || "#");
@@ -505,11 +505,14 @@ function getPaperEntry(entry) {
   let s = `<tr class="pub-row${featured}" id="${escapeHtml(entry.key)}"${dataYear}${dataFeatured}>`;
   s += `<td class="td-year"><span class="year-badge">${escapeHtml(year)}</span></td>`;
   s += '<td class="td-details">';
+  s += '<div class="pub-details-wrap">';
+  s += badge;
   s += '<div class="pub-title-row">';
-  s += `<a class="pub-title-link" href="${href}" target="_blank" rel="noopener">${title}</a>${award}${badge}`;
+  s += `<a class="pub-title-link" href="${href}" target="_blank" rel="noopener">${title}</a>${award}`;
   s += '</div>';
   s += `<div class="pub-authors">${authors}</div>`;
   s += `<div class="pub-meta">${escapeHtml(venue)}</div>`;
+  s += '</div>';
   s += '</td>';
   s += `<td class="td-action td-webview">${webLink}</td>`;
   s += `<td class="td-action td-postprint">${postprintLink}</td>`;
