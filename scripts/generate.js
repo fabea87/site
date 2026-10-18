@@ -331,9 +331,6 @@ export function getFooterHtml() {
   const year = new Date().getFullYear();
   return `
                 <p>© ${year} ${escapeHtml(SITE.short_name)} · Last updated ${TODAY}</p>
-                <p>
-                This website follows the design of <a href="https://m-niemeyer.github.io/" target="_blank">Michael Niemeyer</a> and <a href="https://jonbarron.info/" target="_blank">Jon Barron</a>.
-                </p>
   `;
 }
 
@@ -429,20 +426,16 @@ function getContactHtml() {
 }
 
 // --------------------------------------------------------------------------
-// Publication and Talk Artefacts
+// Publication and Talk Artefacts (Minimalist: Web view + Postprint)
 // --------------------------------------------------------------------------
 const PAPER_ARTEFACTS = {
   html: "Web view",
-  pdf: "Postprint archive",
-  supp: "Supplementary",
-  video: "Video",
-  poster: "Poster",
-  code: "Code",
+  pdf: "Postprint",
 };
 
 const TALK_ARTEFACTS = {
   slides: "Slides",
-  video: "Recording",
+  html: "Web view",
 };
 
 function artefactLinks(fields, artefacts) {
@@ -471,35 +464,48 @@ function getPaperEntry(entry) {
   const year = (fields.year || "").trim() || "n.d.";
   const featured = fields.highlight ? " featured" : "";
   const badge = fields.highlight
-    ? '<span class="featured-badge"><svg class="featured-star" viewBox="0 0 16 16" width="10" height="10" fill="currentColor" aria-hidden="true"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg>Featured</span>'
+    ? '<span class="featured-badge-inline" title="Featured Publication"><svg class="featured-star" viewBox="0 0 16 16" width="10" height="10" fill="currentColor" aria-hidden="true"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg>Featured</span>'
     : "";
   const title = escapeHtml(fields.title);
-  const href = escapeHtml(fields.html || "#");
-  const img = fields.img;
+  const href = escapeHtml(fields.html || fields.pdf || "#");
   const dataYear = ` data-year="${escapeHtml(year)}"`;
   const dataFeatured = fields.highlight ? ' data-featured="true"' : "";
-
-  const onerrorHandler = ' onerror="this.closest(\'.pub-thumb\').classList.add(\'img-missing\')"';
-  let s = `<article class="pub-card${featured}" id="${escapeHtml(entry.key)}"${dataYear}${dataFeatured}>${badge}`;
-  s += `<div class="pub-thumb">${imgTag(img, fields.title, { extra: onerrorHandler })}</div>`;
-  s += '<div class="pub-body">';
 
   let award = "";
   if (fields.award) {
     award = ` <span class="pub-award">(${escapeHtml(fields.award)})</span>`;
   }
-  s += `<h3 class="pub-title"><a href="${href}" target="_blank">${title}</a>${award}</h3>`;
 
   const equalContribution = fields.equal_contribution ? parseInt(fields.equal_contribution, 10) : null;
   const authors = generatePersonHtml(entry.authors, { equalContribution });
-  s += `<p class="pub-authors">${authors}</p>`;
-  s += `<p class="pub-meta">${escapeHtml(formatVenue(entry))}</p>`;
-  s += '<div class="pub-links">';
-  s += artefactLinks(fields, PAPER_ARTEFACTS);
-  const bibIcon =
-    '<svg class="pub-link-icon" viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>';
-  s += `<details class="bib"><summary>${bibIcon}<span>BibTeX</span></summary><div class="bib-drawer"><pre><code>${buildCite(entry)}</code></pre></div></details>`;
-  s += "</div></div></article>";
+  const venue = formatVenue(entry);
+
+  const webIcon =
+    '<svg class="pub-link-icon" viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg>';
+
+  const pdfIcon =
+    '<svg class="pub-link-icon" viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>';
+
+  const webLink = fields.html
+    ? `<a class="pub-link" href="${escapeHtml(fields.html)}" target="_blank" rel="noopener">${webIcon}<span>Web view</span></a>`
+    : '<span class="cell-empty" aria-label="Not available">—</span>';
+
+  const postprintLink = fields.pdf
+    ? `<a class="pub-link" href="${escapeHtml(fields.pdf)}" target="_blank" rel="noopener">${pdfIcon}<span>Postprint</span></a>`
+    : '<span class="cell-empty" aria-label="Not available">—</span>';
+
+  let s = `<tr class="pub-row${featured}" id="${escapeHtml(entry.key)}"${dataYear}${dataFeatured}>`;
+  s += `<td class="td-year"><span class="year-badge">${escapeHtml(year)}</span></td>`;
+  s += '<td class="td-details">';
+  s += '<div class="pub-title-row">';
+  s += `<a class="pub-title-link" href="${href}" target="_blank" rel="noopener">${title}</a>${award}${badge}`;
+  s += '</div>';
+  s += `<div class="pub-authors">${authors}</div>`;
+  s += `<div class="pub-meta">${escapeHtml(venue)}</div>`;
+  s += '</td>';
+  s += `<td class="td-action td-webview">${webLink}</td>`;
+  s += `<td class="td-action td-postprint">${postprintLink}</td>`;
+  s += '</tr>';
   return s;
 }
 
@@ -507,18 +513,34 @@ function getTalkEntry(entry) {
   const fields = entry.fields;
   const year = (fields.year || "").trim() || "n.d.";
   const title = escapeHtml(fields.title);
-  const img = fields.img;
   const dataYear = ` data-year="${escapeHtml(year)}"`;
-  const onerrorHandler = ' onerror="this.closest(\'.pub-thumb\').classList.add(\'img-missing\')"';
+  const venue = formatVenue(entry);
 
-  let s = `<article class="pub-card" id="${escapeHtml(entry.key)}"${dataYear}>`;
-  s += `<div class="pub-thumb">${imgTag(img, fields.title, { extra: onerrorHandler })}</div>`;
-  s += '<div class="pub-body">';
-  s += `<h3 class="pub-title">${title}</h3>`;
-  s += `<p class="pub-meta">${escapeHtml(formatVenue(entry))}</p>`;
-  s += '<div class="pub-links">';
-  s += artefactLinks(fields, TALK_ARTEFACTS);
-  s += "</div></div></article>";
+  const webIcon =
+    '<svg class="pub-link-icon" viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg>';
+
+  const slidesIcon =
+    '<svg class="pub-link-icon" viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2z"/><path d="M8.5 13a.5.5 0 0 0-.5.5v1.5H5.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1H9v-1.5a.5.5 0 0 0-.5-.5z"/></svg>';
+
+  const webLink = fields.html
+    ? `<a class="pub-link" href="${escapeHtml(fields.html)}" target="_blank" rel="noopener">${webIcon}<span>Web view</span></a>`
+    : '<span class="cell-empty" aria-label="Not available">—</span>';
+
+  const slidesLink = fields.slides
+    ? `<a class="pub-link" href="${escapeHtml(fields.slides)}" target="_blank" rel="noopener">${slidesIcon}<span>Slides</span></a>`
+    : '<span class="cell-empty" aria-label="Not available">—</span>';
+
+  let s = `<tr class="talk-row" id="${escapeHtml(entry.key)}"${dataYear}>`;
+  s += `<td class="td-year"><span class="year-badge">${escapeHtml(year)}</span></td>`;
+  s += '<td class="td-details">';
+  s += '<div class="talk-title-row">';
+  s += `<span class="talk-title">${title}</span>`;
+  s += '</div>';
+  s += `<div class="talk-meta">${escapeHtml(venue)}</div>`;
+  s += '</td>';
+  s += `<td class="td-action td-webview">${webLink}</td>`;
+  s += `<td class="td-action td-slides">${slidesLink}</td>`;
+  s += '</tr>';
   return s;
 }
 
@@ -533,72 +555,56 @@ function groupByYear(entries) {
 }
 
 function getPublicationsHtml(entries) {
-  const groups = groupByYear(entries);
-  const sortedYears = Array.from(groups.keys()).sort((a, b) => {
-    const numA = parseInt(a, 10) || 0;
-    const numB = parseInt(b, 10) || 0;
+  const sortedEntries = entries.slice().sort((a, b) => {
+    const numA = parseInt(a.fields.year, 10) || 0;
+    const numB = parseInt(b.fields.year, 10) || 0;
     return numB - numA;
   });
 
-  let s = "";
-  sortedYears.forEach((year, idx) => {
-    const groupEntries = groups.get(year);
-    const count = groupEntries.length;
-    const countText = count === 1 ? "1 publication" : `${count} publications`;
-    const isOpen = idx === 0 ? " open" : "";
-
-    s += `<details class="year-fold pub-year-fold" data-year="${escapeHtml(year)}"${isOpen}>`;
-    s += '<summary class="year-fold-summary">';
-    s += '<div class="year-fold-header">';
-    s += '<svg class="fold-chevron" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>';
-    s += `<h3 class="year-fold-title">${escapeHtml(year)}</h3>`;
-    s += `<span class="year-fold-count">${countText}</span>`;
-    s += "</div>";
-    s += '<span class="year-fold-line" aria-hidden="true"></span>';
-    s += '<span class="year-fold-badge"><span class="badge-show">Show</span><span class="badge-hide">Hide</span></span>';
-    s += "</summary>";
-    s += '<div class="year-fold-content">';
-    for (const entry of groupEntries) {
-      s += getPaperEntry(entry);
-    }
-    s += "</div>";
-    s += "</details>";
-  });
+  let s = '<div class="table-responsive">';
+  s += '<table class="pub-table" id="pub-table" aria-label="Publications table">';
+  s += '<thead>';
+  s += '<tr>';
+  s += '<th class="th-year" scope="col">Year</th>';
+  s += '<th class="th-details" scope="col">Publication</th>';
+  s += '<th class="th-action" scope="col">Web View</th>';
+  s += '<th class="th-action" scope="col">Post-print</th>';
+  s += '</tr>';
+  s += '</thead>';
+  s += '<tbody>';
+  for (const entry of sortedEntries) {
+    s += getPaperEntry(entry);
+  }
+  s += '</tbody>';
+  s += '</table>';
+  s += '</div>';
   return s;
 }
 
 function getTalksHtml(entries) {
-  const groups = groupByYear(entries);
-  const sortedYears = Array.from(groups.keys()).sort((a, b) => {
-    const numA = parseInt(a, 10) || 0;
-    const numB = parseInt(b, 10) || 0;
+  const sortedEntries = entries.slice().sort((a, b) => {
+    const numA = parseInt(a.fields.year, 10) || 0;
+    const numB = parseInt(b.fields.year, 10) || 0;
     return numB - numA;
   });
 
-  let s = "";
-  sortedYears.forEach((year, idx) => {
-    const groupEntries = groups.get(year);
-    const count = groupEntries.length;
-    const countText = count === 1 ? "1 presentation" : `${count} presentations`;
-    const isOpen = idx === 0 ? " open" : "";
-
-    s += `<details class="year-fold talk-year-fold" data-year="${escapeHtml(year)}"${isOpen}>`;
-    s += '<summary class="year-fold-summary">';
-    s += '<div class="year-fold-header">';
-    s += '<svg class="fold-chevron" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>';
-    s += `<h3 class="year-fold-title">${escapeHtml(year)}</h3>`;
-    s += `<span class="year-fold-count">${countText}</span>`;
-    s += "</div>";
-    s += '<span class="year-fold-line" aria-hidden="true"></span>';
-    s += '<span class="year-fold-badge"><span class="badge-show">Show</span><span class="badge-hide">Hide</span></span>';
-    s += "</summary>";
-    s += '<div class="year-fold-content">';
-    for (const entry of groupEntries) {
-      s += getTalkEntry(entry);
-    }
-    s += "</div>";
-    s += "</details>";
-  });
+  let s = '<div class="table-responsive">';
+  s += '<table class="talk-table" id="talk-table" aria-label="Conferences table">';
+  s += '<thead>';
+  s += '<tr>';
+  s += '<th class="th-year" scope="col">Year</th>';
+  s += '<th class="th-details" scope="col">Presentation</th>';
+  s += '<th class="th-action" scope="col">Web View</th>';
+  s += '<th class="th-action" scope="col">Slides</th>';
+  s += '</tr>';
+  s += '</thead>';
+  s += '<tbody>';
+  for (const entry of sortedEntries) {
+    s += getTalkEntry(entry);
+  }
+  s += '</tbody>';
+  s += '</table>';
+  s += '</div>';
   return s;
 }
 
@@ -623,7 +629,6 @@ function getPubFilterHtml(entries) {
     const cnt = groups.get(year).length;
     s += `<button type="button" class="filter-pill" data-filter="${escapeHtml(year)}" role="tab" aria-selected="false">${escapeHtml(year)} <span class="filter-count">${cnt}</span></button>`;
   }
-  s += '<button type="button" class="filter-pill fold-toggle-btn" id="pub-fold-toggle" aria-expanded="false" title="Expand or collapse all years"><svg class="fold-toggle-icon" viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg><span class="fold-toggle-text">Expand all</span></button>';
   s += "</div>";
   s += '<div id="pub-empty" class="pub-empty" hidden><p class="pub-empty-text">No publications found matching your search.</p><button type="button" id="pub-empty-reset" class="pub-empty-reset">Reset search filters</button></div>';
   s += "</div>";
@@ -747,13 +752,7 @@ ${ldJson}
       </section>
 
       <section id="talks" class="section">
-        <div class="section-heading-row">
-          <h2 class="section-heading">Conferences</h2>
-          <button type="button" class="filter-pill fold-toggle-btn" id="talk-fold-toggle" aria-expanded="false" title="Expand or collapse all conferences">
-            <svg class="fold-toggle-icon" viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg>
-            <span class="fold-toggle-text">Expand all</span>
-          </button>
-        </div>
+        <h2 class="section-heading">Conferences</h2>
         ${getTalksHtml(talkEntries)}
       </section>
 
@@ -768,7 +767,6 @@ ${ldJson}
     </div>
   </main>
 
-  <script type="module" src="assets/thumbs.js"></script>
   <script type="module" src="assets/cvmenu.js"></script>
   <script type="module" src="assets/nav.js"></script>
   <script type="module" src="assets/pubs.js"></script>

@@ -50,7 +50,7 @@ if (window.matchMedia) {
 
 /* ---------- Scroll Reveal (Subtle Stagger) ---------- */
 const revealEls = document.querySelectorAll(
-  ".section-heading, .pub-card, .year-fold-summary, .year-label, .contact-pill"
+  ".section-heading, .pub-row, .talk-row, .contact-pill"
 );
 let revealCounter = 0;
 if ("IntersectionObserver" in window && revealEls.length) {
@@ -333,8 +333,8 @@ function initSearchModal() {
     const q = query.toLowerCase();
     const results = [];
 
-    document.querySelectorAll(".pub-card").forEach((card) => {
-      const title = card.querySelector(".pub-title")?.textContent || "";
+    document.querySelectorAll(".pub-row").forEach((card) => {
+      const title = card.querySelector(".pub-title-link")?.textContent || "";
       const authors = card.querySelector(".pub-authors")?.textContent || "";
       const meta = card.querySelector(".pub-meta")?.textContent || "";
       const text = `${title} ${authors} ${meta}`.toLowerCase();
@@ -349,13 +349,14 @@ function initSearchModal() {
       }
     });
 
-    document.querySelectorAll(".talk-card, .talk-item").forEach((talk) => {
+    document.querySelectorAll(".talk-row").forEach((talk) => {
       const title = talk.querySelector(".talk-title")?.textContent || "";
       const meta = talk.querySelector(".talk-meta")?.textContent || "";
       const text = `${title} ${meta}`.toLowerCase();
       if (text.includes(q)) {
+        const id = talk.id ? `#${talk.id}` : "#talks";
         results.push({
-          url: "#talks",
+          url: id,
           tag: "Talk",
           title,
           excerpt: meta,
@@ -523,11 +524,7 @@ function initSearchModal() {
       closeSearch();
       const target = document.querySelector(href);
       if (target) {
-        const fold = target.closest("details.year-fold");
-        if (fold) {
-          fold.open = true;
-          fold.querySelectorAll(".pub-card").forEach((c) => c.classList.add("in"));
-        }
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     }
   });

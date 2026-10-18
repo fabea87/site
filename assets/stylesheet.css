@@ -56,7 +56,7 @@
   --radius: 10px;
   --radius-lg: 14px;
   --radius-full: 9999px;
-  --maxw: 900px;
+  --maxw: 1200px;
 }
 
 /* Dark Theme — Midnight Scholar & Deep Academic Slate */
@@ -1139,290 +1139,160 @@ button.link-pill:hover {
   background: var(--accent-soft);
 }
 
-/* ---------- Section Heading Row with Controls ---------- */
-.section-heading-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin: 38px 0 16px;
+/* ---------- Academic Minimalist Tables ---------- */
+.table-responsive {
+  width: 100%;
+  margin: 12px 0 32px;
 }
 
-.section-heading-row .section-heading {
-  margin: 0;
-}
-
-/* ---------- Fold Toggle All Button ---------- */
-.fold-toggle-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  background: var(--bg-elevated);
-  color: var(--text-soft);
+.pub-table,
+.talk-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
   font-family: var(--font-ui);
-  font-size: 0.8rem;
-  font-weight: 500;
-  line-height: 1.25;
-  cursor: pointer;
-  white-space: nowrap;
-  box-shadow: var(--shadow-sm);
-  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
-  user-select: none;
 }
 
-.fold-toggle-btn:hover {
-  border-color: var(--accent-border);
-  color: var(--accent);
-  background: var(--bg-subtle);
-}
-
-.fold-toggle-btn:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.fold-toggle-icon {
-  width: 12px;
-  height: 12px;
-  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-  color: currentColor;
-}
-
-.fold-toggle-btn.all-open .fold-toggle-icon {
-  transform: rotate(180deg);
-}
-
-.pub-filter .fold-toggle-btn {
-  margin-left: auto;
-}
-
-/* ---------- Year Groups / Collapsible Accordions ---------- */
-.year-fold {
-  margin: 18px 0 22px;
-  border-radius: var(--radius);
-  transition: background-color 0.2s ease;
-}
-
-.year-fold.is-hidden {
-  display: none !important;
-}
-
-.year-fold-summary {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 10px 10px 6px;
-  cursor: pointer;
-  user-select: none;
-  list-style: none;
-  border-radius: var(--radius);
-  transition: background-color 0.18s ease, color 0.18s ease;
-}
-
-.year-fold-summary::-webkit-details-marker {
-  display: none;
-}
-
-.year-fold-summary:hover {
-  background: var(--bg-subtle);
-}
-
-.year-fold-summary:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.year-fold-header {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-.fold-chevron {
-  width: 15px;
-  height: 15px;
-  color: var(--accent);
-  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-  flex-shrink: 0;
-}
-
-.year-fold[open] > .year-fold-summary .fold-chevron {
-  transform: rotate(90deg);
-}
-
-.year-fold-title {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.15rem;
-  letter-spacing: 0.05em;
-  color: var(--accent);
-  margin: 0;
-  line-height: 1;
-}
-
-.year-fold-count {
-  display: inline-flex;
-  align-items: center;
-  padding: 2.5px 9px;
-  border-radius: var(--radius-full);
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
+.pub-table th,
+.talk-table th {
+  padding: 12px 16px;
+  text-align: left;
   font-family: var(--font-ui);
   font-size: 0.74rem;
-  font-weight: 500;
-  color: var(--text-faint);
-  letter-spacing: 0;
-  line-height: 1.25;
-}
-
-.year-fold-summary:hover .year-fold-count {
-  border-color: var(--border-strong);
-  color: var(--text-soft);
-}
-
-.year-fold-line {
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-  min-width: 24px;
-  transition: background-color 0.18s ease;
-}
-
-.year-fold-summary:hover .year-fold-line {
-  background: var(--border-strong);
-}
-
-.year-fold-badge {
-  display: inline-flex;
-  align-items: center;
-  font-family: var(--font-ui);
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   color: var(--text-faint);
-  padding: 3px 10px;
-  border-radius: var(--radius-full);
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-  transition: all 0.18s ease;
-  flex-shrink: 0;
+  border-bottom: 2px solid var(--border-strong);
+  background: var(--bg);
+  user-select: none;
 }
 
-.year-fold-summary:hover .year-fold-badge {
-  color: var(--accent);
-  border-color: var(--accent-border);
+.pub-table .th-year,
+.talk-table .th-year {
+  width: 76px;
+  text-align: center;
+}
+
+.pub-table .th-action,
+.talk-table .th-action {
+  width: 120px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.td-action {
+  text-align: center;
+  vertical-align: middle !important;
+  white-space: nowrap;
+}
+
+.cell-empty {
+  color: var(--text-faint);
+  font-size: 1.1rem;
+  user-select: none;
+}
+
+.pub-row,
+.talk-row {
+  transition: background-color 0.15s ease;
+}
+
+.pub-row:hover,
+.talk-row:hover {
   background: var(--bg-subtle);
 }
 
-.badge-hide {
-  display: none;
-}
-
-.year-fold[open] > .year-fold-summary .badge-show {
-  display: none;
-}
-
-.year-fold[open] > .year-fold-summary .badge-hide {
-  display: inline;
-}
-
-.year-fold-content {
-  margin-top: 14px;
-  animation: foldReveal 0.22s ease-out;
-}
-
-@keyframes foldReveal {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Fallback legacy Year Groups */
-.year-label {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 28px 0 14px;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.05rem;
-  letter-spacing: 0.06em;
-  color: var(--accent);
-}
-
-.year-label::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
-
-.year-count {
-  font-family: var(--font-ui);
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: var(--text-faint);
-  letter-spacing: 0;
-}
-
-/* Hidden cards / labels when filtered */
-.pub-card.is-hidden,
-.year-label.is-hidden {
+.pub-row.is-hidden,
+.talk-row.is-hidden {
   display: none !important;
 }
 
-/* ---------- Publication Cards ---------- */
-.pub-card {
-  position: relative;
-  display: grid;
-  grid-template-columns: 150px 1fr;
-  gap: 20px;
-  padding: 20px;
-  margin-bottom: 16px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
-  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease, background-color 0.25s ease;
-}
-
-.pub-card:hover {
-  box-shadow: var(--shadow-hover);
-  border-color: var(--border-strong);
-  transform: translateY(-2px);
-}
-
-.pub-card:focus-within {
-  box-shadow: var(--shadow-hover);
-  border-color: var(--accent-border);
-}
-
-.pub-card.featured {
+.pub-row.featured {
   background: var(--featured-bg);
-  border-left: 3.5px solid var(--featured-border);
 }
 
-.featured-badge {
-  position: absolute;
-  top: -10px;
-  right: 16px;
+.pub-row.featured:hover {
+  background: var(--bg-subtle-hover);
+}
+
+.pub-row td,
+.talk-row td {
+  padding: 16px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Year Cell */
+.td-year {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.year-badge {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  padding: 3px 9px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+}
+
+.pub-row.featured .year-badge {
+  background: var(--featured-badge-bg);
+  color: var(--featured-badge-text);
+  border-color: rgba(192, 132, 29, 0.35);
+}
+
+/* Content Cell */
+.td-details {
+  line-height: 1.55;
+  padding-right: 20px;
+}
+
+.pub-title-row,
+.talk-title-row {
+  margin-bottom: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+}
+
+.pub-title-link {
+  font-family: var(--font-serif);
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--text);
+  transition: color 0.15s ease;
+}
+
+.pub-title-link:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.talk-title {
+  font-family: var(--font-serif);
+  font-size: 1.06rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.featured-badge-inline {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 3px 10px;
+  padding: 2px 8px;
   font-family: var(--font-ui);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -1430,113 +1300,17 @@ button.link-pill:hover {
   background: var(--featured-badge-bg);
   border: 1px solid rgba(192, 132, 29, 0.35);
   border-radius: var(--radius-full);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .featured-star {
   color: currentColor;
 }
 
-/* Thumbnail */
-.pub-thumb {
-  position: relative;
-  align-self: start;
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid var(--border);
-  background: var(--bg-subtle);
-  cursor: zoom-in;
-  transition: border-color 0.2s ease;
-}
-
-.pub-thumb img {
-  display: block;
-  width: 100%;
-  height: 124px;
-  object-fit: cover;
-  transition: transform 0.25s ease;
-}
-
-.pub-card:hover .pub-thumb img {
-  transform: scale(1.04);
-}
-
-.pub-thumb.img-missing {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 124px;
-}
-
-.pub-thumb.img-missing img {
-  display: none;
-}
-
-.pub-thumb.img-missing::after {
-  content: "DY";
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.8rem;
-  letter-spacing: 0.05em;
-  color: var(--text-faint);
-}
-
-/* Hover thumbnail popover preview */
-.thumb-preview {
-  position: fixed;
-  z-index: 100;
-  width: 330px;
-  max-width: 85vw;
-  padding: 8px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-popover);
-  animation: fadeIn 0.15s ease-out;
-}
-
-.thumb-preview[hidden] {
-  display: none;
-}
-
-.thumb-preview img {
-  width: 100%;
-  height: auto;
-  max-height: 60vh;
-  object-fit: contain;
-  border-radius: var(--radius);
-}
-
-/* Card Body */
-.pub-body {
-  min-width: 0;
-}
-
-.pub-title {
-  margin: 0 0 7px;
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: 1.08rem;
-  line-height: 1.44;
-  text-wrap: balance;
-}
-
-.pub-title a {
-  color: var(--text);
-  text-decoration: none;
-}
-
-.pub-title a:hover {
-  color: var(--accent);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
 .pub-award {
-  margin-left: 4px;
+  margin-left: 2px;
   font-family: var(--font-ui);
   font-weight: 600;
-  font-size: 0.9em;
+  font-size: 0.88em;
   color: #B91C1C;
 }
 
@@ -1545,9 +1319,9 @@ button.link-pill:hover {
 }
 
 .pub-authors {
-  margin: 0 0 6px;
+  margin-bottom: 4px;
   font-family: var(--font-ui);
-  font-size: 0.93rem;
+  font-size: 0.92rem;
   color: var(--text-soft);
   line-height: 1.55;
 }
@@ -1568,13 +1342,59 @@ button.link-pill:hover {
   text-underline-offset: 2.5px;
 }
 
-.pub-meta {
-  margin: 0 0 11px;
+.pub-meta,
+.talk-meta {
   font-family: var(--font-serif);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-style: italic;
-  color: var(--text-soft);
+  color: var(--text-faint);
   line-height: 1.45;
+}
+
+/* Links Cell */
+.td-links {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.pub-links-bar {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.pub-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 11px;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text-soft);
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.pub-link:hover {
+  color: var(--accent);
+  border-color: var(--accent-border);
+  background: var(--bg-subtle);
+  text-decoration: none;
+}
+
+.pub-link-icon {
+  width: 11px;
+  height: 11px;
+  color: currentColor;
+  flex-shrink: 0;
 }
 
 /* Action Link Pills */
@@ -1954,47 +1774,87 @@ button.link-pill:hover {
     font-size: 0.84rem;
   }
 
-  /* Publications on mobile: show compact side thumbnail */
-  .pub-card {
-    grid-template-columns: 84px 1fr;
-    gap: 14px;
-    padding: 15px;
+  /* Academic Minimalist Table on Mobile */
+  .pub-table thead,
+  .talk-table thead {
+    display: none;
   }
 
-  .pub-thumb {
-    width: 84px;
-    height: 84px;
+  .pub-table,
+  .pub-table tbody,
+  .talk-table,
+  .talk-table tbody {
+    display: block;
+    width: 100%;
   }
 
-  .pub-thumb img {
-    width: 84px;
-    height: 84px;
+  .pub-row,
+  .talk-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "year webview postprint"
+      "details details details";
+    gap: 8px 10px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
   }
 
-  .pub-thumb.img-missing {
-    height: 84px;
+  .pub-row td,
+  .talk-row td {
+    display: block;
+    padding: 0;
+    border-bottom: none;
   }
 
-  .pub-title {
+  .td-year {
+    grid-area: year;
+    text-align: left;
+  }
+
+  .td-webview {
+    grid-area: webview;
+    text-align: right;
+  }
+
+  .td-postprint,
+  .td-slides {
+    grid-area: postprint;
+    text-align: right;
+  }
+
+  .td-action .cell-empty {
+    display: none;
+  }
+
+  .td-details {
+    grid-area: details;
+    padding-right: 0;
+  }
+
+  .pub-title-link,
+  .talk-title {
     font-size: 1rem;
+    line-height: 1.45;
   }
 
   .pub-authors {
     font-size: 0.88rem;
   }
 
-  .pub-meta {
-    font-size: 0.88rem;
+  .pub-meta,
+  .talk-meta {
+    font-size: 0.85rem;
   }
 
   .pub-links {
     gap: 5px;
   }
 
-  .pub-link,
-  .bib summary {
+  .pub-link {
     padding: 3.5px 8px;
-    font-size: 0.78rem;
+    font-size: 0.76rem;
   }
 
   .contact-links {
@@ -2005,64 +1865,18 @@ button.link-pill:hover {
     padding: 6px 12px;
     font-size: 0.84rem;
   }
-
-  /* Year fold controls on mobile */
-  .section-heading-row {
-    margin: 28px 0 14px;
-  }
-
-  .pub-filter .fold-toggle-btn {
-    margin-left: 0;
-  }
-
-  .year-fold {
-    margin: 14px 0 18px;
-  }
-
-  .year-fold-summary {
-    padding: 8px 6px;
-    gap: 8px;
-    min-height: 44px;
-  }
-
-  .year-fold-header {
-    gap: 8px;
-  }
-
-  .year-fold-title {
-    font-size: 1.08rem;
-  }
-
-  .year-fold-count {
-    font-size: 0.72rem;
-    padding: 2px 7px;
-  }
 }
 
 @media (max-width: 440px) {
-  .year-fold-badge {
-    display: none !important;
+  .pub-row,
+  .talk-row {
+    padding: 12px 0;
+    gap: 6px 8px;
   }
 
-  .year-fold-summary {
-    padding: 10px 4px;
-    min-height: 48px;
-  }
-
-  .pub-card {
-    grid-template-columns: 74px 1fr;
-    gap: 12px;
-    padding: 12px;
-  }
-
-  .pub-thumb {
-    width: 74px;
-    height: 74px;
-  }
-
-  .pub-thumb img {
-    width: 74px;
-    height: 74px;
+  .pub-link {
+    padding: 3px 7px;
+    font-size: 0.72rem;
   }
 }
 
