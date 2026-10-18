@@ -80,4 +80,5 @@ export const AUTHOR_LINKS = {
   "Chenjin Jia": "https://scholar.google.com/citations?hl=en&user=Nk-Ar0IAAAAJ",
   "Feng Tian": "https://orcid.org/0009-0006-1905-3921",
   "Yu Gao": "https://www.xyafu.edu.cn/wgyxy/info/1126/7057.htm",
+  "Irfan Naufal Umar": "https://scholar.google.com/citations?user=VcAQefQAAAAJ&hl=en",
 };
