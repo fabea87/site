@@ -1,4 +1,11 @@
-import { computePosition, flip, shift, offset, arrow } from "@floating-ui/dom";
+// Lazy load @floating-ui/dom on demand
+let floatingUiMod = null;
+async function getFloatingUi() {
+  if (!floatingUiMod) {
+    floatingUiMod = await import("@floating-ui/dom");
+  }
+  return floatingUiMod;
+}
 
 // Mark JS enabled
 document.documentElement.classList.add("js");
@@ -166,38 +173,40 @@ export function showFloatingTooltip(referenceEl, htmlContent, { placement = "top
 
   document.body.appendChild(tooltip);
 
-  computePosition(referenceEl, tooltip, {
-    placement,
-    middleware: [
-      offset(8),
-      flip(),
-      shift({ padding: 8 }),
-      arrow({ element: arrowEl }),
-    ],
-  }).then(({ x, y, placement, middlewareData }) => {
-    Object.assign(tooltip.style, {
-      left: `${x}px`,
-      top: `${y}px`,
-    });
+  getFloatingUi().then(({ computePosition, flip, shift, offset, arrow }) => {
+    computePosition(referenceEl, tooltip, {
+      placement,
+      middleware: [
+        offset(8),
+        flip(),
+        shift({ padding: 8 }),
+        arrow({ element: arrowEl }),
+      ],
+    }).then(({ x, y, placement, middlewareData }) => {
+      Object.assign(tooltip.style, {
+        left: `${x}px`,
+        top: `${y}px`,
+      });
 
-    const { x: arrowX, y: arrowY } = middlewareData.arrow || {};
-    const staticSide = {
-      top: "bottom",
-      right: "left",
-      bottom: "top",
-      left: "right",
-    }[placement.split("-")[0]];
+      const { x: arrowX, y: arrowY } = middlewareData.arrow || {};
+      const staticSide = {
+        top: "bottom",
+        right: "left",
+        bottom: "top",
+        left: "right",
+      }[placement.split("-")[0]];
 
-    Object.assign(arrowEl.style, {
-      left: arrowX != null ? `${arrowX}px` : "",
-      top: arrowY != null ? `${arrowY}px` : "",
-      right: "",
-      bottom: "",
-      [staticSide]: "-4px",
-    });
+      Object.assign(arrowEl.style, {
+        left: arrowX != null ? `${arrowX}px` : "",
+        top: arrowY != null ? `${arrowY}px` : "",
+        right: "",
+        bottom: "",
+        [staticSide]: "-4px",
+      });
 
-    requestAnimationFrame(() => {
-      tooltip.classList.add("visible");
+      requestAnimationFrame(() => {
+        tooltip.classList.add("visible");
+      });
     });
   });
 

@@ -126,10 +126,17 @@ function academicSitePlugin() {
     },
     closeBundle() {
       if (!isBuild) return;
-      console.log("[vite] Syncing static PDF and image assets to dist...");
+      console.log("[vite] Syncing static CSS, PDF, and image assets to dist...");
       const distDir = resolve(rootDir, "dist");
       copyDirRecursive(resolve(rootDir, "assets", "pdf"), resolve(distDir, "assets", "pdf"));
       copyDirRecursive(resolve(rootDir, "assets", "img"), resolve(distDir, "assets", "img"));
+      const assetsDir = resolve(rootDir, "assets");
+      const distAssetsDir = resolve(distDir, "assets");
+      for (const f of fs.readdirSync(assetsDir)) {
+        if (f.endsWith(".css") || f.endsWith(".js") || f.endsWith(".ico")) {
+          fs.copyFileSync(resolve(assetsDir, f), resolve(distAssetsDir, f));
+        }
+      }
 
       console.log("[vite] Building Pagefind search index...");
       try {

@@ -1,0 +1,346 @@
+/* ==========================================================
+   Static Full-Text Search Modal & Tooltip (Pagefind)
+   Deferred / Loaded on Demand
+   ========================================================== */
+
+/* ---------- Nav Search Button ---------- */
+.nav-search-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--bg-elevated);
+  color: var(--text-soft);
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.nav-search-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent-border);
+  background: var(--bg-subtle);
+}
+
+.nav-search-icon {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+.nav-search-kbd {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-faint);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 4px;
+  line-height: 1.2;
+}
+
+/* ---------- Search Modal (Pagefind) ---------- */
+.search-modal {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  padding: 0;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: clamp(40px, 12vh, 120px);
+  z-index: 1500;
+}
+
+.search-modal:not([open]) {
+  display: none;
+}
+
+.search-modal::backdrop {
+  background: rgba(15, 23, 42, 0.45);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  animation: modalFadeIn 0.18s ease-out;
+}
+
+[data-theme="dark"] .search-modal::backdrop {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.search-modal-box {
+  width: min(620px, calc(100vw - 32px));
+  max-height: min(560px, calc(100vh - 160px));
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-popover);
+  overflow: hidden;
+  animation: modalSlideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.search-modal-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.search-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--text-faint);
+  font-size: 1.1rem;
+  pointer-events: none;
+}
+
+.search-modal-input {
+  width: 100%;
+  height: 42px;
+  padding: 0 54px 0 38px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 0.98rem;
+  outline: none;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.search-modal-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.search-modal-input::placeholder {
+  color: var(--text-faint);
+  font-size: 0.9rem;
+}
+
+.search-esc-btn {
+  position: absolute;
+  right: 10px;
+  padding: 2px 7px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-faint);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.search-esc-btn:hover {
+  color: var(--text);
+  background: var(--bg-subtle-hover);
+}
+
+.search-modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  min-height: 120px;
+  overscroll-behavior: contain;
+}
+
+.search-hint,
+.search-empty {
+  padding: 36px 16px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-faint);
+}
+
+.search-empty strong {
+  color: var(--text);
+}
+
+.search-result-item {
+  display: block;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  text-decoration: none !important;
+  color: inherit;
+  transition: background-color 0.12s ease;
+  margin-bottom: 2px;
+}
+
+.search-result-item:hover,
+.search-result-item.active {
+  background: var(--bg-subtle);
+}
+
+.search-result-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.search-result-tag {
+  font-size: 0.68rem;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.search-result-tag.publication {
+  background: rgba(0, 102, 204, 0.12);
+  color: #0066CC;
+}
+
+.search-result-tag.talk {
+  background: rgba(124, 58, 237, 0.12);
+  color: #7C3AED;
+}
+
+.search-result-tag.blog {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+}
+
+.search-result-tag.page {
+  background: var(--bg-subtle);
+  color: var(--text-soft);
+}
+
+[data-theme="dark"] .search-result-tag.publication {
+  background: rgba(41, 151, 255, 0.2);
+  color: #2997FF;
+}
+
+[data-theme="dark"] .search-result-tag.talk {
+  background: rgba(167, 139, 250, 0.2);
+  color: #C4B5FD;
+}
+
+[data-theme="dark"] .search-result-tag.blog {
+  background: rgba(52, 211, 153, 0.2);
+  color: #6EE7B7;
+}
+
+[data-theme="dark"] .search-result-tag.page {
+  background: var(--bg-subtle);
+  color: var(--text-soft);
+}
+
+.search-result-title {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--accent-strong);
+}
+
+.search-result-excerpt {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-soft);
+  line-height: 1.45;
+}
+
+.search-result-excerpt mark {
+  background: var(--featured-badge-bg);
+  color: var(--featured-badge-text);
+  font-weight: 600;
+  border-radius: 2px;
+  padding: 0 2px;
+}
+
+/* ---------- Floating UI Tooltip ---------- */
+.floating-tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  pointer-events: none;
+  background: var(--text);
+  color: var(--bg);
+  padding: 5px 9px;
+  font-family: var(--font-ui);
+  font-size: 0.76rem;
+  font-weight: 500;
+  line-height: 1.2;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+
+.floating-tooltip.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.floating-tooltip-arrow {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--text);
+  transform: rotate(45deg);
+}
+
+/* Mobile responsive for search */
+@media (max-width: 680px) {
+  .nav-search-text,
+  .nav-search-kbd {
+    display: none;
+  }
+
+  .nav-search-btn {
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    justify-content: center;
+  }
+
+  .search-modal-box {
+    width: calc(100vw - 20px);
+    max-height: calc(100vh - 80px);
+  }
+}

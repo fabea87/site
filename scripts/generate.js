@@ -720,8 +720,19 @@ ${ldJson}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="assets/stylesheet.css">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap">
+  </noscript>
+  <link rel="stylesheet" href="assets/theme.css">
+  <link rel="stylesheet" href="assets/publications.css">
+  <link rel="stylesheet" href="assets/search.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="assets/print.css" media="print">
+  <noscript>
+    <link rel="stylesheet" href="assets/search.css">
+    <link rel="stylesheet" href="assets/print.css">
+  </noscript>
 </head>
 
 <body>
@@ -792,9 +803,17 @@ ${ldJson}
 const FONTS_LINK =
   '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
   '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
-  '  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">';
+  '  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap">\n' +
+  '  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" media="print" onload="this.media=\'all\'">\n' +
+  '  <noscript>\n' +
+  '    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap">\n' +
+  '  </noscript>';
 
-const CSS_LINK = '<link rel="stylesheet" href="../assets/stylesheet.css">';
+const CSS_LINK =
+  '<link rel="stylesheet" href="../assets/theme.css">\n' +
+  '  <link rel="stylesheet" href="../assets/blog.css">\n' +
+  '  <link rel="stylesheet" href="../assets/search.css" media="print" onload="this.media=\'all\'">\n' +
+  '  <link rel="stylesheet" href="../assets/print.css" media="print">';
 const FAVICON = '<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">';
 
 function parseFrontMatter(text) {

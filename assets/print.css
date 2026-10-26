@@ -1,0 +1,64 @@
+/* ==========================================================
+   Print Stylesheet
+   Loaded with media="print" so it never blocks screen rendering
+   ========================================================== */
+
+@media print {
+  .site-nav,
+  .back-to-top,
+  .pub-toolbar,
+  .theme-toggle,
+  .nav-search-btn,
+  .thumb-preview,
+  .fold-chevron,
+  .year-fold-badge,
+  .fold-toggle-btn,
+  .search-modal,
+  .corpus-topbar,
+  .corpus-actions {
+    display: none !important;
+  }
+
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    font-size: 11pt;
+    line-height: 1.45;
+  }
+
+  .container {
+    max-width: none;
+    padding: 0;
+  }
+
+  .hero {
+    padding: 10px 0;
+  }
+
+  .pub-card {
+    box-shadow: none;
+    border: 1px solid #CCCCCC;
+    break-inside: avoid;
+    margin-bottom: 12px;
+    padding: 12px;
+  }
+
+  .pub-card.featured {
+    border-left: 3px solid #666666;
+    background: #F8F8F8;
+  }
+
+  .featured-badge {
+    position: static;
+    display: inline-block;
+    color: #000000;
+    background: #EEEEEE;
+    border: 1px solid #CCCCCC;
+    box-shadow: none;
+  }
+
+  a {
+    color: #000000;
+    text-decoration: none;
+  }
+}
