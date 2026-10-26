@@ -13,6 +13,11 @@ import {
   generateSitemapXml,
   generateFeedXml,
 } from "./scripts/generate.js";
+import {
+  buildCorpus,
+  getCorpusEntries,
+  renderCorpusPage,
+} from "./scripts/build-corpus.js";
 
 const rootDir = import.meta.dirname;
 
@@ -49,8 +54,9 @@ function academicSitePlugin() {
     config(_config, { command }) {
       isBuild = command === "build";
     },
-    buildStart() {
+    async buildStart() {
       cleanGeneratedHtml();
+      await buildCorpus();
       virtualRoutes = getVirtualHtmlRoutes();
     },
     resolveId(id) {
@@ -67,6 +73,9 @@ function academicSitePlugin() {
     },
     generateBundle() {
       if (!isBuild) return;
+      const posts = getBlogPosts();
+      const corpus = getCorpusEntries();
+
       this.emitFile({
         type: "asset",
         fileName: "robots.txt",
@@ -75,8 +84,36 @@ function academicSitePlugin() {
       this.emitFile({
         type: "asset",
         fileName: "sitemap.xml",
-        source: generateSitemapXml(),
+        source: generateSitemapXml(posts, corpus),
       });
+      this.emitFile({
+        type: "asset",
+        fileName: "feed.xml",
+        source: generateFeedXml(posts),
+      });
+
+      // Emit blog pages
+      this.emitFile({
+        type: "asset",
+        fileName: "blog/index.html",
+        source: renderBlogIndex(posts),
+      });
+      for (const p of posts) {
+        this.emitFile({
+          type: "asset",
+          fileName: `blog/${p.slug}.html`,
+          source: renderBlogPost(p),
+        });
+      }
+
+      // Emit corpus pages
+      for (const c of corpus) {
+        this.emitFile({
+          type: "asset",
+          fileName: `corpus/${c.category}/${c.slug}.html`,
+          source: renderCorpusPage(c),
+        });
+      }
 
       const faviconPath = resolve(rootDir, "assets", "favicon.ico");
       if (fs.existsSync(faviconPath)) {
@@ -165,6 +202,23 @@ function academicSitePlugin() {
           }
         }
 
+        // 3.5. Corpus publication & talk pages
+        if (rawUrl.startsWith("/corpus/")) {
+          const match = rawUrl.match(/^\/corpus\/(publications|talks)\/([^/]+)\.html$/);
+          if (match) {
+            const [, category, slug] = match;
+            const entries = getCorpusEntries();
+            const entry = entries.find((e) => e.category === category && e.slug === slug);
+            if (entry) {
+              const rawHtml = renderCorpusPage(entry);
+              const html = await server.transformIndexHtml(rawUrl, rawHtml);
+              res.setHeader("Content-Type", "text/html; charset=utf-8");
+              res.end(html);
+              return;
+            }
+          }
+        }
+
         // 4. Dynamic SEO & favicon endpoints
         if (rawUrl === "/robots.txt") {
           res.setHeader("Content-Type", "text/plain; charset=utf-8");
@@ -226,6 +280,7 @@ function academicSitePlugin() {
         "site.config.js",
         "scripts",
         "blog",
+        "corpus",
         "assets",
       ];
       watchItems.forEach((item) => {

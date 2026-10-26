@@ -473,10 +473,13 @@ function initSearchModal() {
             resultsContainer.innerHTML = topResults
               .map((item, idx) => {
                 const isBlog = item.url.includes("/blog/");
-                const tag = isBlog ? "Blog" : "Page";
+                const isPub = item.url.includes("/corpus/publications/") || item.filters?.type?.includes("Publication") || item.meta?.type === "Publication";
+                const isTalk = item.url.includes("/corpus/talks/") || item.filters?.type?.includes("Talk") || item.meta?.type === "Talk";
+                const tag = isPub ? "Publication" : isTalk ? "Talk" : isBlog ? "Blog" : "Page";
+                const tagClass = tag.toLowerCase();
                 return `<a href="${item.url}" class="search-result-item ${idx === 0 ? "active" : ""}" data-index="${idx}">
                   <div class="search-result-meta">
-                    <span class="search-result-tag">${tag}</span>
+                    <span class="search-result-tag ${tagClass}">${tag}</span>
                     <span class="search-result-title">${item.meta?.title || item.url}</span>
                   </div>
                   ${item.excerpt ? `<p class="search-result-excerpt">${item.excerpt}</p>` : ""}

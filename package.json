@@ -8,10 +8,12 @@
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "vite build && wrangler deploy",
+    "corpus": "node scripts/build-corpus.js",
     "generate": "node scripts/generate.js",
     "new-post": "node scripts/new-post.js"
   },
   "devDependencies": {
+    "@firecrawl/anydoc": "^0.2.4",
     "marked": "^18.0.14",
     "pagefind": "^1.5.2",
     "vite": "^8.3.2",

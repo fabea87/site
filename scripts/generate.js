@@ -4,6 +4,7 @@ import { execSync } from "child_process";
 import { fileURLToPath } from "url";
 import { marked } from "marked";
 import { SITE, AUTHOR_LINKS } from "../site.config.js";
+import { buildCorpus, getCorpusEntries, generateCorpusSite } from "./build-corpus.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -1042,9 +1043,16 @@ export function generateRobotsTxt() {
   return `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`;
 }
 
-export function generateSitemapXml() {
+export function generateSitemapXml(posts = getBlogPosts(), corpus = getCorpusEntries()) {
   const siteUrl = SITE.url.replace(/\/+$/, "");
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>${siteUrl}/</loc>\n    <lastmod>${TODAY}</lastmod>\n  </url>\n</urlset>\n`;
+  const urls = [`  <url>\n    <loc>${siteUrl}/</loc>\n    <lastmod>${TODAY}</lastmod>\n  </url>`];
+  for (const p of posts) {
+    urls.push(`  <url>\n    <loc>${siteUrl}/blog/${p.slug}.html</loc>\n    <lastmod>${(p.date || TODAY).slice(0, 10)}</lastmod>\n  </url>`);
+  }
+  for (const c of corpus) {
+    urls.push(`  <url>\n    <loc>${siteUrl}/corpus/${c.category}/${c.slug}.html</loc>\n    <lastmod>${TODAY}</lastmod>\n  </url>`);
+  }
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`;
 }
 
 export function generateFeedXml(posts = getBlogPosts()) {
@@ -1065,37 +1073,41 @@ export function generateFeedXml(posts = getBlogPosts()) {
 // Master Generator: writes exclusively to product directory (dist)
 // Never writes to workspace root, blog source, or non-product directories
 // --------------------------------------------------------------------------
-export function generateSite({ outDir = path.join(ROOT, "dist") } = {}) {
+export async function generateSite({ outDir = path.join(ROOT, "dist") } = {}) {
   const relOut = path.relative(ROOT, outDir) || outDir;
   console.log(`[generator] Compiling academic site to product directory (${relOut})...`);
 
   // Ensure workspace code folder stays pristine
   cleanGeneratedHtml();
 
+  // 1. Sync full-text corpus
+  await buildCorpus();
+  const corpusEntries = generateCorpusSite({ outDir });
+
   const posts = getBlogPosts();
   const blogOutDir = path.join(outDir, "blog");
   fs.mkdirSync(blogOutDir, { recursive: true });
 
-  // 1. Output HTML directly into product directory
+  // 2. Output HTML directly into product directory
   fs.writeFileSync(path.join(outDir, "index.html"), generateIndexHtml(), "utf8");
   fs.writeFileSync(path.join(blogOutDir, "index.html"), renderBlogIndex(posts), "utf8");
   for (const p of posts) {
     fs.writeFileSync(path.join(blogOutDir, `${p.slug}.html`), renderBlogPost(p), "utf8");
   }
 
-  // 2. Output SEO files directly into product directory
+  // 3. Output SEO files directly into product directory
   fs.writeFileSync(path.join(outDir, "robots.txt"), generateRobotsTxt(), "utf8");
-  fs.writeFileSync(path.join(outDir, "sitemap.xml"), generateSitemapXml(posts), "utf8");
+  fs.writeFileSync(path.join(outDir, "sitemap.xml"), generateSitemapXml(posts, corpusEntries), "utf8");
   fs.writeFileSync(path.join(outDir, "feed.xml"), generateFeedXml(posts), "utf8");
 
-  // 3. Sync static assets to product directory
+  // 4. Sync static assets to product directory
   copyDirRecursive(path.join(ROOT, "assets"), path.join(outDir, "assets"));
   const favicon = path.join(ROOT, "assets", "favicon.ico");
   if (fs.existsSync(favicon)) {
     fs.copyFileSync(favicon, path.join(outDir, "favicon.ico"));
   }
 
-  // 4. Index search with Pagefind
+  // 5. Index search with Pagefind
   try {
     execSync(`npx pagefind --site "${outDir}"`, { stdio: "inherit" });
   } catch (err) {
@@ -1107,5 +1119,5 @@ export function generateSite({ outDir = path.join(ROOT, "dist") } = {}) {
 
 // Direct execution CLI
 if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(__filename)) {
-  generateSite();
+  await generateSite();
 }

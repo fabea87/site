@@ -1,0 +1,1342 @@
+---
+title: "Feedback seeking abilities of L2 writers using ChatGPT: a mixed method multiple case study"
+authors: "Da Yan"
+venue: "Kybernetes"
+year: "2025"
+type: "Publication"
+pdf: "assets/pdf/publications/yan2024feedbackseeking.pdf"
+html: "https://doi.org/10.1108/K-09-2023-1933"
+key: "yan2024feedbackseeking"
+---
+
+7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58
+
+### Feedback seeking abilities of L2 writers using ChatGPT: a mixed method multiple case study
+
+#### Abstract
+
+#### Purpose: The study investigated the feedback seeking abilities of learners in L2
+
+#### writing classrooms using ChatGPT as an automated written corrective feedback
+
+#### (AWCF) provider. Specifically, the research embarked on the exploration of L2
+
+writers’ feedback seeking abilities in interacting with ChatGPT for feedback and their perceptions thereof in the new learning environment.
+
+**Design/methodology/approach:** Three EFL learners of distinct language proficiencies and technological competences were recruited to participate in the
+
+#### mixed method multiple case study. The researcher used observation and in-depth
+
+interview to collect the ChatGPT prompts written by the participants and their reflections of feedback seeking in the project. Kybernetes
+
+#### Findings: The study revealed that: 1) students with different academic profiles
+
+#### display varied abilities to utilize the feedback seeking strategies; 2) the significance
+
+#### of feedback seeking agency was agreed upon; and 3) the promoting factors for the
+
+development of students’ feedback seeking abilities are the proactivity of involvement and the command of metacognitive regulatory skills.
+
+#### Implications: Additionally, a conceptual model of feedback seeking in an AI-
+
+mediated learning environment was postulated. The research has its conceptual and practical implications for researchers and educators expecting to incorporate
+
+#### ChatGPT in teaching and learning. The research unveiled the significance and
+
+#### potential of using state-of-the-art technologies in education. However, since we are
+
+#### still in an early phase applying such tools in authentic pedagogical environments,
+
+#### many instructional redevelopment and rearrangement should be considered and
+
+# POST-PRINT VERSION implemented.
+
+#### Originality/value: The work is a pioneering effort to explore learners' feedback
+
+#### seeking abilities in a ChatGPT-enhanced learning environment. It pointed out new
+
+#### directions for process-, and student-oriented research in the era of changes.
+
+#### Keywords: ChatGPT; AI-enhanced learning; feedback seeking abilities; mixed
+
+# FOR WEBSITE VIEWER ONLY
+
+#### method case study; corrective feedback
+
+#### Introduction
+
+# RESPECT PUBLISHER RIGHTS
+
+#### In educational studies, feedback has been understood as one of the most effective and
+
+#### easy-to-implement instructional interventions. Researchers have agreed upon the positive
+
+##### Kybernetes Page 2 of 55
+
+#### effects and critical position of feedback in enhancing learning achievement (e.g., Hattie
+
+#### and Timperley, 2007; Wiliam, 2018). Similarly, Hyland and Hyland (2019) point out that
+
+7 8feedback remains a central topic for educators and researchers in the field of second 9 10language (L2) writing with its affirmed role in “encouraging and consolidating learning” 11 12 (p. 1). In light of the technological advancements, a research trend to study the impact of 13 14 15automated written corrective feedback (AWCF) has become increasingly visible in recent 16 17 years (Barrot, 2021). 18 19
+
+#### Since the advent of ChatGPT, a conversational service based on generative
+
+20 21
+
+#### artificial intelligence (GAI), researchers have enthusiastically explored its capacity for an
+
+22 23 24 array of disciplines. According to several piloting studies, ChatGPT has the potential toKybernetes 25 26
+
+#### outperform and replace its predecessors as an error corrector or AWCF provider (Wu,
+
+27 28
+
+#### Wang, et al., 2023; Yan, 2023). ChatGPT’s power to automate tasks relies on prompts,
+
+29 30 31the interactive instructions created by users inclusive of specific job demands, contextual 32 33backgrounds, objectives for the automation, etc. Consequently, L2 writers are expected 34 35
+
+#### to proactively seek instead of receive feedback from the system with well-crafted prompts
+
+36 37 38(White *et al.*, 2023). In a conventional L2 setting, the concept of feedback seeking 39 40 behavior (FSB) facilitates the understanding of learners’ inquiry and monitoring of 41 42 **POST-PRINT VERSION**
+
+#### received feedback from teachers or peers (Papi et al., 2019). However, positioned in the
+
+43 44
+
+#### new and interactive learning environment, we are facing the scantness of empirical
+
+45 46 47 evidence in students’ actual abilities to seek feedback generated by AI-based systems. 48 49
+
+#### Against the above backdrops, the study sets out to explore learners’ feedback
+
+# FOR WEBSITE VIEWER ONLY
+
+50 51
+
+#### seeking abilities in L2 classrooms using ChatGPT. Three participants with different levels
+
+52 53 54of language proficiencies and technological competences were recruited for the multiple**RESPECT PUBLISHER RIGHTS** 55 56case studies employing the sequential explanatory mixed-method design. After a 5-week 57 58
+
+#### project, the researcher analyzed ChatGPT prompts created by the participants through
+
+##### Page 3 of 55
+
+7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58
+
+Kybernetes
+
+#### coding and quantitative document analysis. Then, transcripts of the two in-depth
+
+#### interview sessions were analyzed for qualitative findings. Through the data triangulation
+
+#### and interpretation, the following research questions are answered:
+
+#### RQ1: What characterizes the feedback seeking abilities of the participants in the
+
+#### interaction with ChatGPT for feedback?
+
+#### RQ2: How do L2 writers perceive their feedback seeking abilities in an ChatGPT-
+
+#### enhanced learning environment?
+
+#### The study is significant as an innovative effort to explore the learning behaviors
+
+#### of students in a brand-new environment. The conceptual and practical contribution
+
+#### directed from the findings would be valuable for the field of AI-mediated languageKybernetes
+
+#### education. The next section provides a review of significant literature related to the core
+
+#### concept and theories related to the topic. Section 3 details the methodologies utilized in
+
+#### the study. Results and the interpretation are presented in Section 4 and 5 respectively
+
+#### before the concluding remarks, limitations, and future research directions in Section 6.
+
+#### Literature Review
+
+#### In this section, literature on feedback seeking behavior and automated feedback providers
+
+#### is reviewed before the conceptualization of feedback seeking in a GAI-enhanced learning
+
+# POST-PRINT VERSION
+
+environment.
+
+#### Feedback seeking behavior
+
+# FOR WEBSITE VIEWER ONLY
+
+#### FSB, the processes of learners’ seeking feedback information, is one of the
+
+#### determining factors of feedback effectiveness (Leenknecht et al., 2019). The dyadic
+
+# RESPECT PUBLISHER RIGHTS
+
+#### construct, composing of feedback inquiry and monitoring, was borrowed from Ashford
+
+#### et al. (2003) to indicate the purposeful acquisition of feedback information from the
+
+7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58
+
+##### Kybernetes Page 4 of 55
+
+#### surrounding environment or agents. Papi et al. (2019) recast the term for language
+
+#### learning to denote students’ utilization of inquiry and monitoring strategies in seeking
+
+#### feedback from teachers, peer learners and the learning environment.
+
+#### The introduction of FSB to language learning reflects: 1) the focus on individual
+
+#### differences among learners in feedback (Winstone et al., 2021); 2) the shift from viewing
+
+feedback as a teaching to a learning resource (Papi *et al.*, 2019); and 3) the emphasize on
+
+#### the proactive involvement instead of the reception of learners (Malecka et al., 2022). Two
+
+#### research strands could be identified from existing literature on FSB in L2 learning. On
+
+#### the one hand, extant studies focused on the relation between FSB, its motivational
+
+#### antecedents, and/or subsequent learning outcomes (see Xu and Wang, 2023; Yao andKybernetes
+
+Zhu, 2022). On the other hand, a few recent studies have delved into L2 learners’ FSB in
+
+#### technology-enhanced settings. For example, Kessler (2023) argued that L2 learners in an
+
+#### online community actively sought feedback through clarification and confirmation
+
+#### requests with clear individual strategic tendencies. Similarly, Xu (2021) studied L2
+
+#### writers’ FSB during Covid-19 and discovered the positive correlation between feedback-
+
+#### seeking orientations and the use of self-regulatory strategies.
+
+#### However, we still face a paucity of knowledge in how students seek feedback in
+
+# POST-PRINT VERSION
+
+#### emerging environments practicing new feedback paradigm, where the role of teachers is
+
+#### minimal and students’ information-generation from and sense-making of technology-
+
+#### produced feedback are pivotal (Jensen et al., 2023). FSB from existing studies remains
+
+#### of the old paradigm, in which the students, receivers of feedback, manage to strike a
+
+# FOR WEBSITE VIEWER ONLY
+
+#### balance between the explicit inquiry for feedback from teachers and peers, and the
+
+#### implicit monitoring of the learning environment (PapiRESPECT PUBLISHER RIGHTSet al., 2019). Conversely, the
+
+#### changing learning environment as well as the role of learners as feedback generators urge
+
+#### further exploration into students’ feedback seeking in ChatGPT-enhanced settings.
+
+##### Page 5 of 55 Kybernetes
+
+#### Automated feedback providers: potential of ChatGPT
+
+#### Researchers have contributed a plethora of studies exploring the effects of technology-
+
+7 8
+
+#### enhanced feedback on language learning, especially L2 writing performance. In the
+
+9 10
+
+#### beginning, corpus-based automated writing evaluation (AWE) systems such as Pigai,
+
+11 12 13iWrite, and iTEST were widely applied in L2 writing classrooms (Zhang, 2021). Soon 14 15the AWE systems gave place to AI-based corrective feedback providers, e.g., Grammarly 16 17
+
+#### and QuillBot. The advantage of these AI-based solutions were empirically validated (Ngo
+
+18 19 20*et al.*, 2022) and thus remained the most frequent choices for automated feedback in L2 21 22classrooms. 23 24Kybernetes
+
+#### Since its debut, researchers have attempted to investigate into ChatGPT’s effects
+
+25 26
+
+#### on L2 writing. Yan (2023) explored L2 writers’ abilities to utilize ChatGPT’s text
+
+27 28 29 generation functionality in writing and their perceptions towards the potential threats to 30 31
+
+#### academic integrity. Barrot (2023) summarized advantages and pitfalls of ChatGPT’s
+
+32 33
+
+#### potential usage in L2 writing classrooms, and offered recommendations for L2 teachers.
+
+34 35 36Furthermore, efforts have been made to incorporate ChatGPT in L2 writing assessment. 37 38Mizumoto and Eguchi (2023) reported convincing accuracy and reliability from the 39 40
+
+#### automated scoring on L2 writing products by ChatGPT. Accordingly, the potential of
+
+41 42 **POST-PRINT VERSION** 43ChatGPT as a powerful AWCF providers is posited on: 1) the ability to provide accurate 44 45grammatical and syntactical corrections, thanks to the tremendous volume of trained 46 47
+
+#### linguistic data (Fang et al., 2023); 2) the mechanism of prompt engineering with which
+
+48 49 **FOR WEBSITE VIEWER ONLY**users could tap prompts to iteratively and progressively elicit feedback and responses of 50 51 52 improved quality (White *et al.*, 2023); and 3) the observed enhancement of learners’ 53 54**RESPECT PUBLISHER RIGHTS**
+
+#### engagement and involvement in the interaction with ChatGPT (Yan, 2023).
+
+55 56 57 58
+
+##### Kybernetes Page 6 of 55
+
+#### Furthermore, ChatGPT brings changes to L2 learning behaviors in seeking and
+
+#### utilizing feedback. First, the human-ChatGPT communication is bi-directional, making
+
+7 8ChatGPT a learner-aware, human-like, and adaptive feedback provider (Barrot, 2023). 9 10Second, once properly prompted, ChatGPT could generate feedback on a wide range of 11 12
+
+#### writing constructs and linguistic features, inclusive but not limited to grammar and
+
+13 14 15syntactical correctness (Mizumoto and Eguchi, 2023). Third, multi-turn human-ChatGPT 16 17 communication is encouraged and corroborated to be conducive to performance 18 19
+
+#### improvement of ChatGPT-generated feedback (Bang et al., 2023). Given the human-AI
+
+20 21
+
+#### communication interactivity and corresponding changes in learning behaviors, relevant
+
+22 23 24 studies on learning behavior from the learner perspectives are urgently needed.Kybernetes 25 26 27 28***Conceptualizing feedback seeking in GAI-enhanced learning*** 29 30
+
+#### The study is grounded on interaction theory. As argued by Long (1996), the four
+
+31 32 33constructs involved in learning included input, interaction, feedback and output. For L2 34 35development, Bitchener and Ferris (2012) emphasized the understanding, internalization 36 37
+
+#### and processing of feedback on the basis of exiting knowledge. Furthermore, Kaptelinin
+
+38 39
+
+#### and Nardi (2018) pinpointed that the deepening of the effects of technology could be
+
+40 41 42 attained by putting human-computer interaction within the “purposeful human activities” **POST-PRINT VERSION** 43 44
+
+#### (p. 3). Correspondingly, a conceptual model (Figure 1) is proposed by integrating
+
+45 46
+
+#### feedback seeking from GAI-based systems with the subsequent internalization and
+
+47 48 49processing of the feedback.
+
+# FOR WEBSITE VIEWER ONLY
+
+50 51 52 53 54**RESPECT PUBLISHER RIGHTS** 55 56 57 58
+
+##### Page 7 of 55 Kybernetes
+
+7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24Kybernetes 25
+
+Figure 1. Conceptual Model of L2 writers’ feedback seeking from ChatGPT
+
+26 27 28 According to Papi et al. (2019), FSB consists of feedback monitoring and inquiry 29 30
+
+#### through which the learners observe and absorb relevant feedback information from the
+
+31 32
+
+#### environment, and seek further explanation of the feedback. However, the emergence of
+
+33 34 35 GAI-based tools poses new challenges to the operationalization of the two behaviors. 36 37
+
+#### First, the approaches of feedback inquiry changes. Compared to the traditional teacher-
+
+38 39
+
+#### fronted settings, learners no longer resort to the explanation and help from teachers or
+
+40 41 42peer (Jensen **POST-PRINT VERSION** *et al.*, 2023). Conversely, the affordance of GAI systems could replicate the 43 44role of both teachers and peer learners at the cost of extra prompts written and submitted 45 46
+
+#### through the dialog interfaces. Second, the feedback monitoring as described by Papi et al.
+
+47 48 49(2019) is irrelevant for the setting with ChatGPT. With the conversational interaction
+
+# FOR WEBSITE VIEWER ONLY
+
+50 51 with AI and proper prompt writing techniques, learners could instantly and iteratively 52 53
+
+#### request GAI systems to amend, improve and regenerate feedback in a rather explicit and
+
+54**RESPECT PUBLISHER RIGHTS** 55
+
+#### direct manner. Hence, during a feedback episode, the feedback seeking processes could
+
+56 57 58 be explicitly executed for multiple times. Consequently, the original two component of
+
+##### Kybernetes Page 8 of 55
+
+#### FSB could be reframed: 1) feedback elicitation, in which the learners use prompts to
+
+#### iteratively generate feedback with different contents and focus; 2) feedback refinement,
+
+7 8an on-going process in which the learners repeatedly report their inner judgement to the 9 10GAI systems, after which feedback would be regenerated based on the provided 11 12
+
+#### evaluation. Correspondingly, feedback seeking ability refers to the capability of students
+
+13 14 15to effectively use feedback elicitation and refinement strategies in the interaction with 16 17 GAI systems. 18 19 20 21**Methods and Materials** 22 23 24***Design***Kybernetes 25 26 27The study adopted a mixed method multiple case study approach (Yin, 2013). In the fields 28 29of applied linguistics (Duff, 2010) and instructional feedback (e.g., Zhang and Hyland, 30 31
+
+2023), case study has been widely applied as an established means to collect rich data of
+32 33
+
+#### students’ actual learning experiences. Additionally, Adams (2019) argued that the limited
+
+34 35 36 number of research subjects in case studies had its merits in unfolding learner experiences 37 38
+
+#### in using the feedback other than the feedback design.
+
+39 40
+
+#### A case was defined as a student’s ability to effectively use feedback seeking
+
+41 42 **POST-PRINT VERSION** 43 strategies and their perceptions thereof. Internally, a sequential explanatory mixed 44 45method design was selected so that the quantitively displayed characteristics of students’ 46 47
+
+#### feedback seeking abilities would be explained by their own reflection and perceptions
+
+48 49
+
+# FOR WEBSITE VIEWER ONLY
+
+50(Creswell and Plano Clark, 2018). The study was collective in nature, since it allowed the 51 52researcher to generalize the findings across multiple cases to a broader context (Stake, 53 54**RESPECT PUBLISHER RIGHTS**
+
+#### 1995).
+
+55 56 57 58
+
+##### Page 9 of 55 Kybernetes
+
+#### Participants
+
+The study took place in an EFL program at a Chinese university. Students in the program 7 8
+
+#### were required to take two writing courses. The researcher purposefully sampled three
+
+9 10
+
+#### participants with distinct level of language proficiencies and technological competences
+
+11 12 13(see **The screening** criteria included: 1) mean grades in precedent L2 writing 14 15assessments; 2) experiences and interest in computer-assisted language learning and 16 17
+
+#### feedback reflected in a pre-project survey; 3) performance in two digital humanities
+
+18 19 20courses; and 4) self-rated technological competences. The criteria ensured that students 21 22with various levels of language and technological competence were recruited, thus 23 24Kybernetes
+
+#### forming representative cases of L2 writers in the program.
+
+25 26 27
+
+#### Table I for their characteristics). The screening criteria included: 1) mean grades in
+
+28 29 30 precedent L2 writing assessments¹; 2) experiences and interest in computer-assisted 31 32
+
+#### language learning and feedback reflected in a pre-project survey; 3) performance in two
+
+33 34 2
+
+#### digital humanities courses; and 4) self-rated technological competences. The criteria
+
+35 36 37ensured that students with various levels of language and technological competence were 38 39recruited, thus forming representative cases of L2 writers in the program. 40 41 42 **POST-PRINT VERSION**
+
+#### Table I. Demographic Information and Characteristics of the Participants
+
+43 44 **Pseudonyms Gender Age Mean Mean Self-rated Instructors’** 45 **Grades Grades Technological Recommendations** 46 **1* 2* Competences** 47 Toby M 21 81/100 91/100 9/10 “His balance in both 48 language proficiency and 49
+
+# FOR WEBSITE VIEWER ONLY technology abilities make
+
+50 51 52 1 Writing tasks were developed as per the requirement of College English Test Band 6, an 53 English proficiency examination commonly administered in Chinese universities. The**RESPECT PUBLISHER RIGHTS** 54 writing performances were rated against a 100-mark rubric composing five writing 55 assessment dimensions, i.e., content, organization, grammar, vocabulary, and mechanics. 56 2 Measured by a self-reported 10-point survey including the following dimensions: a) general 57 58 digital literacy; b) information retrieval and evaluation; c) communicative and collaborative skills using technology; and d) language-specific technological skills.
+
+##### Kybernetes Page 10 of 55
+
+|||||||him a must choice for your consideration”|
+|---|---|---|---|---|---|---|
+|Lisa|F|19|67/100|85/100|8/10|“Lisa is a rare case for female students, she is better at handling the technology- related stuffs”.|
+|Isabella|F|20|88/100|62/100|5/10|“Just a typical liberal arts student, at least a very hard- working student in the digital humanity courses ”.|
+
+7 8 9 10 11 12 13 *Mean Grades 1: mean grades in precedent L2 writing assessments. 14 Mean Grades 2: mean grades in precedent assessments in digital humanities courses. 15 16 Based on students’ performance in pre-project language assessments and 17 18teachers’ recommendations, Toby represented those with high language proficiency and 19 20
+
+#### technological competence; Lisa stood for those with medium language proficiency and
+
+21 22 23high technological competence; and Isabella exemplified those with high language 24Kybernetes 25proficiency and medium technological competence. 26 27 28 29 ***Data Collection*** 30 31
+
+#### The project was a five-week teacher-scaffolded informal L2 writing practicum with a
+
+32 33 34 total number of 68 learners (including the three participants). During the project, all 35 36
+
+#### learners were required to complete and revise three argumentative essay each no less than
+
+37 38
+
+#### 250 words. Additionally, two sessions of live demonstration and peer discussion were
+
+39 40 41arranged for each week (see Appendix S1 for practicum details). To ensure students’ 42 **POST-PRINT VERSION** 43engagement with the practicum, they were allowed to choose one of the essays completed 44 45
+
+#### in the practicum as assignment (accounting for 15% of the final grade) of an ongoing
+
+46 47 48writing course. 49
+
+# FOR WEBSITE VIEWER ONLY
+
+50 During the project, students were asked to keep track of the prompts they have 51 52
+
+#### written to interact with ChatGPT in learning logs (see Appendix S2). To overcome the
+
+53 54**RESPECT PUBLISHER RIGHTS**
+
+#### potential bias in the focus and scope of ChatGPT-generated feedback due to different
+
+55 56 57 feedback seeking abilities and ChatGPT prompting strategies, all the participants were 58
+
+##### Page 11 of 55 Kybernetes
+
+#### trained and required to use the same ChatGPT prompting template (see Appendix S1).
+
+#### The official GPT-3.5 version of ChatGPT from OpenAI was used in the study. Students
+
+7 8were encouraged to explore ChatGPT’s functionality at their own paces, hence no time 9 10restraint was posed on their interaction with ChatGPT. The learning log could be filled 11 12
+
+#### with multimedia files as supplementary documents, e.g., screenshot, videorecording, etc.
+
+13 14 15Furthermore, to record all the learning behaviors, the project took place at the 16 17 computerized language laboratories equipped with real-time screen recording, 18 19
+
+#### keylogging, and video-based classroom monitoring devices. Upon the completion of each
+
+20 21
+
+#### session in the project, students are asked to review and member-check the contents of
+
+22 23 24 learning log.Kybernetes 25 26
+
+#### To obtain students’ perceptions of their feedback seeking abilities in the
+
+27 28
+
+#### ChatGPT-enhanced learning environment, two sessions of face-to-face in-depth
+
+29 30 31interview were arranged for each participant at the third and fifth week respectively. Each 32 33interview session lasted for approximately 30 minutes. The interview processes strictly 34 35
+
+#### followed the interview protocol (see Appendix S3). The participants used their first
+
+36 37 38language (Chinese) so that they could better express their understandings and perceptions. 39 40 All contents and procedures of the interview were audio recorded, translated into English, 41 42 **POST-PRINT VERSION**
+
+#### and transcribed verbatim. To enhance the trustworthiness of the collected data, all
+
+43 44
+
+#### translated texts were checked by a co-researcher who was a certified and accredited
+
+45 46 47 English-Chinese translator before member-checked by the participants (Birt *et al.*, 2016). 48 49
+
+# FOR WEBSITE VIEWER ONLY
+
+50 51***Coding and Analysis*** 52 53
+
+#### Data obtained from observation and interviews were analyzed and organized in
+
+54**RESPECT PUBLISHER RIGHTS** 55 56accordance with the within-case and cross-case analysis techniques recommended by 57 58seminal works of case study (Stake, 2005; Yin, 2013).
+
+##### Kybernetes Page 12 of 55
+
+#### First, quantitative document analysis was applied to the ChatGPT prompts. In
+
+#### practice, a coding schemes of ChatGPT prompt patterns developed based on the
+
+7 8experiences from the pilot study and the prompt engineering mechanism (White *et al.*, 9 102023) was applied in the study (see Appendix S4). Four coders were recruited from the 11 12
+
+#### teaching faculty to code the patterns of students’ prompts. The inter-rater reliability
+
+13 14 15measured by the Fleiss’ Kappa statistics (Kappa = .76; [95% CI: 0.68-0.81]) revealed an 16 17 acceptable level of agreement between the coders. Then, descriptive analysis and 18 19
+
+#### visualization were applied to the coded data.
+
+20 21
+
+#### Second, thematic analysis was applied to the transcribed interview data. In
+
+22 23 24 specific, the six-step procedures advocated by Braun and Clarke (2006) was adhered to.Kybernetes 25 26
+
+#### Two co-researchers were recruited to assist the researcher in the data coding and analysis.
+
+27 28
+
+#### Initial codes of significant and recurring patterns were extracted from the original data,
+
+29 30 31then they were refined into higher-order themes representing students’ perceptions of 32 33their feedback seeking abilities from ChatGPT in language learning. To ensure the 34 35
+
+#### trustworthiness of the qualitative analysis, researcher triangulation and peer debriefing
+
+36 37 38were practiced. 39 40 41
+
+#### Validity
+
+42 **POST-PRINT VERSION** 43 44 45**Results** 46 47 48 ***Quantitative Document Analysis*** 49
+
+# FOR WEBSITE VIEWER ONLY
+
+50 51Toby (**Table II**) has created a total of 2,537 pieces of prompts in 167 rounds of interaction 52 53 with ChatGPT using 850 minutes; Lisa **(Table III**) has written 1,648 pieces of prompts 54**RESPECT PUBLISHER RIGHTS** 55
+
+#### in 193 rounds of interaction with ChatGPT using 436 minutes; Isabella (Table IV) has
+
+56 57
+
+#### spent 1,034 minutes in her 70-round interaction with ChatGPT with 1,921 pieces of
+
+##### Page 13 of 55 Kybernetes
+
+prompts.
+
+#### Table II. ChatGPT Prompts Created by Toby
+
+7 8
+
+||Prompt|Words|Words per prompt|Rounds|Prompts per round|Time spent (min)|
+|---|---|---|---|---|---|---|
+|Week 1|306|3213|10.5|48|6.4|251|
+|Week 2|426|4856|11.4|35|12.2|215|
+|Week 3|520|7124|13.7|31|16.8|177|
+|Week 4|589|9365|15.9|27|21.8|111|
+|Week 5|696|12389|17.8|26|26.8|96|
+|Sum|2537|36947|-|167|-|850|
+|Mean|507.4|7389.5|13.9|33.4|16.8|170|
+
+9 10 11 12 13 14 15 16 17 18 19 20 Table III. ChatGPT Prompts Created by Lisa 21
+
+||Prompts|Words|Words per Prompt|Rounds|Prompts per Round|Time spent (min)|
+|---|---|---|---|---|---|---|
+|Week 1|249|2615|10.5 Kybernetes|37|6.7|110|
+|Week 2|292|3329|11.4|40|7.3|102|
+|Week 3|301|3130|10.4|36|8.4|88|
+|Week 4|375|4163|11.1|39|9.6|71|
+|Week 5|431|4870|11.3|41|10.5|65|
+|Sum|1648|18107|-|193|-|436|
+|Mean|329.6|3621.3|10.9|38.6|8.5|87|
+
+22 23 24 25 26 27 28 29 30 31 32 33
+
+#### Table IV. ChatGPT Prompts Created by Isabella
+
+34 35
+
+||Prompts|Words|Words per Prompt|Rounds|Prompts per Round|Time spent (min)|
+|---|---|---|---|---|---|---|
+|Week 1|245|3185|13.0|8|30.6|280|
+|Week 2|335|4690|14.0|12|27.9|245|
+|Week 3|442|7249|16.4|14|31.6|211|
+|Week 4|432|6696|15.5|17|25.4|177|
+|Week 5|467|9247|POST-PRINT VERSION 19.8|19|24.6|121|
+|Sum|1921|31066|-|70|-|1034|
+|Mean|384.2|6213.3|15.7|14|28|207|
+
+36 37 38 39 40 41 42 43 44 45 46 47 48Against the coding scheme, the coders have categorized all prompts into two 49
+
+# FOR WEBSITE VIEWER ONLY
+
+#### major dimensions of feedback elicitation and refinement. Then the data were further
+
+51 52 53
+
+#### divided into 11 different subcategories of ChatGPT prompt patterns. With the coded data
+
+54**RESPECT PUBLISHER RIGHTS** 55 visualized by the temporal order, the development feature of the three participants’ 56 57
+
+#### feedback seeking abilities were illustrated.
+
+##### Kybernetes Page 14 of 55
+
+#### Toby’s development of feedback seeking abilities was steady and balanced (see
+
+Figure 2). His application of basic prompts and direct feedback regeneration was
+
+7 8remarkably reduced as he progressed; his utilization of other feedback elicitation 9 10strategies grew consistently while his command of feedback refinement strategies 11 12
+
+#### experienced a transition from a rapid heating up to a gradual cooling down.
+
+13 14 15 16 17 18 19 20 21 22 23 24Kybernetes 25 26 27 28 29 30 31 32 33 34 35 36 37 38Figure 2. Prompt Patterns of Toby 39
+
+#### For Lisa (see Figure 3), her application of basic prompts and direct feedback
+
+40 41 42regeneration remained generally unchanged in the project, while a growing momentum **POST-PRINT VERSION** 43 44could be observed for the rest feedback seeking strategies. 45 46 47 48 49
+
+# FOR WEBSITE VIEWER ONLY
+
+50 51 52 53 54**RESPECT PUBLISHER RIGHTS** 55 56 57 58
+
+##### Page 15 of 55 Kybernetes
+
+7 8 9 10 11 12 13 14 15 16 17 18 19 20 21
+
+Figure 3. Prompt Patterns of Lisa
+
+22 23 Finally, Isabella’s development was similar to Toby’s (see Figure 4), only 24Kybernetes 25
+
+#### relatively less in quantity as she appeared as a slow-paced and detailed prompt writer.
+
+26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 **POST-PRINT VERSION** 43 44 45
+
+Figure 4. Prompt Patterns of Isabella
+
+46 47 48
+
+#### Thematic Analysis
+
+# FOR WEBSITE VIEWER ONLY
+
+50 51
+
+#### Through the thematic analysis, the following main themes were identified: 1) perceptions
+
+52 53 of feedback seeking from ChatGPT; 2) significance of active feedback seeking; and 3)**RESPECT PUBLISHER RIGHTS** 54 55 56factors for the development of feedback seeking abilities. The thematic map of the 57 58interviews is shown in Figure 5. Additionally, each of the participants summarized their
+
+##### Kybernetes Page 16 of 55
+
+#### learning experiences in the second interview session.
+
+7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24Kybernetes 25 26 27Figure 5. Thematic Map of the Interviews 28 29 30*Perception of feedback seeking from ChatGPT* 31 32 33When asked about the GAI-enhanced environments, Toby and Lisa stressed the proactive 34 35involvement of learners. As they have experienced, the shift from a feedback *receiver to* 36 37
+
+#### seeker was impactful on their “flow of learning”. In the new environment, students’
+
+38 39 40agency, creativity, and proactivity was highly valued. 41 42 **POST-PRINT VERSION**Pertinent to the role ChatGPT played in L2 writing, Lisa and Isabella agreed upon 43 44
+
+#### the dual identity as both a feedback provider and explainer. From their viewpoints,
+
+45 46
+
+#### ChatGPT availed the learners clearer and detailed explanation about the feedback. At the
+
+47 48 49 same time, they believed that such affordance distinguishes ChatGPT from previous
+
+# FOR WEBSITE VIEWER ONLY
+
+50 51
+
+#### feedback providers, as it could compensate for the possible unavailability of the teachers.
+
+52 53
+
+# RESPECT PUBLISHER RIGHTSThe three participants reached an agreement in the advantage of ChatGPT as an
+
+54 55 56instant feedback provider. Learners could continuously solicit corrective feedback with 57 58improved quality from the AI system, if they were “well-versed in the language ChatGPT
+
+##### Page 17 of 55 Kybernetes
+
+#### spoke, aka, the prompts” (Toby, interview#1). Furthermore, Toby and Isabella argued in
+
+#### unison that “ChatGPT needs just a few seconds to provide feedback, and every second
+
+7 8would be rewarded with corrections of high quality” (Isabella, interview#2). According 9 10to both Toby and Isabella, who have compared the quality of the corrections from 11 12
+
+#### multiple sources, e.g., Grammarly or QuillBot, ChatGPT was generally reliable and
+
+13 14 15accurate. 16 17 18
+
+#### Significance of active feedback seeking
+
+19 20 21
+
+#### All the three participants agreed that active feedback seeking was beneficial to the
+
+22 23 24
+
+#### affective and behavioral outcomes of learning. Toby and Isabella emphasized that the
+
+## Kybernetes
+
+25 26subsequent processing of feedback gained from frequent and effective feedback seeking. 27 28Isabella underlined the value of the unfocused feedback offered by ChatGPT against the 29 30
+
+#### focused feedback from teachers that she “could make judgement on writing from a
+
+31 32 33holistic perspective instead of paying attention merely to a certain aspect” (Isabella, 34 35interview#1). 36 37
+
+#### Regarding the effects of the active feedback seeking from ChatGPT on the
+
+38 39 40
+
+#### affective domain of learning experiences, all participants kept pace with each other. To
+
+41 42 them, the feedback seeking from ChatGPT helped creating a democratic atmosphere. **POST-PRINT VERSION** 43 44
+
+#### Students were mentally at ease asking ChatGPT to regenerate or refine the feedback.
+
+45 46 47
+
+#### Furthermore, participants felt that they are motivated to actively involve in
+
+48 49feedback seeking. In conventional settings, negative and critical feedback was treated by
+
+# FOR WEBSITE VIEWER ONLY
+
+50 51learners as shame. Consequently, students were generally reluctant to ask additional 52 53
+
+#### questions about the feedback, much less challenge it. The interactive processes to elicit
+
+# RESPECT PUBLISHER RIGHTS
+
+54 55 56feedback from ChatGPT, according to Lisa, “works like a black box, in which our shames 57 58are hidden, in a positive way” (Lisa, interview#2).
+
+##### Kybernetes Page 18 of 55
+
+#### Finally, for the effects of feedback seeking on L2 writer’s competence, Lisa and
+
+#### Isabelle pointed to students’ critical thinking. In accordance with their reflections, the
+
+7 8feedback refinement processes required the learners to critically compare the values and 9 10side effects of feedback under consideration. Furthermore, the abilities to accurately 11 12
+
+#### identify existing issues and critically describe them in writing prompts were vital for
+
+13 14 15effective interaction with ChatGPT. 16 17 18
+
+#### Factors for the development of feedback seeking abilities
+
+19 20 21
+
+#### Grounded on the consensus that ChatGPT provided a promoting environment for students
+
+22 23
+
+#### to develop feedback seeking abilities, all participants accentuate that the experiences of
+
+24Kybernetes 25 26interaction with AI system were most important. ChatGPT, from their viewpoints, is 27 28“shockingly easy-to-use at first glance” (Toby, interview#2), but takes “a huge amount 29 30
+
+#### of practice and thinking” to “craft the skills and techniques of writing and polishing
+
+31 32 33prompts” (Isabella, interview#2). 34 35Furthermore, all three participants agreed that an open-minded attitude mattered. 36 37
+
+#### According to Toby, the innovation ChatGPT brought about resulted in “either overhyped
+
+38 39
+
+#### tunes or total rejections” (Toby, interview#1). As a result, there exists a gap between the
+
+40 41 42 perceived affordance of “ChatGPT as a key to good writing quality” (Lisa, interview#1) **POST-PRINT VERSION** 43 44
+
+#### and realistic experiences that “it is a powerful yet demanding tool with diversified and
+
+45 46
+
+#### unpredictable outcomes” (Isabella, interview#2). To mediate such cognitive dissonance,
+
+47 48 49the participants suggested that deepening one’s understanding of ChatGPT’s mechanism
+
+# FOR WEBSITE VIEWER ONLY
+
+50 51and workflow in a real setting of L2 writing was imperative. 52 53
+
+#### Toby and Isabella provided their take on the concrete learning strategies needed
+
+54**RESPECT PUBLISHER RIGHTS** 55 56to foster feedback seeking abilities from AI-based systems. Reflected by their 57 58
+
+##### Page 19 of 55 Kybernetes
+
+#### experiences, learners’ monitoring and evaluation were decisive for feedback quality.
+
+#### Toby confirmed that such refinements called for metacognitive abilities:
+
+7 8*“To compare and select from multiple pieces of feedback, one needs to evaluate* 9 *comprehensively, and use a whole flow of planning, comparing and controlling from* 10*a higher order perspective” (Toby, interview#2).* 11 12 13*Wrap-up of individual learning experiences* 14 15In the second interview sessions, each participant summarized their learning 16 17experiences and several post-project perceptions. In specific, their perceptions of 18 19
+
+#### feedback seeking, recommendations for the best practices and a summary of their
+
+20 21
+
+#### personal growth were elucidated. The gist of their summaries is presented in Table V.
+
+22 23 24Kybernetes 25 Table V. Individual Summary of Learning Experiences 26
+
+|Participant|Toby|Lisa|Isabella|
+|---|---|---|---|
+|Post-project perception of feedback seeking|A learners should actively seek feedback from AI systems. During the refinement, he/she should use multiple criteria to select and compare available feedback.|We should take advantage of AI system’s ability to provide feedback from different angles.|Human understanding and judgement should not be replaced. One should think closely at the feedback provided by the AI system and make the final decision on his/her own.|
+|Perceived best practice of feedback seeking|It’s all about the balance. The balance between the learner’s own judgement and the interaction with the system. Think hard for a clear decision, then interact proactively with the AI POST-PRINT VERSION system to specify the details in the decision.|Proactively interact with ChatGPT for improvement in feedback. Learners should actively channel their own judgement back to the system. The more you interact with ChatGPT, the better.|Precision matters. When using the conversation with ChatGPT to produce feedback, we should give detailed and clear prompts. For the refinement, we should incorporate the AI’s response with our own linguistics knowledge.|
+|Personal growth|A thrilling experience in using ChatGPT for feedback. I like my fast- paced growth in feedback triggering and feedback monitoring. I have tried to be bold and exploratory in dealing with ChatGPT. I will explore more advanced tricks in the future, and I believe AI-based tools will be my learning companion in the days to come.|Have truly mastered the tricks to chat with AI. But I am not satisfied with my ability to write high quality prompt. I FOR WEBSITE VIEWER ONLY like the feeling with ChatGPT. But I will learn more about how to write effective prompt as RESPECT PUBLISHER RIGHTS a language learner.|I will describe my development as a slow- paced but fruitful one. Before the project, I am not confident in myself. So, for most of the time, I write prompts with measured words and am very careful talking with ChatGPT. But I like the feeling of reading and comparing the feedback.|
+
+27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58
+
+##### Kybernetes Page 20 of 55
+
+#### Discussions
+
+#### Being a multiple case study, the observations and findings emerged from individual cases
+
+7 8
+
+#### were triangulated and holistically interpreted. The findings are discussed against existing
+
+9 10
+
+#### empirical evidence and theoretical perspectives.
+
+11 12 13In answering **RQ1**, the quantitative document analysis revealed that students with 14 15different language proficiencies and technological competences displayed diversified 16 17
+
+#### developmental trajectories of feedback seeking abilities. First, students with higher
+
+18 19 20language proficiency (i.e., Toby and Isabella) tended to create content-rich prompts in 21 22relatively fewer rounds of interaction with AI system, while learner with moderate 23 24Kybernetes
+
+#### language proficiency (i.e., Lisa) resorted to an opposite path. The differences in the
+
+25 26
+
+#### quantity and length of prompts could be partially explained by the claim that the
+
+27 28 29 utilization and processing of feedback depended on the learners’ language skills 30 31
+
+#### (Koltovskaia, 2020). Such phenomenon could also be attributed to the interrelation
+
+32 33
+
+#### between L2 language mindset and FSB (Yao and Zhu, 2022). Second, judging from the
+
+34 35 36time consumption of the participants, Toby and Isabella (representing learners with higher 37 38language proficiency) were relatively slow-paced in action. This echoed with the 39 40
+
+#### observation of Ranalli (2018) that AWCF would affect mental-effort expenditure on
+
+41 42 **POST-PRINT VERSION** 43learners with different L2 levels. However, contrary to the claim that AWCF would pose 44 45extra cognitive overload to low-proficiency learners (Bitchener and Ferris, 2012), the 46 47
+
+#### current study revealed that it was high-proficiency students (i.e., Toby and Isabella) who
+
+48 49 **FOR WEBSITE VIEWER ONLY**spent more time and efforts analyzing, evaluating and making use the AWCF. Such 50 51 52 contradiction could be attributed to the iterative and interaction mechanism of ChatGPT, 53 54**RESPECT PUBLISHER RIGHTS**
+
+#### in which low-proficiency learners could directly ask ChatGPT to regenerate (as evidenced
+
+55 56
+
+#### in Lisa’s overuse of feedback regeneration in Figure 2) while high-proficiency learners
+
+57 58
+
+##### Page 21 of 55 Kybernetes
+
+#### (as evidenced in the dramatic decrease in feedback regeneration of Toby and Isabella)
+
+#### would stop, think, and write prompts with additionally backgrounds and specific demands
+
+7 8(as evidenced by Toby and Isabella’s prompt writing habits). Additionally, the variances 9 10in time consumption testified the existence of *inner feedback*, a natural process of 11 12
+
+#### processing and comparison when the learners was exposed to feedback (Nicol, 2021).
+
+13 14 15Internally, the weekly ChatGPT prompt patterns reflected the strategical aspect of 16 17 feedback seeking ability development. First, students with different language 18 19
+
+#### proficiencies kept abreast in exerting feedback elicitation strategies in the interaction with
+
+20 21
+
+#### ChatGPT. This showcased students’ progress in understanding the conversational and
+
+22 23 24 iterative mechanism of ChatGPT. With the progression in the project, students graduallyKybernetes 25 26
+
+#### reduced writing minimalistic prompts, instead, additional information were included to
+
+27 28
+
+#### enrich and clarify the instructions prepared for ChatGPT. This finding echoed the
+
+29 30 31developmental characteristics of students using ChatGPT for text generation in an L2 32 33classroom (Yan, 2023). Second, diversity to use feedback refinement strategies surfaced 34 35
+
+#### from the quantitative document analysis. Students with higher language proficiencies
+
+36 37 38(i.e., Toby and Isabella) steadily shifted from the style of short and frequent interaction 39 40 with the AI system to a more deliberated and information-rich manner. Conversely, Lisa, 41 42 **POST-PRINT VERSION**
+
+#### representing students with moderate language proficiency but higher command of
+
+43 44
+
+#### technologies, consistently carried out a straightforward way to interact with the AI
+
+45 46 47 system. To some extent, the finding was in tandem with the argument of Havranek and 48 49
+
+#### Cesnik’s (2001) that proficient learners could make better use of feedback. As feedback
+
+# FOR WEBSITE VIEWER ONLY
+
+50 51
+
+#### refinement strategies functioned on a higher order, such disparities could also be
+
+52 53 54attributed to the variance in metacognitive regulatory skills. In this sense, such**RESPECT PUBLISHER RIGHTS** 55 56phenomenon could be explained by the positive correlation between metacognition and 57 58
+
+#### FSB (Xu, 2021).
+
+##### Kybernetes Page 22 of 55
+
+#### In answering RQ2, the synthetization of participants’ perceptions pinpointed the
+
+#### decisive factors for fostering feedback seeking abilities in a ChatGPT-enhanced
+
+7 8environment. First, the consensus of participants emphasized learners’ proactive 9 10involvement. Such belief was in tandem with the view that contemporary feedback was a 11 12
+
+#### process of self-generated meaning making (Jensen et al., 2023). Based on such views, we
+
+13 14 15infer that the significance of human efforts, in the era of AI-enhanced learning, should be 16 17 uplifted rather than diminished. Second, the participants stressed the significance of 18 19
+
+#### metacognitive regulation. In the study, participants effectively combined the internal
+
+20 21
+
+#### feedback processing and external feedback refinement to make better use of ChatGPT’s
+
+22 23 24 feedback. The observationKybernetescontradicted traditional views that feedback seeking 25 26
+
+#### encompassed limited metacognitive regulation other than the comparison of value and
+
+27 28
+
+#### cost of potential feedback information (Ashford et al., 2003). ChatGPT called for higher
+
+29 30 31level of metacognition because students were allowed to state their affective and cognitive 32 33judgments. Such contradiction could be attributed to the *new feedback paradigm*, in 34 35
+
+#### which students’ proactivity and agency were held pivotal (Jensen et al., 2023). From
+
+36 37 38another perspective, such phenomenon testified the reported effects of ChatGPT on the 39 40 promotion of self-regulation skills (Wu, Lee, *et al.*, 2023). 41 42 **POST-PRINT VERSION** 43 44**Conclusions** 45 46
+
+#### The study investigated the development of feedback seeking abilities of L2 writers
+
+47 48 49utilizing ChatGPT for corrective feedback. Furthermore, the research identified the key
+
+# FOR WEBSITE VIEWER ONLY
+
+50 51factors deciding students’ development of feedback seeking abilities in the new learning 52 53 environment. 54**RESPECT PUBLISHER RIGHTS** 55 56The study delivered conceptual and pedagogical implications. First, a 57 58sociomaterial perspective towards feedback would trigger researchers to expand and
+
+##### Page 23 of 55 Kybernetes
+
+#### redevelop existing conceptualization in the field of instructional feedback (Gravett,
+
+#### 2022). The study revealed that ChatGPT, when actively and strategically utilized, offered
+
+7 8a competitive solution for AWCF in L2 learning. Considering the growth in the 9 10application of AI, such domain-specific and in-depth investigations into the provision and 11 12
+
+#### utilization of feedback in innovative learning environments would be helpful for the
+
+13 14 15sustained development of educational studies in the new era. Second, educators should 16 17 consider the development of students’ abilities to use state-of-the-art tools. The results 18 19
+
+#### showed that the quality and effectiveness of ChatGPT-generated feedback were closely
+
+20 21
+
+#### related to students’ feedback seeking abilities. However, to date, such abilities were
+
+22 23 24 understudied, let alone properly trained. There remained much to be done for educators,Kybernetes 25 26
+
+#### e.g., altering curriculum and assessment setups, (re)constructing a learning environment
+
+27 28
+
+#### levering AI affordance and peer collaboration, providing training on AI skills, etc.
+
+29 30 31The study was not without limitations. First, the study took a relatively narrow 32 33stance towards student’s learning behaviors in the new context. The study focused on 34 35
+
+#### human-AI interaction during the utilization of ChatGPT in L2 classrooms. Consequently,
+
+36 37 38other key factors related to learning process and outcomes, e.g., achievement, 39 40 engagement, motivation, acceptance, etc., were not examined. In the follow-up studies, 41 42 **POST-PRINT VERSION**
+
+#### educators and researchers could continue the exploration of the impact of ChatGPT on
+
+43 44
+
+#### different aspects of pedagogy. Second, the reported findings were based on a three-
+
+45 46 47 participant case study and could not be easily generalizable. Considering the complexity 48 49
+
+#### and diversity of L2 learning, follow-up studies are encouraged to examine students’
+
+# FOR WEBSITE VIEWER ONLY
+
+50 51
+
+#### feedback seeking with a larger sample size. Third, the study intentionally adopted a
+
+52 53 54student-centered perspective in research design. As a result, the effects of ChatGPT on**RESPECT PUBLISHER RIGHTS** 55 56teacher’s roles and instructional approaches were not examined. In subsequent studies, 57 58
+
+#### researchers could posit the research settings in teacher-fronted L2 classrooms, where the
+
+##### Kybernetes Page 24 of 55
+
+#### interaction between students and AI systems would be mediated by the teacher-student
+
+#### and peer interactions. Finally, the study is restricted by its duration. With a relatively short
+
+7 8time span, the study delivered exploratory insights necessary to understand students’ 9 10feedback seeking from GAI tools used in learning. However, due to the limited amount 11 12
+
+#### of collected data, the study did not apply analytical methods such as inferential statistical
+
+13 14 15analysis, which would offer more evidence regarding the developmental trajectories of 16 17 students’ feedback seeking abilities. In subsequent studies, researchers are encouraged to 18 19
+
+#### conduct longitudinal studies for the deepened understanding of feedback seeking with
+
+20 21
+
+#### AI-enhanced learning tools.
+
+22 23 24Kybernetes 25 26
+
+#### Acknowledgement
+
+27 28
+
+#### The author would like to thank the handling editor and all three anonymous reviewers
+
+29 30 31who have offered constructive feedback for the paper’s quality improvement. 32 33**Declaration of Interest** 34 35
+
+#### The author has no competing interests to declare.
+
+36 37 38**Funding** 39 40 This research was funded by ****, grant number ****. 41 42 **POST-PRINT VERSION** 43 44**References** 45 Adams, G. (2019), “A narrative study of the experience of feedback on a professional doctorate: ‘a kind 46 47 of flowing conversation’”, *Studies in Continuing Education*, Routledge, Vol. 41 No. 2, pp. 191– 48 49
+
+# FOR WEBSITE VIEWER ONLY 206, doi: 10.1080/0158037X.2018.1526782.
+
+50 51 Ashford, S.J., Blatt, R. and VandeWalle, D. (2003), “Reflections on the Looking Glass: A Review of 52 53 Research on Feedback-Seeking Behavior in Organizations”, *Journal of Management*, Vol. 29 54**RESPECT PUBLISHER RIGHTS** 55 No. 6, pp. 773–799, doi: 10.1016/S0149-2063(03)00079-5. 56 57 58
+
+##### Page 25 of 55
+
+7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58
+
+Kybernetes
+
+Bang, Y., Cahyawijaya, S., Lee, N., Dai, W., Su, D., Wilie, B., Lovenia, H., *et al.* (2023), “A Multitask,
+
+Multilingual, Multimodal Evaluation of ChatGPT on Reasoning, Hallucination, and
+
+##### Interactivity”, arXiv, doi: 10.48550/arXiv.2302.04023.
+
+Barrot, J.S. (2021), “Using automated written corrective feedback in the writing classrooms: effects on L2
+
+writing accuracy”, *Computer Assisted Language Learning*, Routledge, pp. 1–24, doi:
+
+10.1080/09588221.2021.1936071.
+Barrot, J.S. (2023), “Using ChatGPT for second language writing: Pitfalls and potentials”, *Assessing*
+
+*Writing*, Vol. 57, p. 100745, doi: 10.1016/j.asw.2023.100745.
+
+Birt, L., Scott, S., Cavers, D., Campbell, C. and Walter, F. (2016), “Member Checking: A Tool to
+
+Enhance Trustworthiness or Merely a Nod to Validation?”, *Qualitative Health Research*, SAGE
+
+Publications Inc, Vol. 26 No. 13, pp. 1802–1811, doi: 10.1177/1049732316654870.
+
+Bitchener, J. and Ferris, D. (2012),
+
+## Kybernetes
+
+*Written Corrective Feedback in Second Language Acquisition and*
+
+##### Writing, Routledge, New York ; London.
+
+Braun, V. and Clarke, V. (2006), “Using thematic analysis in psychology”, *Qualitative Research in*
+
+*Psychology*, Hodder Arnold, United Kingdom, Vol. 3 No. 2, pp. 77–101, doi:
+
+10.1191/1478088706qp063oa.
+Creswell, J.W. and Plano Clark, V.L. (2018), *Designing and Conducting Mixed Methods Research*, Third
+
+##### Edition., SAGE, Los Angeles.
+
+Duff, P. (2010), *Case Study Research in Applied Linguistics*, Transferred to digital printing., Routledge,
+
+##### New York.
+
+Fang, T., Yang, S., Lan, K., Wong, D.F., Hu, J., Chao, L.S. and Zhang, Y. (2023), “Is ChatGPT a Highly
+
+# POST-PRINT VERSION
+
+Fluent Grammatical Error Correction System? A Comprehensive Evaluation”, arXiv, 4 April,
+
+doi: 10.48550/arXiv.2304.01746.
+
+Gravett, K. (2022), “Feedback literacies as sociomaterial practice”, *Critical Studies in Education*,
+
+Routledge, Vol. 63 No. 2, pp. 261–274, doi: 10.1080/17508487.2020.1747099.
+
+# FOR WEBSITE VIEWER ONLY
+
+Hattie, J. and Timperley, H. (2007), “The Power of Feedback”, *Review of Educational Research*,
+
+American Educational Research Association, Vol. 77 No. 1, pp. 81–112, doi:
+
+# RESPECT PUBLISHER RIGHTS
+
+10.3102/003465430298487.
+
+7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58
+
+##### Kybernetes Page 26 of 55
+
+Havranek, G. and Cesnik, H. (2001), “Factors affecting the success of corrective feedback”:, *EUROSLA*
+
+*Yearbook*, John Benjamins Publishing Company, Vol. 1 No. 1, pp. 99–122, doi:
+
+10.1075/eurosla.1.10hav.
+Hyland, K. and Hyland, F. (2019), “Contexts and Issues in Feedback on L2 Writing”, in Hyland, F. (Ed.),
+
+*Feedback in Second Language Writing: Contexts and Issues*, 2nd ed., Cambridge University
+
+##### Press, Cambridge, pp. 1–22, doi: 10.1017/9781108635547.003.
+
+Jensen, L.X., Bearman, M. and Boud, D. (2023), “Feedback encounters: towards a framework for
+
+analysing and understanding feedback processes”, *Assessment & Evaluation in Higher*
+
+*Education*, Routledge, Vol. 48 No. 1, pp. 121–134, doi: 10.1080/02602938.2022.2059446.
+
+Kaptelinin, V. and Nardi, B. (2018), “Activity Theory as a Framework for Human-Technology
+
+Interaction Research”, *Mind, Culture, and Activity*, Routledge, Vol. 25 No. 1, pp. 3–5, doi:
+
+10.1080/10749039.2017.1393089.
+## Kybernetes
+
+Kessler, M. (2023), “Written corrective feedback in an online community: A typology of English
+
+language learners’ requests and interlocutors’ responses”, *Computers and Composition*, Vol. 67,
+
+p. 102752, doi: 10.1016/j.compcom.2023.102752.
+Koltovskaia, S. (2020), “Student engagement with automated written corrective feedback (AWCF)
+
+provided by Grammarly: A multiple case study”, *Assessing Writing*, Vol. 44, p. 100450, doi:
+
+10.1016/j.asw.2020.100450.
+Leenknecht, M., Hompus, P. and Van Der Schaaf, M. (2019), “Feedback seeking behaviour in higher
+
+education: the association with students’ goal orientation and deep learning approach”,
+
+*Assessment & Evaluation in Higher Education*, Routledge, Vol. 44 No. 7, pp. 1069–1078, doi:
+
+# POST-PRINT VERSION
+
+10.1080/02602938.2019.1571161.
+Long, M. (1996), “The role of the linguistic environment in second language acquisition”, in Ritchie, W.
+
+and Bhatia, T. (Eds.), *Handbook of Second Language Acquisition*, Academic Press, San Diego,
+
+CA, pp. 413–468.
+
+# FOR WEBSITE VIEWER ONLY
+
+Malecka, B., Boud, D. and Carless, D. (2022), “Eliciting, processing and enacting feedback: mechanisms
+
+for embedding student feedback literacy within the curriculum”, *Teaching in Higher Education*,
+
+# RESPECT PUBLISHER RIGHTS
+
+Routledge, Vol. 27 No. 7, pp. 908–922, doi: 10.1080/13562517.2020.1754784.
+
+##### Page 27 of 55
+
+7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58
+
+Kybernetes
+
+Mizumoto, A. and Eguchi, M. (2023), “Exploring the potential of using an AI language model for
+
+automated essay scoring”, *Research Methods in Applied Linguistics*, Vol. 2 No. 2, p. 100050,
+
+doi: 10.1016/j.rmal.2023.100050.
+
+Ngo, T.T.-N., Chen, H.H.-J. and Lai, K.K.-W. (2022), “The effectiveness of automated writing evaluation
+
+in EFL/ESL writing: a three-level meta-analysis”, *Interactive Learning Environments*,
+
+##### Routledge, pp. 1–18, doi: 10.1080/10494820.2022.2096642.
+
+Nicol, D. (2021), “The power of internal feedback: exploiting natural comparison processes”, *Assessment*
+
+*& Evaluation in Higher Education*, Routledge, Vol. 46 No. 5, pp. 756–778, doi:
+
+10.1080/02602938.2020.1823314.
+Papi, M., Rios, A., Pelt, H. and Ozdemir, E. (2019), “Feedback-Seeking Behavior in Language Learning:
+
+Basic Components and Motivational Antecedents”, *The Modern Language Journal*, Vol. 103
+
+No. 1, pp. 205–226, doi: 10.1111/modl.12538.
+
+## Kybernetes
+
+Ranalli, J. (2018), “Automated written corrective feedback: how well can students make use of it?”,
+
+*Computer Assisted Language Learning*, Routledge, Vol. 31 No. 7, pp. 653–674, doi:
+
+10.1080/09588221.2018.1428994.
+Stake, R.E. (1995), *The Art of Case Study Research*, Sage Publications, Thousand Oaks.
+
+Stake, R.E. (2005), *Multiple Case Study Analysis*, Illustrated edition., The Guilford Press, New York.
+
+White, J., Fu, Q., Hays, S., Sandborn, M., Olea, C., Gilbert, H., Elnashar, A., *et al.* (2023), “A Prompt
+
+Pattern Catalog to Enhance Prompt Engineering with ChatGPT”, arXiv, 21 February, doi:
+
+10.48550/arXiv.2302.11382.
+Wiliam, D. (2018), “Feedback: At the Heart of – But Definitely Not All of – Formative Assessment”, in
+
+# POST-PRINT VERSION
+
+Lipnevich, A.A. and Smith, J.K. (Eds.), *The Cambridge Handbook of Instructional Feedback*,
+
+Cambridge University Press, Cambridge, pp. 3–28, doi: 10.1017/9781316832134.003.
+
+Winstone, N.E., Hepper, E.G. and Nash, R.A. (2021), “Individual differences in self-reported use of
+
+assessment feedback: the mediating role of feedback beliefs”, *Educational Psychology*,
+
+# FOR WEBSITE VIEWER ONLY
+
+Routledge, Vol. 41 No. 7, pp. 844–862, doi: 10.1080/01443410.2019.1693510.
+
+Wu, H., Wang, W., Wan, Y., Jiao, W. and Lyu, M. (2023), “ChatGPT or Grammarly? Evaluating
+
+# RESPECT PUBLISHER RIGHTS
+
+ChatGPT on Grammatical Error Correction Benchmark”, arXiv, 14 March, doi:
+
+10.48550/arXiv.2303.13648.
+
+7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58
+
+##### Kybernetes Page 28 of 55
+
+Wu, T.-T., Lee, H.-Y., Li, P.-H., Huang, C.-N. and Huang, Y.-M. (2023), “Promoting Self-Regulation
+
+Progress and Knowledge Construction in Blended Learning via ChatGPT-Based Learning Aid”,
+
+*Journal of Educational Computing Research*, SAGE Publications Inc, p. 07356331231191125,
+
+doi: 10.1177/07356331231191125.
+
+Xu, J. (2021), “Chinese University Students’ L2 Writing Feedback Orientation and Self-Regulated
+
+Learning Writing Strategies in Online Teaching During COVID-19”, *The Asia-Pacific*
+
+*Education Researcher*, Vol. 30 No. 6, pp. 563–574, doi: 10.1007/s40299-021-00586-6.
+
+Xu, J. and Wang, Y. (2023), “Individual differences in L2 writing feedback-seeking behaviors: The
+
+predictive roles of various motivational constructs”, *Assessing Writing*, Vol. 56, p. 100698, doi:
+
+10.1016/j.asw.2023.100698.
+Yan, D. (2023), “Impact of ChatGPT on learners in a L2 writing practicum: An exploratory
+
+investigation”, *Education and Information Technologies*
+
+## Kybernetes
+
+, Vol. 28 No. 11, pp. 13943–13967, doi:
+
+10.1007/s10639-023-11742-4.
+Yao, Y. and Zhu, X. (2022), “Modeling chinese high school EFL writers’ language mindsets, goal
+
+orientations, and feedback-seeking behavior: the interaction effect between language mindsets
+
+and writing competence”, *Reading and Writing*, doi: 10.1007/s11145-022-10339-6.
+
+Yin, R.K. (2013), *Case Study Research: Design and Methods*, Fifth edition., SAGE Publications, Inc, Los
+
+Angeles.
+
+Zhang, S. (2021), “Review of automated writing evaluation systems”, *Journal of China Computer-*
+
+*Assisted Language Learning*, De Gruyter, Vol. 1 No. 1, pp. 170–176, doi: 10.1515/jccall-2021-
+
+2007.
+# POST-PRINT VERSION
+
+Zhang, Z. and Hyland, K. (2023), “Student engagement with peer feedback in l2 writing: Insights from
+
+reflective journaling and revising practices”, *Assessing Writing*, Vol. 58, p. 100784, doi:
+
+10.1016/j.asw.2023.100784.
+# FOR WEBSITE VIEWER ONLY RESPECT PUBLISHER RIGHTS
