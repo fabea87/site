@@ -719,7 +719,7 @@ ${ldJson}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bona+Nova+SC:wght@400;700&family=IBM+Plex+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="assets/stylesheet.css">
 </head>
 
@@ -791,8 +791,7 @@ ${ldJson}
 const FONTS_LINK =
   '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
   '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
-  '  <link href="https://fonts.googleapis.com/css2?family=Bona+Nova+SC:wght@400;700' +
-  '&family=IBM+Plex+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">';
+  '  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">';
 
 const CSS_LINK = '<link rel="stylesheet" href="../assets/stylesheet.css">';
 const FAVICON = '<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">';

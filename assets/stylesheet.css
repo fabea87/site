@@ -5,90 +5,91 @@
 
 /* ---------- Design Tokens ---------- */
 :root {
-  /* Fonts */
-  --font-display: "Bona Nova SC", "Songti SC", "SimSun", Georgia, serif;
-  --font-serif: "IBM Plex Serif", "Songti SC", "SimSun", Georgia, "Times New Roman", serif;
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+  /* Fonts — Mac-inspired typography system */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "PingFang SC", "Hiragino Sans GB", "Inter", system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro", "PingFang SC", "Hiragino Sans GB", "Inter", system-ui, -apple-system-headline, sans-serif;
+  --font-serif: -apple-system-ui-serif, "New York", "Songti SC", "PingFang SC", "Charter", "Bitstream Charter", Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, "SF Mono", "Menlo", Monaco, "Cascadia Code", "Source Code Pro", Consolas, monospace;
 
   /* Typography mapping */
+  --font-body: var(--font-sans);
   --font-ui: var(--font-sans);
   --font-label: var(--font-sans);
   --font-meta: var(--font-sans);
 
-  /* Light Theme — Oxford Ink Blue & Fine Warm Alabaster */
-  --bg: #FAF8F5;
+  /* Light Theme — Apple Mac Inspired (Clean, Vibrant, Modern) */
+  --bg: #F5F5F7;
   --bg-elevated: #FFFFFF;
-  --bg-subtle: #F3EFE8;
-  --bg-subtle-hover: #EAE4D9;
-  --bg-nav: rgba(250, 248, 245, 0.88);
-  --featured-bg: #FCFBF7;
-  --featured-border: #C0841D;
-  --featured-badge-bg: #FEF3C7;
-  --featured-badge-text: #92400E;
+  --bg-subtle: #EBECEF;
+  --bg-subtle-hover: #E1E2E7;
+  --bg-nav: rgba(245, 245, 247, 0.82);
+  --featured-bg: #FCFAF6;
+  --featured-border: #FF9500;
+  --featured-badge-bg: rgba(255, 149, 0, 0.12);
+  --featured-badge-text: #B25E00;
 
-  --text: #1C232D;
-  --text-soft: #4B5868;
-  --text-faint: #7D8B9B;
+  --text: #1D1D1F;
+  --text-soft: #515154;
+  --text-faint: #86868B;
 
-  --accent: #1B365D;
-  --accent-strong: #0F2342;
-  --accent-soft: rgba(27, 54, 93, 0.08);
-  --accent-border: rgba(27, 54, 93, 0.2);
+  --accent: #0066CC;
+  --accent-strong: #004FB8;
+  --accent-soft: rgba(0, 102, 204, 0.08);
+  --accent-border: rgba(0, 102, 204, 0.22);
 
-  --border: #E5E0D4;
-  --border-strong: #CEC7B6;
-  --border-light: #F0ECE2;
+  --border: #E5E5EA;
+  --border-strong: #D2D2D7;
+  --border-light: #F2F2F7;
 
-  --code-bg: #F4F1EA;
-  --code-text: #24292F;
-  --code-border: #E2DDD2;
+  --code-bg: #EFEFF2;
+  --code-text: #1D1D1F;
+  --code-border: #E5E5EA;
 
-  --badge-bg: #1B365D;
+  --badge-bg: #0066CC;
   --badge-text: #FFFFFF;
 
-  --shadow-sm: 0 1px 3px rgba(27, 38, 59, 0.05);
-  --shadow: 0 2px 8px -1px rgba(27, 38, 59, 0.07), 0 1px 3px rgba(27, 38, 59, 0.04);
-  --shadow-hover: 0 8px 24px -4px rgba(27, 38, 59, 0.12), 0 2px 6px -1px rgba(27, 38, 59, 0.04);
-  --shadow-popover: 0 14px 34px -6px rgba(27, 38, 59, 0.16), 0 4px 12px rgba(27, 38, 59, 0.06);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow: 0 2px 8px -1px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
+  --shadow-hover: 0 10px 26px -4px rgba(0, 0, 0, 0.09), 0 3px 8px rgba(0, 0, 0, 0.04);
+  --shadow-popover: 0 16px 36px -4px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
 
   --radius-sm: 6px;
   --radius: 10px;
-  --radius-lg: 14px;
+  --radius-lg: 16px;
   --radius-full: 9999px;
   --maxw: 1200px;
 }
 
-/* Dark Theme — Midnight Scholar & Deep Academic Slate */
+/* Dark Theme — macOS Dark & Apple Night Accent */
 [data-theme="dark"] {
-  --bg: #0C1017;
-  --bg-elevated: #141A24;
-  --bg-subtle: #1B2433;
-  --bg-subtle-hover: #232E40;
-  --bg-nav: rgba(12, 16, 23, 0.88);
-  --featured-bg: #162030;
-  --featured-border: #F59E0B;
-  --featured-badge-bg: rgba(245, 158, 11, 0.18);
-  --featured-badge-text: #FBBF24;
+  --bg: #161617;
+  --bg-elevated: #1C1C1E;
+  --bg-subtle: #2C2C2E;
+  --bg-subtle-hover: #3A3A3C;
+  --bg-nav: rgba(22, 22, 23, 0.82);
+  --featured-bg: #1F1B14;
+  --featured-border: #FF9F0A;
+  --featured-badge-bg: rgba(255, 159, 10, 0.2);
+  --featured-badge-text: #FFB340;
 
-  --text: #F0F4F8;
-  --text-soft: #9EACBF;
-  --text-faint: #697A8F;
+  --text: #F5F5F7;
+  --text-soft: #A1A1A6;
+  --text-faint: #76767B;
 
-  --accent: #60A5FA;
-  --accent-strong: #93C5FD;
-  --accent-soft: rgba(96, 165, 250, 0.14);
-  --accent-border: rgba(96, 165, 250, 0.3);
+  --accent: #2997FF;
+  --accent-strong: #64B5F6;
+  --accent-soft: rgba(41, 151, 255, 0.14);
+  --accent-border: rgba(41, 151, 255, 0.32);
 
-  --border: #212C3C;
-  --border-strong: #33435C;
-  --border-light: #18202D;
+  --border: rgba(255, 255, 255, 0.11);
+  --border-strong: rgba(255, 255, 255, 0.20);
+  --border-light: rgba(255, 255, 255, 0.06);
 
-  --code-bg: #0E131C;
-  --code-text: #E2E8F0;
-  --code-border: #212C3C;
+  --code-bg: #1C1C1E;
+  --code-text: #F5F5F7;
+  --code-border: rgba(255, 255, 255, 0.12);
 
-  --badge-bg: #2563EB;
+  --badge-bg: #2997FF;
   --badge-text: #FFFFFF;
 
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -109,9 +110,10 @@ html {
 
 body {
   margin: 0;
-  font-family: var(--font-serif);
-  font-size: 17px;
-  line-height: 1.68;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.62;
+  letter-spacing: -0.006em;
   color: var(--text);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
@@ -158,28 +160,30 @@ section[id] {
   border-radius: var(--radius-sm);
 }
 
-/* Custom modern scrollbar */
+/* Custom macOS-style scrollbar */
 ::-webkit-scrollbar {
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--border-strong);
-  border-radius: 8px;
-  border: 2px solid var(--bg);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
+  background: var(--text-faint);
+  background-clip: padding-box;
 }
 
 html {
-  scrollbar-color: var(--border-strong) var(--bg);
+  scrollbar-color: var(--border-strong) transparent;
   scrollbar-width: thin;
 }
 
@@ -210,8 +214,8 @@ html {
   top: 0;
   z-index: 50;
   background: var(--bg-nav);
-  -webkit-backdrop-filter: blur(14px) saturate(180%);
-  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--border);
   transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
@@ -537,9 +541,10 @@ html {
 }
 
 .search-result-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 0.95rem;
   font-weight: 600;
+  letter-spacing: -0.01em;
   color: var(--accent-strong);
 }
 
@@ -579,19 +584,19 @@ html {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(2.2rem, 5.5vw, 3.1rem);
-  line-height: 1.15;
-  letter-spacing: 0.01em;
+  line-height: 1.12;
+  letter-spacing: -0.028em;
   color: var(--text);
 }
 
 .hero-suffix {
-  font-family: var(--font-serif);
-  font-style: italic;
+  font-family: var(--font-sans);
+  font-style: normal;
   font-weight: 400;
   color: var(--text-faint);
-  font-size: 0.48em;
-  letter-spacing: 0;
-  margin-left: 2px;
+  font-size: 0.5em;
+  letter-spacing: -0.01em;
+  margin-left: 4px;
 }
 
 .hero-tagline {
@@ -885,9 +890,9 @@ button.link-pill:hover {
   margin: 0 0 20px;
   padding-bottom: 12px;
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.85rem;
-  letter-spacing: 0.02em;
+  font-weight: 650;
+  font-size: 1.75rem;
+  letter-spacing: -0.022em;
   color: var(--text);
   border-bottom: 1px solid var(--border);
   text-wrap: balance;
@@ -898,7 +903,7 @@ button.link-pill:hover {
   position: absolute;
   left: 0;
   bottom: -1px;
-  width: 52px;
+  width: 48px;
   height: 2.5px;
   background: var(--accent);
   border-radius: 2px;
@@ -907,9 +912,10 @@ button.link-pill:hover {
 /* ---------- Research Interests Narrative ---------- */
 .interests-narrative {
   max-width: 1080px;
-  font-family: var(--font-serif);
-  font-size: 1.05rem;
-  line-height: 1.82;
+  font-family: var(--font-sans);
+  font-size: 1.02rem;
+  line-height: 1.7;
+  letter-spacing: -0.005em;
   color: var(--text);
   margin-top: 14px;
 }
@@ -1092,7 +1098,7 @@ button.link-pill:hover {
   border-color: var(--accent);
   color: #FFFFFF;
   font-weight: 600;
-  box-shadow: 0 2px 6px -1px var(--accent-soft);
+  box-shadow: 0 2px 6px rgba(0, 102, 204, 0.25);
 }
 
 .filter-count {
@@ -1259,10 +1265,10 @@ button.link-pill:hover {
 
 .year-badge {
   display: inline-block;
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   color: var(--accent);
   padding: 3px 9px;
   border-radius: var(--radius-sm);
@@ -1273,7 +1279,7 @@ button.link-pill:hover {
 .pub-row.featured .year-badge {
   background: var(--featured-badge-bg);
   color: var(--featured-badge-text);
-  border-color: rgba(192, 132, 29, 0.35);
+  border-color: rgba(255, 149, 0, 0.35);
 }
 
 /* Content Cell */
@@ -1302,7 +1308,7 @@ button.link-pill:hover {
   text-transform: uppercase;
   color: var(--featured-badge-text);
   background: var(--featured-badge-bg);
-  border: 1px solid rgba(192, 132, 29, 0.35);
+  border: 1px solid rgba(255, 149, 0, 0.35);
   border-radius: var(--radius-full);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   user-select: none;
@@ -1319,10 +1325,11 @@ button.link-pill:hover {
 }
 
 .pub-title-link {
-  font-family: var(--font-serif);
-  font-size: 1.08rem;
-  font-weight: 700;
-  line-height: 1.45;
+  font-family: var(--font-sans);
+  font-size: 1.04rem;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.42;
   color: var(--text);
   transition: color 0.15s ease;
 }
@@ -1334,10 +1341,11 @@ button.link-pill:hover {
 }
 
 .talk-title {
-  font-family: var(--font-serif);
-  font-size: 1.06rem;
-  font-weight: 700;
-  line-height: 1.45;
+  font-family: var(--font-sans);
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.42;
   color: var(--text);
 }
 
@@ -1383,9 +1391,9 @@ button.link-pill:hover {
 
 .pub-meta,
 .talk-meta {
-  font-family: var(--font-serif);
-  font-size: 0.92rem;
-  font-style: italic;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  letter-spacing: -0.005em;
   color: var(--text-faint);
   line-height: 1.45;
 }
@@ -1959,8 +1967,9 @@ button.link-pill:hover {
    ========================================================== */
 .blog-intro {
   color: var(--text-soft);
-  font-family: var(--font-serif);
-  font-style: italic;
+  font-family: var(--font-sans);
+  font-size: 1.02rem;
+  line-height: 1.6;
   margin: -10px 0 20px;
 }
 
@@ -1994,8 +2003,9 @@ button.link-pill:hover {
 
 .blog-title {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.24rem;
+  font-weight: 650;
+  font-size: 1.22rem;
+  letter-spacing: -0.015em;
   color: var(--text);
   line-height: 1.35;
   transition: color 0.15s ease;
@@ -2033,8 +2043,9 @@ button.link-pill:hover {
 .blog-title-large {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.8rem, 4.5vw, 2.4rem);
-  line-height: 1.25;
+  font-size: clamp(1.8rem, 4.5vw, 2.3rem);
+  letter-spacing: -0.025em;
+  line-height: 1.22;
   color: var(--text);
   margin: 0 0 8px;
 }
@@ -2047,16 +2058,19 @@ button.link-pill:hover {
 }
 
 .prose {
+  font-family: var(--font-sans);
   color: var(--text);
-  font-size: 1.05rem;
-  line-height: 1.8;
+  font-size: 1.02rem;
+  letter-spacing: -0.005em;
+  line-height: 1.72;
   max-width: 740px;
 }
 
 .prose h2,
 .prose h3 {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 650;
+  letter-spacing: -0.018em;
   color: var(--text);
 }
 
