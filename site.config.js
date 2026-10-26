@@ -24,7 +24,7 @@ export const SITE = {
   bio_text: `
                 <p>
                 Da "Alex" Yan(<ruby>闫<rt>yán</rt></ruby> <ruby>达<rt>dá</rt></ruby>), PhD, works on CALL and feedback.</p>
-                <p>He teaches at <a href="https://www.wmu.edu.cn" target="_blank" rel="noopener">Wenzhou Medical University</a>. His research interests include language learning, formative assessment, and human-computer interaction. He is listed in the <a href="assets/img/yan-da-alex-topscinet-single-year-2026.jpg" target="_blank" rel="noopener">2026 World's Top 2% Scientists</a> (Stanford / Elsevier).
+                <p>He teaches at <a href="https://www.wmu.edu.cn" target="_blank" rel="noopener">Wenzhou Medical University</a>. His research interests include language learning, formative assessment, and human-computer interaction. He is listed in the <a href="assets/img/yan-da-alex-topscinet-single-year-2026.jpg" target="_blank" rel="noopener">2026 World's Top 2% Scientists</a> (Stanford / Elsevier). He is now serving as an academic editor of <a href="https://journals.plos.org/plosone/" target="_blank" rel="noopener">PLOS ONE</a>, and an editorial board member of <a href="https://www.nature.com/hsscomm/" target="_blank" rel="noopener">HSSC</a>.
                 </p>
                 `,
   bio: `
