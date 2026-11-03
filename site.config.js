@@ -11,8 +11,8 @@ export const SITE = {
   scholar: "28WTkNkAAAAJ",
   orcid: "0000-0002-1265-9772",
   github: "fabea87",
-  cv_en: "https://870603.xyz/assets/pdf/CV.pdf",
-  cv_cn: "https://870603.xyz/assets/pdf/CV-cn.pdf",
+  cv_en: "https://fabea87.github.io/cv/CV.pdf",
+  cv_cn: "https://fabea87.github.io/cv/CV-cn.pdf",
 
   // Site metadata
   url: "https://870603.xyz",
